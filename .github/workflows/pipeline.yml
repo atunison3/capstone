@@ -30,10 +30,10 @@ jobs:
     - name: Lint with ruff
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        ruff check --exit-zero
+        ruff check 
     - name: Security check
       run: |
-        bandit -r . --exit-zero
+        bandit -r .
     - name: Mypy check 
       run: |
-        mypy . --exit-zero 
+        mypy . 

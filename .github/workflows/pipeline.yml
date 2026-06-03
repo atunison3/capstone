@@ -39,4 +39,4 @@ jobs:
 
     - name: Mypy check 
       run: |
-        mypy . --exit-zero
+        mypy . --exit-zero 

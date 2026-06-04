@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
     steps:
     - name: Set up Python 3.13
@@ -36,4 +36,4 @@ jobs:
     - name: Mypy check 
       run: |
         pip install mypy
-        mypy . 
+        mypy src

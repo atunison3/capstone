@@ -33,7 +33,7 @@ jobs:
       run: |
         pip install bandit
         bandit -r .
-    # - name: Mypy check 
-    #   run: |
-    #     pip install mypy
-    #     mypy . 
+    - name: Mypy check 
+      run: |
+        pip install mypy
+        mypy . 

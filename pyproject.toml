@@ -1,0 +1,17 @@
+[project]
+name = "capstone-2026"
+description = "Capstone project UMich MADS Spring/Summer 2026."
+version = "0.1.0"
+requires-python = ">= 3.13"
+authors = [
+  {name = "Andy Tunison", email = "andrew.e.tunison@gmail.com"},
+  {name = "Melody Ren"}
+]
+readme = "README.md"
+
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120

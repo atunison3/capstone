@@ -30,17 +30,17 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names
         pip install ruff
-        ruff check 
+        ruff check
     - name: Security check with Bandit
       run: |
         pip install bandit
         bandit -r .
-    - name: Mypy check 
+    - name: Mypy check
       run: |
         pip install mypy
 
         # Separately run mypy on src and tests
-        mypy src 
-        mypy tests 
+        mypy src
+        mypy tests
     - name: Run unit tests
       run: python -m unittest discover -s tests

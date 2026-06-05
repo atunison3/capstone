@@ -1,9 +1,6 @@
 
 
-def foo() -> str:
-    return '1' 
-
-x: int = 19.
+password = "super_secret_password"
 
 print("Hello World!")
 

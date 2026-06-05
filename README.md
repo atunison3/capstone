@@ -2,7 +2,7 @@
 
 ## Installing Repository
 
-Verify python version is 3.13. I am using 3.13.2 https://www.python.org/downloads/release/python-3132/. 
+Verify python version is 3.13. I am using 3.13.2 https://www.python.org/downloads/release/python-3132/.
 
 ```
 python --version
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 ## Contributing
 
-To contibute, you will need to work on a branch other than main. When you are finished with your changes, push them to your branch and perform a PR. Rules will be enabled such that at least one reviewer must approve changes. 
+To contibute, you will need to work on a branch other than main. When you are finished with your changes, push them to your branch and perform a PR. Rules will be enabled such that at least one reviewer must approve changes.
 
 ```
 git add .  # Or specify which files to add
@@ -68,4 +68,3 @@ To run a script, simply navigate to the project directory and run `python <scrip
 cd capstone
 python src/main.py
 ```
-

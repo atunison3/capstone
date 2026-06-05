@@ -1,7 +1,5 @@
 
-
-password = "super_secret_password"
-
-print("Hello World!")
+def foo() -> str:
+    return "Hello World"
 
 

@@ -21,6 +21,9 @@ jobs:
       with:
         python-version: "3.13"
 
+    - name: Check out repository
+      uses: actions/checkout@v6
+
     # AI section: for troubleshooting to verify the directory this action is running in
     - name: Confirm working directory
       run: |

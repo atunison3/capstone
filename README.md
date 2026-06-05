@@ -73,6 +73,7 @@ black . # The uncompromising code formatter.
 ruff check  # An extremely fast Python linter and code formatter.
 bandit . # Python source code security analyzer
 mypy .  # Program that will type check your Python code.
+```
 
 
 
@@ -81,6 +82,7 @@ mypy .  # Program that will type check your Python code.
 To run a script, simply navigate to the project directory and run `python <script_name>.py`
 
 ```
-cd capstone
 python src/main.py
 ```
+
+### TODOs

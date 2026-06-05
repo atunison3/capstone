@@ -1,5 +1,7 @@
-.vite
+# Project specific ignores
+.vite     
 .venv*
+data-prod/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

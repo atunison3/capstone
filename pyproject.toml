@@ -19,6 +19,10 @@ line-length = 120
 
 [tool.ruff]
 extend-exclude = ["notes"]  # Excludes the notes (allows us to have unclean code there)
+line-length = 120
+
+[tool.ruff.lint]
+extend-select = ["E501"]
 
 [tool.mypy]
 #no_namespace_packages = true

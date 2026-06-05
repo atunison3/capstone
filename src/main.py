@@ -1,5 +1,2 @@
-import pandas as pd
-
-print("Hello World!")
-
-
+def foo() -> str:
+    return "Hello World"

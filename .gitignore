@@ -1,7 +1,27 @@
+###
 # Project specific ignores
+###
+
+# I like keeping notes and doing stuff in html 
 .vite     
+
+# I use .venv* for my different environments
 .venv*
+
+# We shouldn't use our repository to store data
+# Production (all) data should go in data/data-prod/
+# A smaller sanitized subset(s) can be placed in data-dev or data-test (if we want to do testing)
 data-prod/
+
+# Specific notebooks/files not to commit (feel free to add anything you don't care to commit)
+src/sandbox.ipynb
+
+
+
+
+
+
+### The rest is templated from GitHub
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

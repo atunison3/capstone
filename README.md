@@ -40,6 +40,18 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+Set up your jupyter notebook kernel:
+
+```
+brew install python@3.13
+python3.13 --version
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip setuptools wheel
+pip install notebook ipykernel
+python -m ipykernel install --user --name=capstoneDev --display-name="Python 3.13 (Capstone Dev)"
+    ```
+
 ### Pre-Commits
 
 This project utilizes GitHub actions to perform quality and safety checks. To reduce the burden on shared resources and prevent unnecessary commits dur to fixing these checks, it is **highly recommended** you install the pre-commits.

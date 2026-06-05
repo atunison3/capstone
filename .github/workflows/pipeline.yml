@@ -36,4 +36,4 @@ jobs:
     - name: Mypy check 
       run: |
         pip install mypy
-        mypy src
+        mypy ../../src

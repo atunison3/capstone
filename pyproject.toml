@@ -5,7 +5,8 @@ version = "0.1.0"
 requires-python = ">= 3.13"
 authors = [
   {name = "Andy Tunison", email = "andrew.e.tunison@gmail.com"},
-  {name = "Melody Ren"}
+  {name = "Melody Ren", email="yyren@umich.edu"},
+  {name = "Sahana Sundar", email="sahanasu@umich.edu"}
 ]
 readme = "README.md"
 
@@ -15,3 +16,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 120
+
+[tool.ruff]
+extend-exclude = ["notes"]  # Excludes the notes (allows us to have unclean code there)
+
+[tool.mypy]
+#no_namespace_packages = true
+#explicit_package_bases = true

@@ -20,6 +20,15 @@ jobs:
       uses: actions/setup-python@v6
       with:
         python-version: "3.13"
+
+    # AI section: for troubleshooting to verify the directory this action is running in
+    - name: Confirm working directory
+      run: |
+        pwd
+        ls -la
+        ls -la src
+
+      
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip

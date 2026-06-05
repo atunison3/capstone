@@ -40,6 +40,22 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+### Pre-Commits
+
+This project utilizes GitHub actions to perform quality and safety checks. To reduce the burden on shared resources and prevent unnecessary commits dur to fixing these checks, it is **highly recommended** you install the pre-commits.
+
+```
+pip install pre-commit
+pre-commit install
+```
+
+You can further run the quality checks locally by running `pre-commit run --all-files`. Learn more at https://pre-commit.com/. Currently, the pre-commit configuration doesn't check `mypy`. We might want to add that later or remove the `mypy` check in the github if its too much of a problem. Until a solution is found, I recommend manually running `mypy` commands before committing:
+
+```
+mypy src
+mypy tests
+```
+
 ## Contributing
 
 To contibute, you will need to work on a branch other than main. When you are finished with your changes, push them to your branch and perform a PR. Rules will be enabled such that at least one reviewer must approve changes.

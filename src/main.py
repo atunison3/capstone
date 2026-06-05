@@ -1,9 +1,9 @@
-import pandas as pd
+
 
 def foo() -> str:
-    return 1 
+    return '1' 
 
-x: float = 19
+x: int = 19.
 
 print("Hello World!")
 

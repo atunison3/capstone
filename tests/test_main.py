@@ -1,6 +1,6 @@
 import unittest
 
-from src.main import foo
+from capstone.main import foo
 
 
 class TestMain(unittest.TestCase):

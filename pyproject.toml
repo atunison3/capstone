@@ -23,3 +23,6 @@ extend-exclude = ["notes"]  # Excludes the notes (allows us to have unclean code
 [tool.mypy]
 #no_namespace_packages = true
 #explicit_package_bases = true
+
+[tool.setuptools]
+packages = ["capstone"]

@@ -19,10 +19,11 @@ repos:
     rev: 1.8.3
     hooks:
       - id: bandit
-        args: [-r, src]
+        args: [-r, capstone, tests]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.16.1
     hooks:
       - id: mypy
-        args: [src, tests]
+        pass_filenames: false
+        args: [capstone, tests]

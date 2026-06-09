@@ -1,4 +1,9 @@
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+
   - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
@@ -14,4 +19,11 @@ repos:
     rev: 1.8.3
     hooks:
       - id: bandit
-        args: [-r, src]
+        args: [-r, capstone, tests]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.16.1
+    hooks:
+      - id: mypy
+        pass_filenames: false
+        args: [capstone, tests]

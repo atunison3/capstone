@@ -12,7 +12,7 @@ babel==2.18.0
 beautifulsoup4==4.14.3
 bleach==6.4.0
 build==1.5.0
--e .
+-e git+https://github.com/atunison3/capstone.git@a8fa89614c4fbe9870e1ca4e922c1890c00f4d87#egg=capstone_2026
 certifi==2026.5.20
 cffi==2.0.0
 charset-normalizer==3.4.7
@@ -71,6 +71,7 @@ notebook_shim==0.2.4
 numpy==2.4.6
 packaging==26.2
 pandas==3.0.3
+pandas-stubs==3.0.3.260530
 pandocfilters==1.5.1
 parso==0.8.7
 pathspec==1.1.1

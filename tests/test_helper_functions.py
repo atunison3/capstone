@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from capstone.helper_functions import load_ces_data, load_config
+from capstone.helper_functions import load_ces_data, load_config, load_fips_data
 
 
 class TestHelperFunctions(unittest.TestCase):
@@ -17,6 +17,12 @@ class TestHelperFunctions(unittest.TestCase):
         df = load_ces_data(data_path)
 
         self.assertEqual(len(df), 50)
+
+    def test_003_load_fips_data(self):
+
+        fips_df = load_fips_data()
+
+        self.assertEqual(len(fips_df), 51)
 
 
 if __name__ == "__main__":

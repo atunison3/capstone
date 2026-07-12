@@ -12,7 +12,7 @@ babel==2.18.0
 beautifulsoup4==4.14.3
 bleach==6.4.0
 build==1.5.0
--e git+https://github.com/atunison3/capstone.git@95b251eb034f071461ece09f431614d2eb5ccbed#egg=capstone_2026
+-e .
 certifi==2026.5.20
 cffi==2.0.0
 charset-normalizer==3.4.7

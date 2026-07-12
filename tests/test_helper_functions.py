@@ -13,10 +13,10 @@ class TestHelperFunctions(unittest.TestCase):
 
     def test_002_load_ces_data(self):
 
-        data_path = Path("data/data-test/data.csv")
+        data_path = Path("data/test/data.csv")
         df = load_ces_data(data_path)
 
-        self.assertEqual(len(df), 200)
+        self.assertEqual(len(df), 50)
 
 
 if __name__ == "__main__":

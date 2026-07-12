@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from capstone.helper_functions import load_ces_data, load_config, load_fips_data
+from capstone.helper_functions import load_ces_data, load_config, load_fips_data, load_voter_id_effect
 
 
 class TestHelperFunctions(unittest.TestCase):
@@ -23,6 +23,12 @@ class TestHelperFunctions(unittest.TestCase):
         fips_df = load_fips_data()
 
         self.assertEqual(len(fips_df), 51)
+
+    def test_004_load_voter_id_effect(self):
+
+        df = load_voter_id_effect()
+
+        self.assertEqual(df.loc[0, "State"], "ALABAMA")
 
 
 if __name__ == "__main__":

@@ -29,4 +29,6 @@ repos:
         additional_dependencies:
           - pandas
           - pandas-stubs
+          - requests
+          - types-requests
         args: [capstone, tests]

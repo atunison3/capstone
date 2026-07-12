@@ -3,6 +3,7 @@
 data-prod/
 .DS_Store
 config.local.toml
+data.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -18,7 +18,11 @@ build-backend = "setuptools.build_meta"
 line-length = 120
 
 [tool.ruff]
-extend-exclude = ["notes"]  # Excludes the notes (allows us to have unclean code there)
+extend-exclude = [
+  "notes",
+  "*.ipynb"
+  ]
+
 
 [tool.mypy]
 #no_namespace_packages = true

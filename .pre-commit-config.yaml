@@ -26,4 +26,7 @@ repos:
     hooks:
       - id: mypy
         pass_filenames: false
+        additional_dependencies:
+          - pandas
+          - pandas-stubs
         args: [capstone, tests]

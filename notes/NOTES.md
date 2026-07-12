@@ -1,8 +1,14 @@
-# Notes
+# SIADS 699 - Capstone
 
 - Andy Tunison [atunison@umich.edu](atunison@umich.edu)
 - Melody Ren [yyren@umich.edu](yyren@umich.edu)
 - Sahana Sundar [sahanasu@umich.edu](sahanasu@umich.edu)
+
+TODO: Finish this citation
+
+[Name of Team Principal Investigator], COOPERATIVE ELECTION STUDY,
+2024: [TEAM NAME] CONTENT. [Computer File] Release: [Date]. [Location
+of Team]. [producer] [http://cces.gov.harvard.edu](http://cces.gov.harvard.edu)
 
 ## Course Overview
 
@@ -22,5 +28,8 @@
 
 ## Project Notes
 
-- [Google Drive](https://drive.google.com/drive/folders/1Ze5Y_ZMJ9mpWOoKh7VyuAu37kqNrFBjB?dmr=1&ec=wgc-drive-%5Bmodule%5D-goto)
+- Sahana's [Google Drive](https://drive.google.com/drive/u/0/folders/1CYiy7ZphYa-u0ly1MhTje3K7PEMNK4WG)
+- Andy's [Google Drive](https://drive.google.com/drive/folders/1Ze5Y_ZMJ9mpWOoKh7VyuAu37kqNrFBjB?dmr=1&ec=wgc-drive-%5Bmodule%5D-goto)
 - [Github](ttps://github.com/atunison3/capstone)
+- Dataset: [Cooperative Election Study Common Content, 2024](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/X11EP6)
+- Dataset Overview: [Cooperative Election Study](https://tischcollege.tufts.edu/research-faculty/research-centers/cooperative-election-study)

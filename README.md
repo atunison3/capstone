@@ -98,3 +98,5 @@ python src/main.py
 ```
 
 ### TODOs
+
+- Finish data source citation

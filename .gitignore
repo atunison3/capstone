@@ -1,5 +1,6 @@
 .vite
 .venv*
+config.local.toml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -211,3 +212,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+.DS_Store

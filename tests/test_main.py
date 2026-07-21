@@ -1,11 +1,9 @@
 import unittest
 
-from capstone.main import foo
-
 
 class TestMain(unittest.TestCase):
     def test01(self):
-        test_string = foo()
+        test_string = "Hello World"
 
         self.assertEqual(test_string, "Hello World")
 

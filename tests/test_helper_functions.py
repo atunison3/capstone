@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from capstone.helper_functions import load_config
+from capstone.helper_functions import load_config, expand_user
 
 
 class TestLoadTomlConfig(unittest.TestCase):
@@ -181,6 +181,51 @@ class TestLoadTomlConfig(unittest.TestCase):
 
         with self.assertRaises(KeyError):
             load_config(config_path)
+
+
+class TestExpandUser(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp_directory = tempfile.TemporaryDirectory()
+        self.temp_path = Path(self.temp_directory.name)
+
+    def tearDown(self) -> None:
+        self.temp_directory.cleanup()
+
+    def test_returns_resolved_existing_path(self) -> None:
+        result = expand_user(self.temp_path)
+
+        self.assertEqual(result, self.temp_path.resolve())
+        self.assertTrue(result.is_absolute())
+
+    def test_returns_existing_file_path(self) -> None:
+        file_path = self.temp_path / "config.toml"
+        file_path.write_text('data_path = "data"', encoding="utf-8")
+
+        result = expand_user(file_path)
+
+        self.assertEqual(result, file_path.resolve())
+
+    def test_missing_path_raises_file_not_found_error(self) -> None:
+        missing_path = self.temp_path / "missing"
+
+        with self.assertRaisesRegex(
+            FileNotFoundError,
+            "Configuration file not found",
+        ):
+            expand_user(missing_path)
+
+    def test_expands_tilde_path(self) -> None:
+        expected_path = self.temp_path.resolve()
+
+        with patch.object(
+            Path,
+            "expanduser",
+            return_value=expected_path,
+        ) as mock_expanduser:
+            result = expand_user(Path("~/data"))
+
+        self.assertEqual(result, expected_path)
+        mock_expanduser.assert_called_once()
 
 
 if __name__ == "__main__":

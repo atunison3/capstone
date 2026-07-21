@@ -5,13 +5,22 @@ from typing import Any
 LOCAL_CONFIG_PATH = Path("config.local.toml")
 
 
+def expand_user(path: Path) -> Path:
+    """Expands the user's path"""
+
+    data_path = Path(path).expanduser().resolve()
+
+    if not data_path.exists():
+        raise FileNotFoundError(f"Configuration file not found: {data_path}")
+
+    return data_path
+
+
 def load_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
     """Loads the local config"""
 
-    path = Path(config_path).expanduser().resolve()
-
-    if not path.exists():
-        raise FileNotFoundError(f"Configuration file not found: {path}")
+    # path = Path(config_path).expanduser().resolve()
+    path = expand_user(config_path)
 
     if not path.is_file():
         raise IsADirectoryError(f"Configuration path is not a file: {path}")

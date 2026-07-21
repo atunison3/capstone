@@ -101,5 +101,13 @@ python src/main.py
 
 ### Data
 
-You can download the 2024 Cooperative Election Study data and code books from the [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/X11EP6). 
+You can download the 2024 Cooperative Election Study data and code books from the [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/X11EP6).
 * Download a copy of CCES24_Common_OUTPUT_vv_topost_final.csv, and upload it to the capstone/data folder before running the data_cleaning.ipynb file to clean the data.
+
+### Saving data
+
+Save your data on your local machine. Create a `config.local.toml` file in your project root with a parameter `data_path`. Use the function `data_cleaning.load_ces_data` to automatically read in your CES data.
+
+```toml config.local.toml
+data_path = "/Users/<username>/Downloads/CES Data"
+```

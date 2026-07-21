@@ -166,6 +166,17 @@ def rename_columns(df: DataFrame, column_map: dict[str, str]) -> DataFrame:
     return df
 
 
+def merge_fips_ncsl(fips_df: DataFrame, ncsl_df: DataFrame) -> DataFrame:
+    """Merges the two"""
+
+    merged_df = fips_df.merge(ncsl_df, on="State Name")
+
+    # Drop unnecessary columns
+    merged_df = merged_df.drop(columns=["STATENS"])
+
+    return merged_df[["State Name", "State Code", "NCSL Classification", "State FIPS Code"]]
+
+
 if __name__ == "__main__":
 
     # Get the data path
@@ -181,3 +192,5 @@ if __name__ == "__main__":
 
     ncsl_df = load_voter_id_effect(data_path)
     print(ncsl_df.head())
+
+    print(merge_fips_ncsl(fips_df, ncsl_df))

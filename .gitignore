@@ -213,3 +213,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 .DS_Store
+
+# VS Code settings
+.vscode/settings.json
+capstone/data/CCES24_Common_OUTPUT_vv_topost_final.csv
+capstone/data/CES Cleaned and Reduced.csv
+capstone/data/State,_County_and_City_FIPS_Reference_Table_20260719.csv
+capstone/data/Voter ID Law Classification.csv

@@ -31,4 +31,5 @@ repos:
           - pandas-stubs
           - numpy
           - matplotlib
+          - requests
         args: [capstone, tests]

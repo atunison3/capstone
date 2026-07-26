@@ -77,21 +77,6 @@ class TestLoadFipsData(unittest.TestCase):
     def tearDown(self) -> None:
         self.temp_directory.cleanup()
 
-    # def test_loads_existing_fips_csv_without_request(self) -> None:
-    #     expected = pd.DataFrame(
-    #         {
-    #             "State FIPS Code": pd.Series(["01", "02"], dtype="string"),
-    #             "State Name": ["Alabama", "Alaska"],
-    #         }
-    #     )
-    #     expected.to_csv(self.data_path / "fips.csv", index=False)
-
-    #     with patch("capstone.data_cleaning.requests.get") as mock_get:
-    #         result = load_fips_data(self.data_path)
-
-    #     mock_get.assert_not_called()
-    #     pd.testing.assert_frame_equal(result, expected)
-
     @patch("capstone.data_cleaning.requests.get")
     def test_downloads_saves_and_returns_fips_data(
         self,

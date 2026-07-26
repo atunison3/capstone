@@ -4,7 +4,7 @@ from io import StringIO
 from pandas import DataFrame
 from pathlib import Path
 
-from capstone.helper_functions import load_config, expand_user
+from capstone.helper_functions import expand_user, load_config
 
 
 def load_dataframe(ces_path: Path) -> DataFrame:

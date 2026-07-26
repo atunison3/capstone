@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from capstone.helper_functions import load_config, expand_user
+from capstone.helper_functions import expand_user, load_config
 
 
 class TestLoadTomlConfig(unittest.TestCase):

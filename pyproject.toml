@@ -18,6 +18,7 @@ build-backend = "setuptools.build_meta"
 line-length = 120
 
 [tool.ruff]
+line-length = 120
 extend-exclude = ["notes", "mke_um_figs.py", "*.ipynb"]  # Excludes the notes (allows us to have unclean code there)
 
 [tool.mypy]

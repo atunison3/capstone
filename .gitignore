@@ -1,6 +1,7 @@
 .vite
 .venv*
 config.local.toml
+my_sandbox.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,12 +4,15 @@
 
 import numpy as np
 import pandas as pd
+import warnings
 from pathlib import Path
 from scipy.optimize import minimize
 from scipy.special import expit
 
 from capstone.data_cleaning import load_full_dataframe
 from capstone.helper_functions import load_config
+
+warnings.filterwarnings("ignore")
 
 
 config = load_config()
@@ -48,7 +51,7 @@ initial_coefficients = np.zeros(X.shape[1], dtype=float)
 result = minimize(  # type: ignore
     lambda coefficients: np.sum(np.logaddexp(0.0, X @ coefficients) - y * (X @ coefficients)),
     x0=initial_coefficients,
-    method="Newton-CG",  # Is there a way to use Gauss-Newton?
+    method="BFGS",  # Is there a way to use Gauss-Newton?
 )
 
 if not result.success:
@@ -64,6 +67,7 @@ model_df["Predicted Probability"] = probabilities
 model_df["Prediction"] = predictions
 
 # Print model coefficients.
+print("\n\n")
 print(f"Intercept: {coefficients[0]:.4f}")
 
 for feature, coefficient in zip(FEATURES, coefficients[1:]):
@@ -72,5 +76,5 @@ for feature, coefficient in zip(FEATURES, coefficients[1:]):
 # Simple training accuracy.
 accuracy = (model_df["Prediction"] == model_df[TARGET]).mean()
 
-print(f"Accuracy: {accuracy:.2%}")
+print(f"\n\nAccuracy: {accuracy:.2%}")
 print(model_df.head())

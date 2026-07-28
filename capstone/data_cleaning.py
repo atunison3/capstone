@@ -13,9 +13,6 @@ def load_dataframe(ces_path: Path) -> DataFrame:
     csv_path = ces_path / "data.csv"
     df = pd.read_csv(csv_path)
 
-    # Clean the dataframe
-    df = clean_ces_data(df)
-
     return df
 
 
@@ -269,29 +266,29 @@ def merge_ces_fips(ces_df: DataFrame, merged_fips_nscl: DataFrame) -> DataFrame:
     return ces_df.merge(merged_fips_nscl, on="State FIPS Code")
 
 
+def load_full_dataframe(data_path: Path):
+    """Loads the full dataframe and cleans"""
+
+    df = load_dataframe(data_path)
+    df = clean_ces_data(df)
+
+    fips_df = load_fips_data(data_path)
+
+    ncsl_df = load_voter_id_effect(data_path)
+
+    merged_fips_ncsl_df = merge_fips_ncsl(fips_df, ncsl_df)
+
+    final_df = merge_ces_fips(df, merged_fips_ncsl_df)
+
+    return final_df
+
+
 if __name__ == "__main__":
 
     # Get the data path
     config = load_config()
     data_path = Path(config["data_path"]) / "dev"
 
-    # Load the dataframe
-    df = load_dataframe(data_path)
-    print("\nCES DataFrame:")
+    df = load_full_dataframe(data_path)
     print(df.head())
-
-    fips_df = load_fips_data(data_path)
-    print("\nFIPS DataFrame:")
-    print(fips_df.head())
-
-    ncsl_df = load_voter_id_effect(data_path)
-    print("\nNSCL DataFrame")
-    print(ncsl_df.head())
-
-    print("\nMerged FIPS and NCSL DataFrame")
-    merged_fips_ncsl_df = merge_fips_ncsl(fips_df, ncsl_df)
-    print(merged_fips_ncsl_df)
-
-    print("\nFinal DataFrame")
-    final_df = merge_ces_fips(df, merged_fips_ncsl_df)
-    print(final_df)
+    print(df.dtypes)

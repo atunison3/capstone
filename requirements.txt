@@ -68,7 +68,9 @@ nbformat==5.10.4
 nest-asyncio==1.6.0
 notebook==7.5.7
 notebook_shim==0.2.4
-numpy==2.4.6
+numpy==2.5.1
+numpy-typing-compat==20260602.2.5
+optype==0.18.0
 packaging==26.2
 pandas==3.0.3
 pandas-stubs==3.0.3.260530
@@ -99,8 +101,10 @@ rfc3986-validator==0.1.1
 rfc3987-syntax==1.1.0
 rich==15.0.0
 rpds-py==2026.5.1
+ruff==0.15.22
 scikit-learn==1.8.0
 scipy==1.17.1
+scipy-stubs==1.18.0.1
 Send2Trash==2.1.0
 setuptools==82.0.1
 six==1.17.0

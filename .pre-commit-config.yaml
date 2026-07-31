@@ -32,4 +32,6 @@ repos:
           - numpy
           - matplotlib
           - requests
+          - scipy
+          - scipy-stubs
         args: [capstone, tests]

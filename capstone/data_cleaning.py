@@ -3,8 +3,9 @@ import requests
 from io import StringIO
 from pandas import DataFrame
 from pathlib import Path
+from typing import Any
 
-from capstone.helper_functions import expand_user, load_config
+from capstone.helper_functions import expand_user, load_config, load_local_config
 
 
 def load_dataframe(ces_path: Path) -> DataFrame:
@@ -177,59 +178,18 @@ def merge_fips_ncsl(fips_df: DataFrame, ncsl_df: DataFrame) -> DataFrame:
     return merged_df[["State Name", "State Code", "NCSL Classification", "State FIPS Code"]]
 
 
-def clean_ces_data(df: DataFrame) -> DataFrame:
+def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     """Clean the CES Data"""
 
     # Rename columns for human readability
-    demographic_columns = {
-        "educ": "Education",
-        "race": "Race",
-        "hispanic": "Hispanic",
-        "gender4": "Gender",
-        "birthyr": "Birth Year",
-    }
-    df = df.rename(columns=demographic_columns)
+    df = df.rename(columns=config["demographic_columns"])
+    df = df.rename(columns=config["voter_outreach_columns"])
+    df = df.rename(columns=config["state_column"])
 
-    voter_outreach_columns = {
-        "CC24_431a": "Outreach Y/N",
-        "CC24_431b_1": "In person",
-        "CC24_431b_2": "Phone call",
-        "CC24_431b_3": "Email or text message",
-        "CC24_431b_4": "Letter or postcard",
-    }
-    df = df.rename(columns=voter_outreach_columns)
-
-    # State columns
-    state_column = {"inputstate": "State FIPS Code"}
-    df = df.rename(columns=state_column)
-
-    # Perform mappings
-    educ_mapping = {
-        1: "No HS degree",
-        2: "High school graduate",
-        3: "Some college, no degree (yet)",
-        4: "2 year college degree",
-        5: "4 year college degree",
-        6: "Postgraduate degree",
-        8: "Skipped",
-        9: "Not asked",
-    }
-    df["Education"] = df["Education"].replace(educ_mapping)
-
-    race_mapping = {
-        1: "White",
-        2: "Black",
-        3: "Hispanic",
-        4: "Asian",
-        5: "Native American",
-        6: "Two or more races",
-        7: "Other",
-        8: "Middle Eastern",
-    }
-    df["Race"] = df["Race"].replace(race_mapping)
-
-    gender_mapping = {1: "Man", 2: "Woman", 3: "Non-binary", 4: "Other"}
-    df["Gender"] = df["Gender"].replace(gender_mapping)
+    # Perform mapping of data
+    df["Education"] = df["Education"].replace(config["educ_mapping"])
+    df["Race"] = df["Race"].replace(config["race_mapping"])
+    df["Gender"] = df["Gender"].replace(config["gender_mapping"])
 
     # Drop na
     df = df.dropna(subset="TS_voterstatus")
@@ -241,21 +201,7 @@ def clean_ces_data(df: DataFrame) -> DataFrame:
     df["Age"] = 2024 - df["Birth Year"]
 
     # Reduce columns
-    df = df[
-        [
-            "Education",
-            "Race",
-            "Gender",
-            "Outreach Y/N",
-            "In person",
-            "Phone call",
-            "Email or text message",
-            "Letter or postcard",
-            "State FIPS Code",
-            "Voted",
-            "Age",
-        ]
-    ]
+    df = df[config["full_columns"]]
 
     return df
 
@@ -266,11 +212,11 @@ def merge_ces_fips(ces_df: DataFrame, merged_fips_nscl: DataFrame) -> DataFrame:
     return ces_df.merge(merged_fips_nscl, on="State FIPS Code")
 
 
-def load_full_dataframe(data_path: Path):
+def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
     """Loads the full dataframe and cleans"""
 
     df = load_dataframe(data_path)
-    df = clean_ces_data(df)
+    df = clean_ces_data(df, config)
 
     fips_df = load_fips_data(data_path)
 
@@ -287,8 +233,12 @@ if __name__ == "__main__":
 
     # Get the data path
     config = load_config()
-    data_path = Path(config["data_path"]) / "dev"
+    print(config)
 
-    df = load_full_dataframe(data_path)
+    # Local config
+    local_config = Path("config.local.toml")
+    data_path = Path(load_local_config(local_config)["data_path"]) / "dev"
+
+    df = load_full_dataframe(data_path, config)
     print(df.head())
     print(df.dtypes)

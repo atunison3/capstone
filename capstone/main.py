@@ -10,14 +10,14 @@ from scipy.optimize import minimize
 from scipy.special import expit
 
 from capstone.data_cleaning import load_full_dataframe
-from capstone.helper_functions import load_config
+from capstone.helper_functions import load_config, load_local_config
 
 warnings.filterwarnings("ignore")
 
-
 config = load_config()
-data_path = Path(config["data_path"]) / "dev"
-df = load_full_dataframe(data_path)
+local_config = load_local_config(Path("config.local.toml"))
+data_path = Path(local_config["data_path"]) / "dev"
+df = load_full_dataframe(data_path, config)
 
 FEATURES = [
     "Outreach Y/N",
@@ -39,10 +39,10 @@ y = model_df[TARGET].to_numpy(dtype=float)
 # Get the dummies
 X = pd.get_dummies(X, dtype=float, drop_first=True)
 feature_names = list(X.columns)
-X = X.to_numpy(dtype=float)
+X = X.to_numpy(dtype=float)  # type: ignore
 
 # Add a column of ones for the intercept.
-X = np.column_stack([np.ones(len(X)), X])
+X = np.column_stack([np.ones(len(X)), X])  # type: ignore
 
 # Start all coefficients at zero.
 initial_coefficients = np.zeros(X.shape[1], dtype=float)

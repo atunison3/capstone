@@ -2,7 +2,7 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
-LOCAL_CONFIG_PATH = Path("config.local.toml")
+LOCAL_CONFIG_PATH = Path("config.toml")  # Config path used for common configuration
 
 
 def expand_user(path: Path) -> Path:
@@ -19,7 +19,20 @@ def expand_user(path: Path) -> Path:
 def load_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
     """Loads the local config"""
 
-    # path = Path(config_path).expanduser().resolve()
+    path = expand_user(config_path)
+
+    if not path.is_file():
+        raise IsADirectoryError(f"Configuration path is not a file: {path}")
+
+    with path.open("rb") as file:
+        config: dict[Any, Any] = tomllib.load(file)
+
+    return config
+
+
+def load_local_config(config_path: Path) -> dict[Any, Any]:
+    """Loads the local config"""
+
     path = expand_user(config_path)
 
     if not path.is_file():
@@ -30,7 +43,7 @@ def load_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
 
     if "data_path" not in config:
         raise KeyError(
-            "Required configuration seeting 'data_path' is missing."
+            "Required configuration setting 'data_path' is missing."
             "Please add a 'data_path' with a path to your CES data into "
             "config.local.toml"
         )

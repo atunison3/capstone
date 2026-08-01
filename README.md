@@ -1,4 +1,6 @@
-# capstone
+# Capstone
+
+![Voter Turnout](assets/figures/report_fig1_turnout_by_strictness.png)
 
 ## Installing Repository
 
@@ -16,7 +18,7 @@ python --version
 py -3.13 --version
 ```
 
-Clone the repository. You'll be able to clone it but you'll need permission to push changes.
+Clone the [capstone repository](https://github.com/atunison3/capstone). You'll be able to clone it but you'll need permission to push changes.
 
 ```terminal
 git clone https://github.com/atunison3/capstone.git
@@ -40,34 +42,6 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 python -m build
-```
-
-Set up your jupyter notebook kernel:
-
-```terminal
-brew install python@3.13
-python3.13 --version
-python3.13 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip setuptools wheel
-pip install notebook ipykernel
-python -m ipykernel install --user --name=capstoneDev --display-name="Python 3.13 (Capstone Dev)"
-```
-
-### Pre-Commits
-
-This project utilizes GitHub actions to perform quality and safety checks. To reduce the burden on shared resources and prevent unnecessary commits due to fixing these checks, it is **highly recommended** you install the pre-commits.
-
-```terminal
-pip install pre-commit
-pre-commit install
-```
-
-You can further run the quality checks locally by running `pre-commit run --all-files`. Learn more at [pre-commit](https://pre-commit.com/). Currently, the pre-commit configuration doesn't check `mypy`. We might want to add that later or remove the `mypy` check in the github if its too much of a problem. Until a solution is found, I recommend manually running `mypy` commands before committing:
-
-```terminal
-mypy src
-mypy tests
 ```
 
 ## Contributing
@@ -96,8 +70,6 @@ To run a script, simply navigate to the project directory and run `python <scrip
 ```terminal
 python src/main.py
 ```
-
-### TODOs
 
 ### Data
 

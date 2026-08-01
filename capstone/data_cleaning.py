@@ -3,8 +3,9 @@ import requests
 from io import StringIO
 from pandas import DataFrame
 from pathlib import Path
+from typing import Any
 
-from capstone.helper_functions import expand_user, load_config
+from capstone.helper_functions import expand_user, load_local_config, load_model_config
 
 
 def load_dataframe(ces_path: Path) -> DataFrame:
@@ -177,7 +178,7 @@ def merge_fips_ncsl(fips_df: DataFrame, ncsl_df: DataFrame) -> DataFrame:
     return merged_df[["State Name", "State Code", "NCSL Classification", "State FIPS Code"]]
 
 
-def clean_ces_data(df: DataFrame) -> DataFrame:
+def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     """Clean the CES Data"""
 
     # Rename columns for human readability
@@ -266,11 +267,11 @@ def merge_ces_fips(ces_df: DataFrame, merged_fips_nscl: DataFrame) -> DataFrame:
     return ces_df.merge(merged_fips_nscl, on="State FIPS Code")
 
 
-def load_full_dataframe(data_path: Path):
+def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
     """Loads the full dataframe and cleans"""
 
     df = load_dataframe(data_path)
-    df = clean_ces_data(df)
+    df = clean_ces_data(df, config)
 
     fips_df = load_fips_data(data_path)
 
@@ -286,9 +287,10 @@ def load_full_dataframe(data_path: Path):
 if __name__ == "__main__":
 
     # Get the data path
-    config = load_config()
-    data_path = Path(config["data_path"]) / "dev"
+    model_config = load_model_config()
+    local_config = load_local_config()
+    data_path = Path(local_config["data_path"]) / "dev"
 
-    df = load_full_dataframe(data_path)
+    df = load_full_dataframe(data_path, model_config)
     print(df.head())
     print(df.dtypes)

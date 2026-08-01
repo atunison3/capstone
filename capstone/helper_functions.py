@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any
 
 LOCAL_CONFIG_PATH = Path("config.local.toml")
+MODEL_CONFIG_PATH = Path("config.toml")
 
 
 def expand_user(path: Path) -> Path:
@@ -16,10 +17,26 @@ def expand_user(path: Path) -> Path:
     return data_path
 
 
-def load_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
+def load_local_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
     """Loads the local config"""
 
-    # path = Path(config_path).expanduser().resolve()
+    # Generically load the config
+    config = load_model_config(config_path)
+
+    # The local config requires the data path
+    if "data_path" not in config:
+        raise KeyError(
+            "Required configuration setting 'data_path' is missing."
+            "Please add a 'data_path' with a path to your CES data into "
+            "config.local.toml"
+        )
+
+    return config
+
+
+def load_model_config(config_path: Path = MODEL_CONFIG_PATH) -> dict[Any, Any]:
+    """Loads the model  config"""
+
     path = expand_user(config_path)
 
     if not path.is_file():
@@ -27,12 +44,5 @@ def load_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
 
     with path.open("rb") as file:
         config: dict[Any, Any] = tomllib.load(file)
-
-    if "data_path" not in config:
-        raise KeyError(
-            "Required configuration seeting 'data_path' is missing."
-            "Please add a 'data_path' with a path to your CES data into "
-            "config.local.toml"
-        )
 
     return config

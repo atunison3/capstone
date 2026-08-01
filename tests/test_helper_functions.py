@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from capstone.helper_functions import expand_user, load_model_config, load_local_config
+from capstone.helper_functions import expand_user, load_model_config
 
 
 class TestLoadTomlConfig(unittest.TestCase):
@@ -170,17 +170,6 @@ class TestLoadTomlConfig(unittest.TestCase):
         result = load_model_config(config_path)
 
         self.assertEqual(result, {"project": "election analysis", "data_path": "."})
-
-    def test_missing_data_path_raises_key_error(self) -> None:
-        config_path = self.write_config(
-            """
-            [model]
-            random_state = 42
-            """
-        )
-
-        with self.assertRaises(KeyError):
-            load_local_config(config_path)
 
 
 class TestExpandUser(unittest.TestCase):

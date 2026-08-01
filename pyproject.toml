@@ -21,9 +21,12 @@ line-length = 120
 line-length = 120
 extend-exclude = ["notes", "mke_um_figs.py", "*.ipynb"]  # Excludes the notes (allows us to have unclean code there)
 
-[tool.mypy]
-#no_namespace_packages = true
-#explicit_package_bases = true
+[[tool.mypy.overrides]]
+module = [
+  "statsmodels",
+  "statsmodels.*"
+]
+ignore_missing_imports = true
 
 [tool.setuptools]
 packages = ["capstone"]

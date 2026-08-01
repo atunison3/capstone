@@ -44,8 +44,8 @@ def fig_bars_zoom(s: DataFrame) -> None:
     cis = s["ci"].to_numpy(dtype=float)
 
     # Zoom to the occupied range.
-    ylo = float(np.floor(((pcts - cis).min() - 1.0) / 2) * 2)
-    yhi = float(np.ceil(((pcts + cis).max() + 1.5) / 2) * 2)
+    ylo = float(np.floor(((s["pct"] - s["ci"]).min() - 1.0) / 2) * 2)
+    yhi = float(np.ceil(((s["pct"] + s["ci"]).max() + 1.5) / 2) * 2)
     fig, ax = plt.subplots(figsize=(8.5, 5.2))
     ax.bar(
         [LABEL[c] for c in ORDER],

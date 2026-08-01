@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pathlib import Path
 from typing import Any
 
-from capstone.helper_functions import expand_user, load_local_config, load_model_config
+from capstone.helper_functions import expand_user, get_data_path, load_model_config
 
 
 def load_dataframe(ces_path: Path) -> DataFrame:
@@ -193,9 +193,6 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df["Voted"] = (df["TS_g2024"] == 7).astype(int)
     df["Age"] = 2024 - df["Birth Year"]
 
-    # Reduce columns
-    df = df[config["full_columns"]]
-
     # Map the columns
     for column_name, map_name in config["maps"].items():
         df[column_name] = df[column_name].astype(str).replace(config[map_name])
@@ -215,7 +212,6 @@ def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
 
     df = load_dataframe(data_path)
     df = clean_ces_data(df, config)
-    df = clean_ces_data(df, config)
 
     fips_df = load_fips_data(data_path)
 
@@ -232,8 +228,7 @@ if __name__ == "__main__":
 
     # Get the data path
     model_config = load_model_config()
-    local_config = load_local_config()
-    data_path = Path(local_config["data_path"]) / "dev"
+    data_path = get_data_path() / "dev"
 
     df = load_full_dataframe(data_path, model_config)
     print(df.head())

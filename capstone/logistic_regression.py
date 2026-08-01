@@ -2,10 +2,9 @@ import pandas as pd
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 import warnings
-from pathlib import Path
 
 from capstone.data_cleaning import load_full_dataframe
-from capstone.helper_functions import load_model_config
+from capstone.helper_functions import load_model_config, get_data_path
 
 warnings.filterwarnings("ignore")
 
@@ -13,11 +12,10 @@ warnings.filterwarnings("ignore")
 if __name__ == "__main__":
 
     # Load the config
-    config_path = Path("config.local.toml")
     config = load_model_config()
 
     # Local config
-    data_path = Path(config["data_path"]) / "prod"
+    data_path = get_data_path() / "prod"
 
     # Get the full dataframe
     df = load_full_dataframe(data_path, config)
@@ -30,11 +28,9 @@ if __name__ == "__main__":
     X_train = pd.get_dummies(
         X_train,
         columns=config["multiclass_features"],
-        drop_first=True,  # Not including an intercept
+        drop_first=True,  # True because I am including an intercept
         dtype=int,
     )
-    # X_train[config["binary_features"]] = (X_train[config["binary_features"]] - 1).astype(int)
-    print(X_train.dtypes)
 
     # Add a constant
     X_train = sm.add_constant(X_train, has_constant="add")

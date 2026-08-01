@@ -182,81 +182,69 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     """Clean the CES Data"""
 
     # Rename columns for human readability
-    demographic_columns = {
-        "educ": "Education",
-        "race": "Race",
-        "hispanic": "Hispanic",
-        "gender4": "Gender",
-        "birthyr": "Birth Year",
-    }
-    df = df.rename(columns=demographic_columns)
+    # demographic_columns = {
+    #     "educ": "Education",
+    #     "race": "Race",
+    #     "hispanic": "Hispanic",
+    #     "gender4": "Gender",
+    #     "birthyr": "Birth Year",
+    # }
+    # df = df.rename(columns=demographic_columns)
+    df = df.rename(columns=config["demographic_columns"])
+    df = df.rename(columns=config["voter_outreach_columns"])
+    df = df.rename(columns=config["state_column"])
 
-    voter_outreach_columns = {
-        "CC24_431a": "Outreach Y/N",
-        "CC24_431b_1": "In person",
-        "CC24_431b_2": "Phone call",
-        "CC24_431b_3": "Email or text message",
-        "CC24_431b_4": "Letter or postcard",
-    }
-    df = df.rename(columns=voter_outreach_columns)
+    # voter_outreach_columns = {
+    #     "CC24_431a": "Outreach Y/N",
+    #     "CC24_431b_1": "In person",
+    #     "CC24_431b_2": "Phone call",
+    #     "CC24_431b_3": "Email or text message",
+    #     "CC24_431b_4": "Letter or postcard",
+    # }
+    # df = df.rename(columns=voter_outreach_columns)
 
-    # State columns
-    state_column = {"inputstate": "State FIPS Code"}
-    df = df.rename(columns=state_column)
+    # # State columns
+    # state_column = {"inputstate": "State FIPS Code"}
+    # df = df.rename(columns=state_column)
 
-    # Perform mappings
-    educ_mapping = {
-        1: "No HS degree",
-        2: "High school graduate",
-        3: "Some college, no degree (yet)",
-        4: "2 year college degree",
-        5: "4 year college degree",
-        6: "Postgraduate degree",
-        8: "Skipped",
-        9: "Not asked",
-    }
-    df["Education"] = df["Education"].replace(educ_mapping)
+    # # Perform mappings
+    # educ_mapping = {
+    #     1: "No HS degree",
+    #     2: "High school graduate",
+    #     3: "Some college, no degree (yet)",
+    #     4: "2 year college degree",
+    #     5: "4 year college degree",
+    #     6: "Postgraduate degree",
+    #     8: "Skipped",
+    #     9: "Not asked",
+    # }
+    # df["Education"] = df["Education"].replace(educ_mapping)
 
-    race_mapping = {
-        1: "White",
-        2: "Black",
-        3: "Hispanic",
-        4: "Asian",
-        5: "Native American",
-        6: "Two or more races",
-        7: "Other",
-        8: "Middle Eastern",
-    }
-    df["Race"] = df["Race"].replace(race_mapping)
+    # race_mapping = {
+    #     1: "White",
+    #     2: "Black",
+    #     3: "Hispanic",
+    #     4: "Asian",
+    #     5: "Native American",
+    #     6: "Two or more races",
+    #     7: "Other",
+    #     8: "Middle Eastern",
+    # }
+    # df["Race"] = df["Race"].replace(race_mapping)
 
-    gender_mapping = {1: "Man", 2: "Woman", 3: "Non-binary", 4: "Other"}
-    df["Gender"] = df["Gender"].replace(gender_mapping)
-
-    # Drop na
-    df = df.dropna(subset="TS_voterstatus")
-
+    # gender_mapping = {1: "Man", 2: "Woman", 3: "Non-binary", 4: "Other"}
+    # df["Gender"] = df["Gender"].replace(gender_mapping)
+    df = df.dropna(subset=["TS_voterstatus"])
     # Determine who voted
     df["Voted"] = (df["TS_g2024"] == 7).astype(int)
-
-    # Add the age column
     df["Age"] = 2024 - df["Birth Year"]
 
     # Reduce columns
-    df = df[
-        [
-            "Education",
-            "Race",
-            "Gender",
-            "Outreach Y/N",
-            "In person",
-            "Phone call",
-            "Email or text message",
-            "Letter or postcard",
-            "State FIPS Code",
-            "Voted",
-            "Age",
-        ]
-    ]
+    df = df[config["full_columns"]]
+
+    # Map the columns
+    for column_name, map_name in config["maps"].items():
+        df[column_name] = df[column_name].astype(str).replace(config[map_name])
 
     return df
 

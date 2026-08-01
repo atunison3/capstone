@@ -17,6 +17,18 @@ def expand_user(path: Path) -> Path:
     return data_path
 
 
+def get_data_path(config_path: Path = LOCAL_CONFIG_PATH) -> Path:
+    """Loads the local config and extracts the data path"""
+
+    # Load the user's local config
+    config = load_model_config(config_path)
+
+    # Extract the data_path into a Path object
+    data_path = Path(config["data_path"])
+
+    return data_path
+
+
 def load_local_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
     """Loads the local config"""
 

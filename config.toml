@@ -3,7 +3,6 @@ full_columns = [
     "Race",
     "Gender",
     "Age",
-    "Outreach Y/N",
     "In person",
     "Phone call",
     "Email or text message",
@@ -16,7 +15,6 @@ categorical_features = [
     "Education",
     "Race",
     "Gender",
-    "Outreach Y/N",
     "In person",
     "Phone call",
     "Email or text message",
@@ -32,7 +30,6 @@ multiclass_features = [
 ]
 
 binary_features = [
-    "Outreach Y/N",
     "In person",
     "Phone call",
     "Email or text message",
@@ -77,7 +74,6 @@ inputstate = "State FIPS Code"
 "Education" = "educ_mapping"
 "Race" = "race_mapping"
 "Gender" = "gender_mapping"
-"Outreach Y/N" = "outreach_mapping"
 "In person" = "in_person_mapping"
 "Phone call" = "phone_mapping"
 "Email or text message" = "email_mapping"

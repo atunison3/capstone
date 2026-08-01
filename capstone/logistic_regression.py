@@ -5,18 +5,19 @@ import warnings
 from pathlib import Path
 
 from capstone.data_cleaning import load_full_dataframe
-from capstone.helper_functions import load_config, load_local_config
+from capstone.helper_functions import load_config
 
 warnings.filterwarnings("ignore")
 
 
 if __name__ == "__main__":
-    # Get the data path
+
+    # Load the config
+    config_path = Path("config.local.toml")
     config = load_config()
 
     # Local config
-    local_config = Path("config.local.toml")
-    data_path = Path(load_local_config(local_config)["data_path"]) / "prod"
+    data_path = Path(config["data_path"]) / "prod"
 
     # Get the full dataframe
     df = load_full_dataframe(data_path, config)

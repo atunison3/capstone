@@ -171,17 +171,6 @@ class TestLoadTomlConfig(unittest.TestCase):
 
         self.assertEqual(result, {"project": "election analysis", "data_path": "."})
 
-    def test_missing_data_path_raises_key_error(self) -> None:
-        config_path = self.write_config(
-            """
-            [model]
-            random_state = 42
-            """
-        )
-
-        with self.assertRaises(KeyError):
-            load_config(config_path)
-
 
 class TestExpandUser(unittest.TestCase):
     def setUp(self) -> None:

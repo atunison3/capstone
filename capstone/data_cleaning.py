@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pathlib import Path
 from typing import Any
 
-from capstone.helper_functions import expand_user, load_config, load_local_config
+from capstone.helper_functions import expand_user, load_config
 
 
 def load_dataframe(ces_path: Path) -> DataFrame:
@@ -235,8 +235,9 @@ if __name__ == "__main__":
     print(config)
 
     # Local config
-    local_config = Path("config.local.toml")
-    data_path = Path(load_local_config(local_config)["data_path"]) / "dev"
+    config_path = Path("config.local.toml")
+    config = load_config(config_path)
+    data_path = Path(config["data_path"]) / "dev"
 
     df = load_full_dataframe(data_path, config)
     print(df.head())

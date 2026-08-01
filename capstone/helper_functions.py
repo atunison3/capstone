@@ -28,24 +28,3 @@ def load_config(config_path: Path = LOCAL_CONFIG_PATH) -> dict[Any, Any]:
         config: dict[Any, Any] = tomllib.load(file)
 
     return config
-
-
-def load_local_config(config_path: Path) -> dict[Any, Any]:
-    """Loads the local config"""
-
-    path = expand_user(config_path)
-
-    if not path.is_file():
-        raise IsADirectoryError(f"Configuration path is not a file: {path}")
-
-    with path.open("rb") as file:
-        config: dict[Any, Any] = tomllib.load(file)
-
-    if "data_path" not in config:
-        raise KeyError(
-            "Required configuration setting 'data_path' is missing."
-            "Please add a 'data_path' with a path to your CES data into "
-            "config.local.toml"
-        )
-
-    return config

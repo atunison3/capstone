@@ -29,12 +29,20 @@ FIVE_HUE = [UM_BLUE, ARB_BLUE, RACK_GRN, UMMA_TAN, UM_MAIZE]
 
 mpl.rcParams.update(
     {
-        "figure.dpi": 140, "savefig.dpi": 140, "font.size": 11,
-        "axes.spines.top": False, "axes.spines.right": False,
-        "axes.titlesize": 14, "axes.titleweight": "bold", "axes.titlecolor": UM_BLUE,
-        "axes.labelcolor": UM_BLUE, "text.color": UM_BLUE,
-        "xtick.color": UM_BLUE, "ytick.color": UM_BLUE,
-        "figure.facecolor": "white", "axes.facecolor": "white",
+        "figure.dpi": 140,
+        "savefig.dpi": 140,
+        "font.size": 11,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "axes.titlesize": 14,
+        "axes.titleweight": "bold",
+        "axes.titlecolor": UM_BLUE,
+        "axes.labelcolor": UM_BLUE,
+        "text.color": UM_BLUE,
+        "xtick.color": UM_BLUE,
+        "ytick.color": UM_BLUE,
+        "figure.facecolor": "white",
+        "axes.facecolor": "white",
     }
 )
 
@@ -55,6 +63,8 @@ LABEL = {
     "Strict Non-Photo ID": "Strict\nnon-photo",
     "Strict Photo ID": "Strict\nphoto",
 }
+
+
 def build_frame() -> pd.DataFrame:
     """Join CES respondents to their state's NCSL strictness classification."""
     data_path = Path(load_config()["data_path"]) / "dev"
@@ -70,14 +80,13 @@ def build_frame() -> pd.DataFrame:
 
     # count not matched as didn't vote
     combined["turnout"] = combined["TS_g2024"].isin([1, 2, 3, 4, 5, 6]).astype(int)
-    combined["strictness"] = pd.Categorical(
-        combined["NCSL Classification"], categories=ORDER, ordered=True
-    )
+    combined["strictness"] = pd.Categorical(combined["NCSL Classification"], categories=ORDER, ordered=True)
     return combined
 
 
 def compute_turnout_by_strictness(df: pd.DataFrame) -> pd.DataFrame:
     """Turnout rate and 95% CI per strictness level."""
+
     g = df.groupby("strictness", observed=True)["turnout"]
     out = pd.DataFrame({"n": g.count(), "pct": g.mean() * 100}).reindex(ORDER)
     p = out["pct"] / 100
@@ -89,21 +98,31 @@ def fig_bars_zoom(s: pd.DataFrame) -> None:
     """Bar chart. The y-axis does not start at 0, so bar length is not proportional to
     turnout.
     """
-    pcts = s["pct"].to_numpy(dtype=float)
-    cis = s["ci"].to_numpy(dtype=float)
-
     # Zoom to the occupied range.
-    ylo = float(np.floor(((pcts - cis).min() - 1.0) / 2) * 2)
-    yhi = float(np.ceil(((pcts + cis).max() + 1.5) / 2) * 2)
+    ylo = float(np.floor(((s["pct"] - s["ci"]).min() - 1.0) / 2) * 2)
+    yhi = float(np.ceil(((s["pct"] + s["ci"]).max() + 1.5) / 2) * 2)
     fig, ax = plt.subplots(figsize=(8.5, 5.2))
     ax.bar(
-        [LABEL[c] for c in ORDER], pcts, yerr=cis,
-        color=FIVE_HUE, capsize=6, edgecolor="white", linewidth=0.8, width=0.62,
+        [LABEL[c] for c in ORDER],
+        s["pct"],
+        yerr=s["ci"],
+        color=FIVE_HUE,
+        capsize=6,
+        edgecolor="white",
+        linewidth=0.8,
+        width=0.62,
         error_kw=dict(ecolor=TAPPAN_RD, elinewidth=2.2, capthick=2.2, zorder=5),
     )
-    for i, (pct, ci) in enumerate(zip(pcts, cis)):
-        ax.text(i, pct + ci + 0.35, f"{pct:.1f}%",
-                ha="center", fontsize=10.5, color=UM_BLUE, fontweight="bold")
+    for i, c in enumerate(ORDER):
+        ax.text(
+            i,
+            s.loc[c, "pct"] + s.loc[c, "ci"] + 0.35,  # type: ignore
+            f"{s.loc[c, 'pct']:.1f}%",
+            ha="center",
+            fontsize=10.5,
+            color=UM_BLUE,
+            fontweight="bold",
+        )
     ax.set_ylim(ylo, yhi)
     ax.set_yticks(np.arange(ylo, yhi + 1, 2))
     ax.yaxis.grid(True, color="#E5E5E5", linewidth=0.8, zorder=0)
@@ -111,8 +130,17 @@ def fig_bars_zoom(s: pd.DataFrame) -> None:
     ax.set_ylabel("Validated turnout (%)")
     ax.set_title("Turnout by voter-ID strictness, with 95% confidence intervals")
 
-    ax.plot([0], [0], transform=ax.transAxes, clip_on=False, color=UM_BLUE,
-            marker=[(-1, -0.6), (1, 0.6)], markersize=9, markeredgewidth=1.4, linestyle="none")
+    ax.plot(
+        [0],
+        [0],
+        transform=ax.transAxes,
+        clip_on=False,
+        color=UM_BLUE,
+        marker=[(-1, -0.6), (1, 0.6)],
+        markersize=9,
+        markeredgewidth=1.4,
+        linestyle="none",
+    )
 
     fig.tight_layout()
     fig.savefig(OUT / "report_fig1_turnout_by_strictness.png")

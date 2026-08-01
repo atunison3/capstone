@@ -1,3 +1,5 @@
+
+
 full_columns = [
     "Education",
     "Race",
@@ -8,8 +10,51 @@ full_columns = [
     "Phone call",
     "Email or text message",
     "Letter or postcard",
-    "State FIPS Code"
+    "State FIPS Code",
+    "Voted"
 ]
+
+categorical_features = [
+    "Education",
+    "Race",
+    "Gender",
+    "Outreach Y/N",
+    "In person",
+    "Phone call",
+    "Email or text message",
+    "Letter or postcard",
+    "NCSL Classification"
+]
+
+multiclass_features = [
+    "Education",
+    "Race",
+    "Gender",
+    "NCSL Classification"
+]
+
+binary_features = [
+    "Outreach Y/N",
+    "In person",
+    "Phone call",
+    "Email or text message",
+    "Letter or postcard",
+]
+
+
+features = [
+    "Education",
+    "Race",
+    "Gender",
+    "Age",
+    "Outreach Y/N",
+    "In person",
+    "Phone call",
+    "Email or text message",
+    "Letter or postcard",
+    "NCSL Classification"
+]
+target = "Voted"
 
 
 # Columns in CES Data to be renamed
@@ -29,6 +74,16 @@ CC24_431b_4 = "Letter or postcard"
 
 [state_column]
 inputstate = "State FIPS Code"
+
+[maps]
+"Education" = "educ_mapping"
+"Race" = "race_mapping"
+"Gender" = "gender_mapping"
+"Outreach Y/N" = "outreach_mapping"
+"In person" = "in_person_mapping"
+"Phone call" = "phone_mapping"
+"Email or text message" = "email_mapping"
+"Letter or postcard" = "letter_mapping"
 
 [educ_mapping]
 1 = "No HS degree"
@@ -55,4 +110,25 @@ inputstate = "State FIPS Code"
 2 = "Woman"
 3 = "Non-binary"
 4 = "Other"
+
+[outreach_mapping]
+"1.0" = "No"
+"2.0" = "Yes"
+
+[in_person_mapping]
+"1.0" = "No"
+"2.0" = "Yes"
+
+[phone_mapping]
+"1.0" = "No"
+"2.0" = "Yes"
+
+[email_mapping]
+"1.0" = "No"
+"2.0" = "Yes"
+
+[letter_mapping]
+"1.0" = "No"
+"2.0" = "Yes"
+
 

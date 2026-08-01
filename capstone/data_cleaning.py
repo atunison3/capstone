@@ -186,13 +186,8 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df = df.rename(columns=config["voter_outreach_columns"])
     df = df.rename(columns=config["state_column"])
 
-    # Perform mapping of data
-    df["Education"] = df["Education"].replace(config["educ_mapping"])
-    df["Race"] = df["Race"].replace(config["race_mapping"])
-    df["Gender"] = df["Gender"].replace(config["gender_mapping"])
-
     # Drop na
-    df = df.dropna(subset="TS_voterstatus")
+    df = df.dropna(subset=["TS_voterstatus"])
 
     # Determine who voted
     df["Voted"] = (df["TS_g2024"] == 7).astype(int)
@@ -226,7 +221,7 @@ def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
 
     final_df = merge_ces_fips(df, merged_fips_ncsl_df)
 
-    return final_df
+    return final_df.dropna(subset=config["features"])
 
 
 if __name__ == "__main__":

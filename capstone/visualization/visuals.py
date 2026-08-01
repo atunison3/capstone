@@ -38,13 +38,15 @@ PLT_PARAMS: dict[str, object] = {
     "axes.facecolor": "white",
 }
 
+Y_LABEL = "Validated turnout (%)"
+
 
 def compute_turnout_by_category(df: DataFrame, category: str, order: list[str]) -> DataFrame:
     """Turnout rate and 95% CI per contact level"""
 
     g = df.groupby(category, observed=True)["Voted"]
 
-    out = DataFrame({"n": g.count(), "pct": g.mean() * 100}).reindex(order)  # Curious as to why we need this
+    out = DataFrame({"n": g.count(), "pct": g.mean() * 100}).reindex(order)
 
     p = out["pct"] / 100
     out["ci"] = 1.96 * sqrt(p * (1 - p) / out["n"]) * 100

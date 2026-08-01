@@ -5,7 +5,7 @@ from pandas import DataFrame
 
 from capstone.helper_functions import load_model_config, get_data_path
 from capstone.data_cleaning import load_full_dataframe
-from capstone.visualization.visuals import ColorScheme, OUTPUT_DIR, PLT_PARAMS, compute_turnout_by_category
+from capstone.visualization.visuals import Y_LABEL, OUTPUT_DIR, PLT_PARAMS, ColorScheme, compute_turnout_by_category
 
 ORDER = ["Not Contacted", "Contacted"]
 LABEL = {"Not Contacted": "Not Contacted", "Contacted": "Contacted"}
@@ -44,7 +44,7 @@ def fig_bars_zoom(s: DataFrame) -> None:
     ax.set_yticks(np.arange(ylo, yhi + 1, 2))
     ax.yaxis.grid(True, color=ColorScheme.LIGHT_GRAY, linewidth=0.8, zorder=0)
     ax.set_axisbelow(True)
-    ax.set_ylabel("Validated turnout (%)")
+    ax.set_ylabel(Y_LABEL)
     ax.set_title("Turnout by contactedness, with 95% confidence intervals")
 
     ax.plot(

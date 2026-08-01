@@ -13,7 +13,7 @@ from pathlib import Path
 
 from capstone.helper_functions import load_local_config, load_model_config
 from capstone.data_cleaning import load_full_dataframe
-from capstone.visualization.visuals import ColorScheme, OUTPUT_DIR, PLT_PARAMS, compute_turnout_by_category
+from capstone.visualization.visuals import Y_LABEL, OUTPUT_DIR, PLT_PARAMS, ColorScheme, compute_turnout_by_category
 
 # Bar colors
 FIVE_HUE = [ColorScheme.UM_BLUE, ColorScheme.ARB_BLUE, ColorScheme.RACK_GRN, ColorScheme.UMMA_TAN, ColorScheme.UM_MAIZE]
@@ -66,7 +66,7 @@ def fig_bars_zoom(s: DataFrame) -> None:
     ax.set_yticks(np.arange(ylo, yhi + 1, 2))
     ax.yaxis.grid(True, color=ColorScheme.LIGHT_GRAY, linewidth=0.8, zorder=0)
     ax.set_axisbelow(True)
-    ax.set_ylabel("Validated turnout (%)")
+    ax.set_ylabel(Y_LABEL)
     ax.set_title("Turnout by voter-ID strictness, with 95% confidence intervals")
 
     ax.plot(

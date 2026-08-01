@@ -2,6 +2,7 @@
 
 ![Voter Turnout](assets/figures/report_fig1_turnout_by_strictness.png)
 ![Voter Turnout 2](assets/figures/report_fig2_turnout_by_contacted.png)
+![Voter Turnout 3](assets/figures/report_fig3_turnout_by_contacted.png)
 
 ## Installing Repository
 

@@ -198,6 +198,10 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     # Reduce columns
     df = df[config["full_columns"]]
 
+    # Map the columns
+    for column_name, map_name in config["maps"].items():
+        df[column_name] = df[column_name].astype(str).replace(config[map_name])
+
     return df
 
 

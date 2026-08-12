@@ -226,41 +226,39 @@ class TestInstallNcslClassification(unittest.TestCase):
             self.assertEqual(len(df), 51)  # 50 states + District of Columbia
             self.assertFalse(df.isnull().any().any())
 
+    def test_known_classifications(self) -> None:
+        """Spot-check a few states against the hard-coded values."""
+        with tempfile.TemporaryDirectory() as tmp:
+            result_path = install_ncsl_classification(output_dir=Path(tmp))
+            df = pd.read_csv(result_path).set_index("State Name")
 
-def test_known_classifications(self) -> None:
-    """Spot-check a few states against the hard-coded values."""
-    with tempfile.TemporaryDirectory() as tmp:
-        result_path = install_ncsl_classification(output_dir=Path(tmp))
-        df = pd.read_csv(result_path).set_index("State Name")
+            expected = {
+                "California": "No Document Required to Vote",
+                "Washington": "Non-Strict, Non-Photo ID",
+                "Idaho": "Non-Strict, Photo ID",
+                "Wyoming": "Strict, Non-Photo ID",
+                "Kansas": "Strict, Photo ID",
+                "Alabama": "Non-Strict, Photo ID",
+                "Georgia": "Strict, Photo ID",
+                "New York": "No Document Required to Vote",
+            }
 
-        expected = {
-            "California": "No Document Required to Vote",
-            "Washington": "Non-Strict, Non-Photo ID",
-            "Idaho": "Non-Strict, Photo ID",
-            "Wyoming": "Strict, Non-Photo ID",
-            "Kansas": "Strict, Photo ID",
-            "Alabama": "Non-Strict, Photo ID",
-            "Georgia": "Strict, Photo ID",
-            "New York": "No Document Required to Vote",
-        }
+            for state, classification in expected.items():
+                self.assertEqual(
+                    df.loc[state, "NCSL Classification"],
+                    classification,
+                    msg=f"Mismatch for {state}",
+                )
 
-        for state, classification in expected.items():
-            self.assertEqual(
-                df.loc[state, "NCSL Classification"],
-                classification,
-                msg=f"Mismatch for {state}",
-            )
+    def test_default_filename_and_directory_creation(self) -> None:
+        """Default filename is used and missing directories are created."""
+        with tempfile.TemporaryDirectory() as tmp:
+            nested = Path(tmp) / "subdir" / "data"
+            result_path = install_ncsl_classification(output_dir=nested)
 
-
-def test_default_filename_and_directory_creation(self) -> None:
-    """Default filename is used and missing directories are created."""
-    with tempfile.TemporaryDirectory() as tmp:
-        nested = Path(tmp) / "subdir" / "data"
-        result_path = install_ncsl_classification(output_dir=nested)
-
-        self.assertTrue(nested.is_dir())
-        self.assertEqual(result_path.name, "ncsl_voter_id_classification.csv")
-        self.assertTrue(result_path.is_file())
+            self.assertTrue(nested.is_dir())
+            self.assertEqual(result_path.name, "ncsl_voter_id_classification.csv")
+            self.assertTrue(result_path.is_file())
 
 
 if __name__ == "__main__":

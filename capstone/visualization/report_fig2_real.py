@@ -45,7 +45,7 @@ def fig_bars_zoom(s: DataFrame) -> None:
     ax.yaxis.grid(True, color=ColorScheme.LIGHT_GRAY, linewidth=0.8, zorder=0)
     ax.set_axisbelow(True)
     ax.set_ylabel(Y_LABEL)
-    ax.set_title("Turnout by contactedness, with 95% confidence intervals")
+    ax.set_title("Effect of Contact on Voter Turnout (95% CI)")
 
     ax.plot(
         [0],

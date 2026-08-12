@@ -1,10 +1,13 @@
+import logging
 import tempfile
 import tomllib
 import unittest
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from unittest.mock import patch
 
-from capstone.helper_functions import expand_user, load_model_config
+from capstone import helper_functions as fun
+from capstone.helper_functions import expand_user, load_model_config, setup_logger
 
 
 class TestLoadTomlConfig(unittest.TestCase):
@@ -215,6 +218,62 @@ class TestExpandUser(unittest.TestCase):
 
         self.assertEqual(result, expected_path)
         mock_expanduser.assert_called_once()
+
+
+class TestSetupLogger(unittest.TestCase):
+    def tearDown(self) -> None:
+        logger = logging.getLogger("test_capstone")
+
+        for handler in logger.handlers[:]:
+            handler.close()
+            logger.removeHandler(handler)
+
+    def test_setup_logger(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            log_dir = Path(temp_dir) / ".log"
+
+            with patch.object(fun, "LOG_DIR", log_dir):
+                logger = setup_logger("test_capstone")
+
+                self.assertTrue(log_dir.exists())
+                self.assertTrue(log_dir.is_dir())
+
+                self.assertEqual(logger.name, "test_capstone")
+                self.assertEqual(logger.level, logging.DEBUG)
+                self.assertEqual(len(logger.handlers), 2)
+
+                console_handler = next(handler for handler in logger.handlers if type(handler) is logging.StreamHandler)
+                file_handler = next(handler for handler in logger.handlers if isinstance(handler, RotatingFileHandler))
+
+                self.assertEqual(console_handler.level, logging.INFO)
+                self.assertEqual(file_handler.level, logging.DEBUG)
+
+                self.assertEqual(file_handler.maxBytes, 5 * 1024 * 1024)
+                self.assertEqual(file_handler.backupCount, 5)
+
+                logger.info("Test log message")
+
+                for handler in logger.handlers:
+                    handler.flush()
+
+                log_path = log_dir / "capstone.log"
+
+                self.assertTrue(log_path.exists())
+                self.assertIn("Test log message", log_path.read_text(encoding="utf-8"))
+
+    def test_setup_logger_does_not_duplicate_handlers(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            log_dir = Path(temp_dir) / ".log"
+
+            with patch.object(fun, "LOG_DIR", log_dir):
+                logger = setup_logger("test_capstone")
+                initial_handlers = logger.handlers.copy()
+
+                same_logger = setup_logger("test_capstone")
+
+                self.assertIs(logger, same_logger)
+                self.assertEqual(logger.handlers, initial_handlers)
+                self.assertEqual(len(logger.handlers), 2)
 
 
 if __name__ == "__main__":

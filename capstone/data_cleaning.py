@@ -148,9 +148,9 @@ def load_voter_id_effect(data_path: Path) -> DataFrame:
     df["NCSL Classification"] = df["NCSL Classification"].astype(int).astype(str)
 
     classification_map = {
-        "5": "Strict Photo ID",
-        "4": "Strict Non-Photo ID",
-        "3": "Non-Strict Photo ID",
+        "5": "Strict, Photo ID",
+        "4": "Strict, Non-Photo ID",
+        "3": "Non-Strict, Photo ID",
         "2": "Non-Strict, Non-Photo ID",
         "1": "No Document Required to Vote",
     }
@@ -190,6 +190,7 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df = df.dropna(subset=["TS_voterstatus"])
 
     # Determine who voted
+    # 7 is did not vote
     df["Voted"] = (df["TS_g2024"] != 7).astype(int)
     df["Age"] = 2024 - df["Birth Year"]
 

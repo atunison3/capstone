@@ -28,9 +28,9 @@ ORDER = [
 LABEL = {
     "No Document Required to Vote": "No ID\nrequired",
     "Non-Strict, Non-Photo ID": "Non-strict\nnon-photo",
-    "Non-Strict Photo ID": "Non-strict\nphoto",
-    "Strict Non-Photo ID": "Strict\nnon-photo",
-    "Strict Photo ID": "Strict\nphoto",
+    "Non-Strict, Photo ID": "Non-strict\nphoto",
+    "Strict, Non-Photo ID": "Strict\nnon-photo",
+    "Strict, Photo ID": "Strict\nphoto",
 }
 
 mpl.rcParams.update(PLT_PARAMS)  # type: ignore

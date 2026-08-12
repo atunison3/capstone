@@ -11,6 +11,7 @@ from capstone.helper_functions import expand_user, get_data_path, load_model_con
 def load_dataframe(ces_path: Path) -> DataFrame:
     """Loads the CES data"""
 
+    # Simply read the dataframe into a csv
     csv_path = ces_path / "data.csv"
     df = pd.read_csv(csv_path)
 
@@ -18,7 +19,8 @@ def load_dataframe(ces_path: Path) -> DataFrame:
 
 
 def load_fips_data(data_path: Path) -> DataFrame:
-    """Loads FIPS data"""
+    """Loads FIPS data. If FIPS data is not available,
+    then requests the FIPS data and saves in data_path"""
 
     # Expand the data path
     data_path = expand_user(data_path)
@@ -32,6 +34,7 @@ def load_fips_data(data_path: Path) -> DataFrame:
     fips_path = data_path / "fips.csv"
 
     # Determine if user already has the fips data saved
+    # TODO: change the inputstate column (I don't think it downloads that way)
     if fips_path.exists():
         return pd.read_csv(
             fips_path,
@@ -89,6 +92,7 @@ def load_voter_id_effect(data_path: Path) -> DataFrame:
     df = df.set_index("State Name")
 
     # Fill in states from image
+    # TODO: verify this information
     df.loc["Alabama", "NCSL Classification"] = 3
     df.loc["Alaska", "NCSL Classification"] = 2
     df.loc["Arizona", "NCSL Classification"] = 4
@@ -190,7 +194,7 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df = df.dropna(subset=["TS_voterstatus"])
 
     # Determine who voted
-    # 7 is did not vote
+    # 7 is did not vote (1 = Yes [voted] and 0 = No [did not vote])
     df["Voted"] = (df["TS_g2024"] != 7).astype(int)
     df["Age"] = 2024 - df["Birth Year"]
 
@@ -211,15 +215,20 @@ def merge_ces_fips(ces_df: DataFrame, merged_fips_nscl: DataFrame) -> DataFrame:
 def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
     """Loads the full dataframe and cleans"""
 
+    # Loads the CES data and cleans it
     df = load_dataframe(data_path)
     df = clean_ces_data(df, config)
 
+    # Loads the fips data
     fips_df = load_fips_data(data_path)
 
+    # Generates the NCSL dataframe
     ncsl_df = load_voter_id_effect(data_path)
 
+    # Merges the NCSL data onto the FIPS data
     merged_fips_ncsl_df = merge_fips_ncsl(fips_df, ncsl_df)
 
+    # Merges the CES and FIPS data
     final_df = merge_ces_fips(df, merged_fips_ncsl_df)
 
     return final_df.dropna(subset=config["features"])

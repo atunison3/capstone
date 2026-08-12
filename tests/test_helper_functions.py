@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from capstone.helper_functions import expand_user, load_config
+from capstone.helper_functions import expand_user, load_model_config
 
 
 class TestLoadTomlConfig(unittest.TestCase):
@@ -36,7 +36,7 @@ class TestLoadTomlConfig(unittest.TestCase):
             """
         )
 
-        result = load_config(config_path)
+        result = load_model_config(config_path)
 
         expected = {
             "data_path": "data/data-prod",
@@ -56,7 +56,7 @@ class TestLoadTomlConfig(unittest.TestCase):
             """
         )
 
-        result = load_config(config_path)
+        result = load_model_config(config_path)
 
         self.assertEqual(result, {"version": 1, "data_path": "P-value Patriots are Awesome!"})
 
@@ -76,7 +76,7 @@ class TestLoadTomlConfig(unittest.TestCase):
             """
         )
 
-        result = load_config(config_path)
+        result = load_model_config(config_path)
 
         self.assertEqual(result["name"], "example")
         self.assertTrue(result["enabled"])
@@ -94,14 +94,14 @@ class TestLoadTomlConfig(unittest.TestCase):
             FileNotFoundError,
             "Configuration file not found",
         ):
-            load_config(missing_path)
+            load_model_config(missing_path)
 
     def test_directory_path_raises_is_a_directory_error(self) -> None:
         with self.assertRaisesRegex(
             IsADirectoryError,
             "Configuration path is not a file",
         ):
-            load_config(self.temp_path)
+            load_model_config(self.temp_path)
 
     def test_invalid_toml_raises_decode_error(self) -> None:
         config_path = self.write_config(
@@ -112,7 +112,7 @@ class TestLoadTomlConfig(unittest.TestCase):
         )
 
         with self.assertRaises(tomllib.TOMLDecodeError):
-            load_config(config_path)
+            load_model_config(config_path)
 
     def test_duplicate_keys_raise_decode_error(self) -> None:
         config_path = self.write_config(
@@ -124,7 +124,7 @@ class TestLoadTomlConfig(unittest.TestCase):
         )
 
         with self.assertRaises(tomllib.TOMLDecodeError):
-            load_config(config_path)
+            load_model_config(config_path)
 
     def test_expands_user_home_directory(self) -> None:
         config_path = self.write_config(
@@ -139,7 +139,7 @@ class TestLoadTomlConfig(unittest.TestCase):
             "expanduser",
             return_value=config_path,
         ) as mock_expanduser:
-            result = load_config("~/config.toml")  # type: ignore
+            result = load_model_config("~/config.toml")  # type: ignore
 
         self.assertEqual(result, {"environment": "test", "data_path": "."})
         mock_expanduser.assert_called_once()
@@ -153,7 +153,7 @@ class TestLoadTomlConfig(unittest.TestCase):
             """
         )
 
-        result = load_config(config_path)
+        result = load_model_config(config_path)
 
         self.assertEqual(result["greeting"], "สวัสดี")
         self.assertEqual(result["city"], "Genova")
@@ -167,7 +167,7 @@ class TestLoadTomlConfig(unittest.TestCase):
             filename="project config.toml",
         )
 
-        result = load_config(config_path)
+        result = load_model_config(config_path)
 
         self.assertEqual(result, {"project": "election analysis", "data_path": "."})
 

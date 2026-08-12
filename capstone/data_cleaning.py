@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pathlib import Path
 from typing import Any
 
-from capstone.helper_functions import expand_user, load_config
+from capstone.helper_functions import expand_user, get_data_path, load_model_config
 
 
 def load_dataframe(ces_path: Path) -> DataFrame:
@@ -191,16 +191,12 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
 
     # Determine who voted
     df["Voted"] = (df["TS_g2024"] == 7).astype(int)
-
-    # Add the age column
     df["Age"] = 2024 - df["Birth Year"]
-
-    # Reduce columns
-    df = df[config["full_columns"]]
 
     # Map the columns
     for column_name, map_name in config["maps"].items():
         df[column_name] = df[column_name].astype(str).replace(config[map_name])
+    df = df[config["full_columns"]]
 
     return df
 
@@ -231,14 +227,9 @@ def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
 if __name__ == "__main__":
 
     # Get the data path
-    config = load_config()
-    print(config)
+    model_config = load_model_config()
+    data_path = get_data_path() / "dev"
 
-    # Local config
-    config_path = Path("config.local.toml")
-    config = load_config(config_path)
-    data_path = Path(config["data_path"]) / "dev"
-
-    df = load_full_dataframe(data_path, config)
+    df = load_full_dataframe(data_path, model_config)
     print(df.head())
     print(df.dtypes)

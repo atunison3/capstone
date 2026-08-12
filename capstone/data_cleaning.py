@@ -190,7 +190,7 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df = df.dropna(subset=["TS_voterstatus"])
 
     # Determine who voted
-    df["Voted"] = (df["TS_g2024"] == 7).astype(int)
+    df["Voted"] = (df["TS_g2024"] != 7).astype(int)
     df["Age"] = 2024 - df["Birth Year"]
 
     # Map the columns

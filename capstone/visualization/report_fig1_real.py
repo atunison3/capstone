@@ -21,9 +21,9 @@ FIVE_HUE = [ColorScheme.UM_BLUE, ColorScheme.ARB_BLUE, ColorScheme.RACK_GRN, Col
 ORDER = [
     "No Document Required to Vote",
     "Non-Strict, Non-Photo ID",
-    "Non-Strict Photo ID",
-    "Strict Non-Photo ID",
-    "Strict Photo ID",
+    "Non-Strict, Photo ID",
+    "Strict, Non-Photo ID",
+    "Strict, Photo ID",
 ]
 LABEL = {
     "No Document Required to Vote": "No ID\nrequired",

@@ -263,11 +263,5 @@ def test_default_filename_and_directory_creation(self) -> None:
         self.assertTrue(result_path.is_file())
 
 
-def load_tests(loader, tests, pattern):
-    tests.addTests(unittest.FunctionTestCase(test_known_classifications))
-    tests.addTests(unittest.FunctionTestCase(test_default_filename_and_directory_creation))
-    return tests
-
-
 if __name__ == "__main__":
     unittest.main()

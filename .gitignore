@@ -2,6 +2,7 @@
 .venv*
 config.local.toml
 my_sandbox.ipynb
+.data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

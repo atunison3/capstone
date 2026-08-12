@@ -8,12 +8,15 @@ repos:
     rev: 25.1.0
     hooks:
       - id: black
-        language_version: python3.13
+        language: system
+        args: [capstone, tests]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.13
     hooks:
       - id: ruff
+        language: system
+        args: [capstone, tests]
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.3
@@ -25,13 +28,15 @@ repos:
     rev: v1.16.1
     hooks:
       - id: mypy
+        language: system
         pass_filenames: false
-        additional_dependencies:
-          - pandas
-          - pandas-stubs
-          - numpy
-          - matplotlib
-          - requests
-          - scipy
-          - scipy-stubs
         args: [capstone, tests]
+
+  - repo: local
+    hooks:
+      - id: unittest
+        name: unittest
+        entry: python -m unittest discover -s tests -v
+        language: system
+        pass_filenames: false
+        types: [python]

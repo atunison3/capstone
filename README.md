@@ -1,11 +1,15 @@
 # Capstone
 
 - [ ] TODO: Verify the NCSL data
-- [ ] TODO: Fix logic for loading FIPS
+- [ ] Add figure 4
+- [ ] Verify code on figure 4
+- [ ] Add figure 5
+- [ ] Add legend to figure 3
 
 ![Voter Turnout](assets/figures/report_fig1_turnout_by_strictness.png)
 ![Voter Turnout 2](assets/figures/report_fig2_turnout_by_contacted.png)
 ![Voter Turnout 3](assets/figures/report_fig3_turnout_by_contacted.png)
+![Voter Turnout 4](assets/figures/report_fig4_logistic_marginal_effects.png)
 
 ## Installing Repository
 
@@ -80,7 +84,7 @@ python src/main.py
 
 You can download the 2024 Cooperative Election Study data and code books from the [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/X11EP6).
 
-* Download a copy of CCES24_Common_OUTPUT_vv_topost_final.csv, and upload it to the capstone/data folder before running the data_cleaning.ipynb file to clean the data.
+- Download a copy of CCES24_Common_OUTPUT_vv_topost_final.csv, and upload it to the capstone/data folder before running the data_cleaning.ipynb file to clean the data.
 
 ### Saving data
 

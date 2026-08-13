@@ -19,7 +19,7 @@ class ColorScheme(StrEnum):
     LIGHT_GRAY = "#E5E5E5"
 
 
-OUTPUT_DIR = Path("assets/figures")
+OUTPUT_DIR = Path("docs/assets")
 
 PLT_PARAMS: dict[str, object] = {
     "figure.dpi": 140,

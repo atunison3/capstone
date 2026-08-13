@@ -115,8 +115,10 @@ def merge_ces_fips(ces_df: DataFrame, merged_fips_nscl: DataFrame) -> DataFrame:
     return ces_df.merge(merged_fips_nscl, on="State FIPS Code")
 
 
-def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
+def load_full_dataframe(config: dict[Any, Any]) -> DataFrame:
     """Loads the full dataframe and cleans"""
+
+    data_path = Path(config["data_path"])
 
     # Loads the CES data and cleans it
     df = load_dataframe(data_path)
@@ -137,12 +139,12 @@ def load_full_dataframe(data_path: Path, config: dict[Any, Any]) -> DataFrame:
     return final_df.dropna(subset=config["features"])
 
 
-def main(data_path: Path = DATA_PATH) -> DataFrame:
+def main() -> DataFrame:
 
     # Get the data path
     model_config = load_model_config()
 
-    df = load_full_dataframe(DATA_PATH, model_config)
+    df = load_full_dataframe(model_config)
 
     return df
 

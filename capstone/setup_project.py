@@ -5,7 +5,6 @@ from typing import Optional
 
 import pandas as pd
 import requests
-from pandas import DataFrame
 
 from capstone.helper_functions import setup_logger
 
@@ -41,7 +40,7 @@ def create_data_directory(output_dir: Path = OUTPUT_DIR) -> None:
 def download_ces_data(
     output_dir: Path = OUTPUT_DIR,
     filename: str = "CCES24_Common_OUTPUT_vv_topost_final.csv",
-) -> DataFrame:
+) -> None:
     """
     Guide the user through a manual download of the CES file.
 
@@ -51,6 +50,10 @@ def download_ces_data(
     """
 
     logger.info("🟢 Starting CES data installation.")
+
+    if (output_dir / "ces_data.csv").exists():
+        logger.info("🟢 CES Data exists. Exiting download of ces data.")
+        return None
 
     output_dir = Path(output_dir)
     create_data_directory(output_dir)
@@ -177,13 +180,18 @@ def download_ces_data(
 
     logger.info("🟢 CES data installation complete.")
 
-    return dataframe
+    return None
 
 
-def download_state_data(output_dir: Path = OUTPUT_DIR) -> DataFrame:
+def download_state_data(output_dir: Path = OUTPUT_DIR) -> None:
     """Downloads FIPS data, saves it as CSV, and returns a DataFrame."""
 
     logger.info("🟢 Starting Census FIPS data download.")
+
+    # Check if data already exists
+    if (output_dir / "fips.csv").exists():
+        logger.info("🟢 State data exists. Exiting the download of state data.")
+        return None
 
     create_data_directory(output_dir)
 
@@ -221,13 +229,13 @@ def download_state_data(output_dir: Path = OUTPUT_DIR) -> DataFrame:
 
     logger.info("🟢 FIPS data saved to: %s", output_path)
 
-    return dataframe
+    return None
 
 
 def install_ncsl_classification(
     output_dir: Path = OUTPUT_DIR,
     filename: str = "ncsl_voter_id_classification.csv",
-) -> Path:
+) -> None:
     """
     Create a DataFrame of state-level NCSL voter ID classifications and save it as a CSV.
 
@@ -236,7 +244,11 @@ def install_ncsl_classification(
 
     logger.info("🟢 Installing NCSL voter ID classification data.")
 
-    output_dir = Path(output_dir)
+    # Checkout if ncsl data exists
+    if (output_dir / "ncsl_voter_id_classification.csv").exists():
+        logger.info("🟢 NCSL Voter ID Classification data exists. Exiting install.")
+        return None
+
     create_data_directory(output_dir)
 
     data = {
@@ -368,7 +380,7 @@ def install_ncsl_classification(
 
     logger.info("🟢 NCSL classification data saved to: %s", output_path)
 
-    return output_path
+    return None
 
 
 def main(output_dir: Path = OUTPUT_DIR) -> None:

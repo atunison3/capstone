@@ -42,7 +42,12 @@ npx docsify-cli serve docs
 
 Then open the URL printed in the terminal (typically `http://localhost:3000`).
 
+## AI assistance
+
+This repository used AI tooling during development. See the [AI statement](ai-statement.md) for how that work was scoped, tested, and human-reviewed.
+
 ## Next
 
 - [Development Setup](contributing/development-setup.md)
 - [Testing](contributing/testing.md)
+- [AI statement](ai-statement.md)

@@ -63,4 +63,5 @@ Third-party datasets used by the analysis keep their own terms and are not re-li
 - [Usage](getting-started/usage.md) — CLI and Python API examples
 - [Full documentation](documentation/README.md) — package and module reference
 - [Contributing](contributing/README.md) — developer setup
+- [AI statement](ai-statement.md) — how AI was used on this project
 - [License (MIT)](license.md) — terms of use

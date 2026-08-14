@@ -49,18 +49,6 @@ CONTACT_COLUMNS = [
     "Letter or postcard",
 ]
 
-FORMULA = """
-    Voted
-    ~ C(Education)
-    + C(Race)
-    + C(Gender)
-    + Age
-    + Q("In person") * C(Q("NCSL Classification"))
-    + Q("Phone call") * C(Q("NCSL Classification"))
-    + Q("Email or text message") * C(Q("NCSL Classification"))
-    + Q("Letter or postcard") * C(Q("NCSL Classification"))
-"""
-
 logger = setup_logger()
 
 mpl.rcParams.update(PLT_PARAMS)  # type: ignore

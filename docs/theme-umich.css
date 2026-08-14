@@ -1,0 +1,211 @@
+/* University of Michigan Docsify Theme */
+
+:root {
+  /* Core palette */
+  --um-blue:        #00274C;
+  --um-maize:       #FFCB05;
+  --arb-blue:       #2F65A7;
+  --rack-grn:       #75988D;
+  --umma-tan:       #CFC096;
+  --tappan-rd:      #9A3324;
+  --ash:            #989C97;
+  --um-blue2:       #2E4E6E;
+  --um-blue3:       #7C97B3;
+  --grey:           #B7B7B7;
+  --ink:            #00274C;
+  --light-gray:     #E5E5E5;
+
+  /* Theme mapping */
+  --theme-color:            var(--um-maize);
+  --sidebar-background:     var(--um-blue);
+  --sidebar-color:          #ffffff;
+  --sidebar-nav-link-color: rgba(255, 255, 255, 0.85);
+  --sidebar-nav-link-color--hover: var(--um-maize);
+  --sidebar-nav-link-color--active: var(--um-maize);
+  --sidebar-border-color:   var(--um-blue2);
+
+  --content-background:     #ffffff;
+  --text-color:             var(--ink);
+  --heading-color:          var(--um-blue);
+  --link-color:             var(--arb-blue);
+  --link-color-hover:       var(--um-blue);
+  --code-background:        #f4f6f8;
+  --blockquote-border:      var(--um-maize);
+  --table-header-bg:        var(--um-blue);
+  --table-header-color:     #ffffff;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  background: var(--sidebar-background) !important;
+  color: var(--sidebar-color);
+  border-right: 1px solid var(--sidebar-border-color);
+}
+
+.sidebar .app-name-link {
+  color: var(--um-maize) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sidebar ul li a {
+  color: var(--sidebar-nav-link-color) !important;
+  transition: color 0.15s ease;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active > a {
+  color: var(--sidebar-nav-link-color--active) !important;
+}
+
+.sidebar-toggle {
+  background-color: transparent;
+}
+
+.sidebar-toggle span {
+  background-color: var(--um-maize);
+}
+
+/* ===== Main content ===== */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--text-color);
+  background: var(--content-background);
+}
+
+.markdown-section h1,
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4 {
+  color: var(--heading-color);
+  font-weight: 700;
+}
+
+.markdown-section h1 {
+  border-bottom: 3px solid var(--um-maize);
+  padding-bottom: 0.3em;
+}
+
+.markdown-section a {
+  color: var(--link-color);
+  font-weight: 500;
+}
+
+.markdown-section a:hover {
+  color: var(--link-color-hover);
+  text-decoration: underline;
+}
+
+/* ===== Code blocks ===== */
+.markdown-section code,
+.markdown-section pre {
+  background: var(--code-background) !important;
+  border-radius: 6px;
+}
+
+.markdown-section pre {
+  border-left: 4px solid var(--um-maize);
+}
+
+/* ===== Blockquotes ===== */
+.markdown-section blockquote {
+  border-left: 4px solid var(--blockquote-border);
+  background: #fffdf0;
+  color: var(--um-blue2);
+  padding: 0.8em 1.2em;
+  border-radius: 0 6px 6px 0;
+}
+
+/* ===== Tables ===== */
+.markdown-section table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+  box-shadow: 0 1px 3px rgba(0, 39, 76, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.markdown-section table thead {
+  background: var(--table-header-bg);
+  color: var(--table-header-color);
+}
+
+.markdown-section table th {
+  font-weight: 600;
+  padding: 12px 16px;
+}
+
+.markdown-section table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.markdown-section table tr:nth-child(even) {
+  background: #f8f9fb;
+}
+
+.markdown-section table tr:hover {
+  background: #eef2f7;
+}
+
+/* ===== Cover page ===== */
+section.cover {
+  background: linear-gradient(135deg, var(--um-blue) 0%, var(--um-blue2) 100%) !important;
+  color: #ffffff;
+}
+
+section.cover .cover-main > p a {
+  border: 2px solid var(--um-maize);
+  color: var(--um-maize) !important;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+section.cover .cover-main > p a:hover {
+  background: var(--um-maize) !important;
+  color: var(--um-blue) !important;
+}
+
+section.cover h1 {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+section.cover blockquote {
+  color: var(--um-maize);
+  border: none;
+  background: transparent;
+  font-size: 1.25em;
+}
+
+/* ===== Search box ===== */
+.search input {
+  border: 1px solid var(--um-blue3) !important;
+  border-radius: 4px;
+}
+
+.search input:focus {
+  border-color: var(--um-maize) !important;
+  box-shadow: 0 0 0 2px rgba(255, 203, 5, 0.25);
+}
+
+/* ===== Scrollbar (WebKit) ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--um-blue3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--um-blue2);
+}

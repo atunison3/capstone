@@ -19,7 +19,10 @@ class ColorScheme(StrEnum):
     LIGHT_GRAY = "#E5E5E5"
 
 
-OUTPUT_DIR = Path("assets/figures")
+# Anchor to repo root so scripts work regardless of cwd.
+# visuals.py lives at <repo>/capstone/visualization/visuals.py
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+OUTPUT_DIR = PROJECT_ROOT / "docs" / "assets"
 
 PLT_PARAMS: dict[str, object] = {
     "figure.dpi": 140,
@@ -39,6 +42,12 @@ PLT_PARAMS: dict[str, object] = {
 }
 
 Y_LABEL = "Validated turnout (%)"
+
+
+def ensure_output_dir(path: Path = OUTPUT_DIR) -> Path:
+    """Create the figure output directory if needed."""
+    path.mkdir(parents=True, exist_ok=True)
+    return path
 
 
 def compute_turnout_by_category(df: DataFrame, category: str, order: list[str]) -> DataFrame:

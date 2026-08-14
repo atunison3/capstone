@@ -6,10 +6,10 @@
 - [ ] Add figure 5
 - [ ] Add legend to figure 3
 
-![Voter Turnout](assets/figures/report_fig1_turnout_by_strictness.png)
-![Voter Turnout 2](assets/figures/report_fig2_turnout_by_contacted.png)
-![Voter Turnout 3](assets/figures/report_fig3_turnout_by_contacted.png)
-![Voter Turnout 4](assets/figures/report_fig4_logistic_marginal_effects.png)
+![Voter Turnout](assets/report_fig1_turnout_by_strictness.png)
+![Voter Turnout 2](assets/report_fig2_turnout_by_contacted.png)
+![Voter Turnout 3](assets/report_fig3_turnout_by_contacted.png)
+![Voter Turnout 4](assets/report_fig4_logistic_marginal_effects.png)
 
 ## Installing Repository
 

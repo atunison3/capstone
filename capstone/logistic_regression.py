@@ -1,42 +1,16 @@
-import pandas as pd
-import statsmodels.api as sm
 import statsmodels.formula.api as smf
 import warnings
+from pandas import DataFrame
+from statsmodels.discrete.discrete_model import BinaryResultsWrapper
 
 from capstone.data_cleaning import load_full_dataframe
-from capstone.helper_functions import load_model_config, get_data_path
+from capstone.helper_functions import load_model_config
 
 warnings.filterwarnings("ignore")
 
 
-if __name__ == "__main__":
-
-    # Load the config
-    config = load_model_config()
-
-    # Local config
-    data_path = get_data_path() / "prod"
-
-    # Get the full dataframe
-    df = load_full_dataframe(data_path, config)
-
-    # Split the data
-    X_train = df[config["features"]]
-    y_train = df[config["target"]]
-
-    # Get dummies
-    X_train = pd.get_dummies(
-        X_train,
-        columns=config["multiclass_features"],
-        drop_first=True,  # True because I am including an intercept
-        dtype=int,
-    )
-
-    # Add a constant
-    X_train = sm.add_constant(X_train, has_constant="add")
-
-    # Retain the feature names (might only be needed for sklearn)
-    feature_names = X_train.columns
+def train_model(df: DataFrame) -> BinaryResultsWrapper:
+    """Trains the model"""
 
     # Fit logistic regression model using formula
     formula = """
@@ -56,4 +30,18 @@ if __name__ == "__main__":
         + Q("Letter or postcard") * C(Q("NCSL Classification"))
     """
     model = smf.logit(formula=formula, data=df).fit()
+
+    return model
+
+
+if __name__ == "__main__":
+
+    # Load the config
+    config = load_model_config()
+
+    # Get the full dataframe
+    df = load_full_dataframe(config)
+
+    # Train the model
+    model = train_model(df)
     print(model.summary())

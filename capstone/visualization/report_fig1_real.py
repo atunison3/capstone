@@ -9,11 +9,18 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from pandas import DataFrame
-from pathlib import Path
+from typing import Any
 
-from capstone.helper_functions import load_local_config, load_model_config
+from capstone.helper_functions import load_model_config, setup_logger
 from capstone.data_cleaning import load_full_dataframe
-from capstone.visualization.visuals import Y_LABEL, OUTPUT_DIR, PLT_PARAMS, ColorScheme, compute_turnout_by_category
+from capstone.visualization.visuals import (
+    Y_LABEL,
+    OUTPUT_DIR,
+    PLT_PARAMS,
+    ColorScheme,
+    compute_turnout_by_category,
+    ensure_output_dir,
+)
 
 # Bar colors
 FIVE_HUE = [ColorScheme.UM_BLUE, ColorScheme.ARB_BLUE, ColorScheme.RACK_GRN, ColorScheme.UMMA_TAN, ColorScheme.UM_MAIZE]
@@ -32,6 +39,8 @@ LABEL = {
     "Strict, Non-Photo ID": "Strict\nnon-photo",
     "Strict, Photo ID": "Strict\nphoto",
 }
+
+logger = setup_logger()
 
 mpl.rcParams.update(PLT_PARAMS)  # type: ignore
 
@@ -86,20 +95,13 @@ def fig_bars_zoom(s: DataFrame) -> None:
     plt.close(fig)
 
 
-if __name__ == "__main__":
-
-    # Load the config
-    model_config = load_model_config()
-    local_config = load_local_config()
-
-    # Create data path
-    data_path = Path(local_config["data_path"]) / "prod"
+def generate_fig1(config: dict[Any, Any]):
 
     # Make sure output directory exists
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    ensure_output_dir()
 
     # Load the dataframe and collect statistics
-    frame = load_full_dataframe(data_path, model_config)
+    frame = load_full_dataframe(config)
     stats = compute_turnout_by_category(frame, "NCSL Classification", ORDER)
 
     print(f"\nN = {len(frame):,}   overall turnout = {frame['Voted'].mean() * 100:.1f}%\n")
@@ -107,6 +109,14 @@ if __name__ == "__main__":
 
     try:
         fig_bars_zoom(stats)
-        print(f"\nSaved figure to {OUTPUT_DIR}")
+        logger.info(f"🟢 Saved figure to {OUTPUT_DIR}")
     except Exception as e:
-        print(f"Failed to save figure to {OUTPUT_DIR}: {e}")
+        logger.error(f"🔴 Failed to save figure to {OUTPUT_DIR}: {e}")
+
+
+if __name__ == "__main__":
+
+    # Load the config
+    config = load_model_config()
+
+    generate_fig1(config)

@@ -9,6 +9,15 @@ authors = [
   {name = "Sahana Sundar", email="sahanasu@umich.edu"}
 ]
 readme = "README.md"
+dependencies = [
+  "matplotlib==3.10.9",
+  "numpy==2.5.1",
+  "pandas==3.0.3",
+  "patsy==1.0.2",
+  "requests==2.34.2",
+  "scipy==1.18.0",
+  "statsmodels==0.14.6",
+]
 
 [build-system]
 requires = ["setuptools >= 77.0.3"]
@@ -27,6 +36,7 @@ module = [
   "statsmodels.*"
 ]
 ignore_missing_imports = true
+
 
 [tool.setuptools]
 packages = ["capstone"]

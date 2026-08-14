@@ -2,10 +2,11 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 from pandas import DataFrame
+from typing import Any
 
-from capstone.helper_functions import load_model_config, get_data_path
+from capstone.helper_functions import load_model_config, setup_logger
 from capstone.data_cleaning import load_full_dataframe
-from capstone.visualization.visuals import ColorScheme, OUTPUT_DIR, PLT_PARAMS, Y_LABEL
+from capstone.visualization.visuals import ColorScheme, OUTPUT_DIR, PLT_PARAMS, Y_LABEL, ensure_output_dir
 
 ORDER = [
     "No Document Required to Vote",
@@ -22,6 +23,8 @@ LABEL = {
     "Strict, Photo ID": "Strict\nphoto",
 }
 TWO_HUE = [ColorScheme.GREY, ColorScheme.UM_BLUE]
+
+logger = setup_logger()
 
 mpl.rcParams.update(PLT_PARAMS)  # type: ignore
 
@@ -55,18 +58,13 @@ def fig_bars_zoom(df: DataFrame) -> None:
     plt.close(fig)
 
 
-if __name__ == "__main__":
-    # Load the config
-    model_config = load_model_config()
-
-    # Create data path
-    data_path = get_data_path() / "prod"
+def generate_fig3(config: dict[Any, Any]):
 
     # Make sure output directory exists
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    ensure_output_dir()
 
     # Load the dataframe and collect statistics
-    frame = load_full_dataframe(data_path, model_config)
+    frame = load_full_dataframe(config)
 
     # Determine who was contacted
     frame["Contacted"] = (
@@ -96,6 +94,11 @@ if __name__ == "__main__":
     # Create the visual and save
     try:
         fig_bars_zoom(pivot)
-        print(f"\nSaved figure to {OUTPUT_DIR}")
+        logger.info(f"🟢 Saved figure to {OUTPUT_DIR}")
     except Exception as e:
-        print(f"Failed to save figure to {OUTPUT_DIR}: {e}")
+        logger.error(f"🔴 Failed to save figure to {OUTPUT_DIR}: {e}")
+
+
+if __name__ == "__main__":
+    # Load the config
+    config = load_model_config()

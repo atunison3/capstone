@@ -32,6 +32,10 @@
   --sidebar-name-color:           var(--um-maize);
   --sidebar-border-color:         var(--um-blue2);
 
+  /* Docsify 5 cover tokens */
+  --cover-title-color:            var(--um-maize);
+  --cover-color:                  #ffffff;
+
   --content-background:     #ffffff;
   --text-color:             var(--ink);
   --heading-color:          var(--um-blue);
@@ -235,7 +239,8 @@ body {
 }
 
 /* ===== Cover page ===== */
-section.cover {
+section.cover,
+section.cover.show {
   background: linear-gradient(135deg, var(--um-blue) 0%, var(--um-blue2) 100%) !important;
   color: #ffffff;
 }
@@ -252,10 +257,19 @@ section.cover .cover-main > p a:hover {
   color: var(--um-blue) !important;
 }
 
-section.cover h1 {
-  color: #ffffff;
+/* Title is often <h1 id="capstone"><a>...</a></h1>; Docsify uses --cover-title-color */
+section.cover h1,
+section.cover.show h1,
+section.cover h1#capstone,
+section.cover #capstone,
+section.cover h1 a,
+section.cover h1#capstone a,
+section.cover #capstone a {
+  color: var(--um-maize) !important;
+  -webkit-text-fill-color: var(--um-maize) !important;
   font-weight: 800;
   letter-spacing: -0.02em;
+  text-decoration-color: transparent !important;
 }
 
 section.cover blockquote {

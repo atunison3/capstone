@@ -4,7 +4,7 @@ Configuration lives in the Python module **`capstone/config.py`**, not a TOML fi
 
 `load_model_config()` imports that module and returns a dict of every **UPPERCASE** constant, with **lowercased** keys:
 
-| Constant in `config.py` | Key in returned dict |
+| Constant in config.py | Key in returned dict |
 | --- | --- |
 | `DATA_PATH` | `data_path` |
 | `FULL_COLUMNS` | `full_columns` |

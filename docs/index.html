@@ -1,43 +1,42 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Capstone — Voter Turnout</title>
 
-    <!-- Core Theme -->
+    <!-- Core Docsify theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@5/dist/themes/core.min.css">
+
+    <!-- University of Michigan theme -->
+    <link rel="stylesheet" href="theme-umich.css">
   </head>
   <body class="loading">
     <div id="app"></div>
 
-    <!-- Configuration -->
     <script>
-    window.$docsify = {
-        name: 'Capstone',
-        repo: 'https://github.com/atunison3/capstone',
-        loadSidebar: true,
-        coverpage: true,        // ← enable the cover page
-        // or: coverpage: '_coverpage.md',
-        onlyCover: false,       // false = show cover + allow navigation into the site
-        // onlyCover: true,     // true = only show the cover page (no sidebar until clicked)
-    }
-    </script>
-    <script>
-    window.$docsify = {
-        name: 'Capstone',
-        repo: 'https://github.com/atunison3/capstone',
+      window.$docsify = {
+        name: "Capstone",
+        nameLink: "#/",
+        repo: "https://github.com/atunison3/capstone",
         loadSidebar: true,
         coverpage: true,
-        themeColor: '#FFCB05',   // maize accent
+        onlyCover: false,
         auto2top: true,
-        search: 'auto'
-    }
+        // Keep the sidebar stable: do not inject the current page's headings.
+        subMaxLevel: 0,
+        // Resolve sidebar / in-page links from the docs root, not the current route.
+        relativePath: false,
+        themeColor: "#FFCB05",
+        search: "auto",
+        // Always load the root sidebar on nested routes.
+        alias: {
+          "/.*/_sidebar.md": "/_sidebar.md",
+        },
+      };
     </script>
 
-    <!-- Docsify.js -->
     <script src="//cdn.jsdelivr.net/npm/docsify@5"></script>
-
-    <!-- Plugins (optional) -->
-    <!-- <script src="//cdn.jsdelivr.net/npm/docsify@5/dist/plugins/search.min.js"></script> -->
+    <script src="//cdn.jsdelivr.net/npm/docsify@5/dist/plugins/search.min.js"></script>
   </body>
 </html>

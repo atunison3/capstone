@@ -1,4 +1,4 @@
-if __name__ == "__main__":
+def main() -> None:
     from capstone.data_cleaning import load_full_dataframe
     from capstone.helper_functions import setup_logger, load_model_config
     from capstone.logistic_regression import train_model
@@ -26,7 +26,6 @@ if __name__ == "__main__":
 
     # Get the dataframe
     df = load_full_dataframe(config)
-    print(df.head())
 
     ####################
     # Train the model
@@ -34,3 +33,7 @@ if __name__ == "__main__":
     logger.info("🟢 Training the model.")
     model = train_model(df)
     print(model.summary())
+
+
+if __name__ == "__main__":
+    main()

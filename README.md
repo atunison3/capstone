@@ -86,10 +86,20 @@ You can download the 2024 Cooperative Election Study data and code books from th
 
 - Download a copy of CCES24_Common_OUTPUT_vv_topost_final.csv, and upload it to the capstone/data folder before running the data_cleaning.ipynb file to clean the data.
 
-### Saving data
+### Configuration and data path
 
-Save your data on your local machine. Create a `config.local.toml` file in your project root with a parameter `data_path`. Use the function `data_cleaning.load_ces_data` to automatically read in your CES data.
+Project settings live in `capstone/config.py`. By default, input CSVs are read from `.data/` (`DATA_PATH`).
 
-```toml config.local.toml
-data_path = "/Users/<username>/Downloads/CES Data"
+To use another directory, change `DATA_PATH` in `capstone/config.py` (prefer an editable install while developing):
+
+```python
+from pathlib import Path
+
+DATA_PATH = Path("/Users/<username>/Downloads/CES Data")
+```
+
+Or run the built-in installer, which writes CES / FIPS / NCSL files under `.data/`:
+
+```bash
+capstone
 ```

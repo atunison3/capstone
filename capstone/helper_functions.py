@@ -1,10 +1,10 @@
 import logging
-import tomllib
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from typing import Any
 
-MODEL_CONFIG_PATH = Path("config.toml")
+from capstone import config
+
 LOG_DIR = Path(".log")
 
 
@@ -54,15 +54,11 @@ def expand_user(path: Path) -> Path:
     return data_path
 
 
-def load_model_config(config_path: Path = MODEL_CONFIG_PATH) -> dict[Any, Any]:
-    """Loads the model  config"""
+def load_model_config() -> dict[str, Any]:
+    """Load configuration from ``capstone.config``.
 
-    path = expand_user(config_path)
+    Returns a dict of every UPPERCASE constant in ``capstone.config``, with
+    lowercased keys (for example ``DATA_PATH`` → ``"data_path"``).
+    """
 
-    if not path.is_file():
-        raise IsADirectoryError(f"Configuration path is not a file: {path}")
-
-    with path.open("rb") as file:
-        config: dict[Any, Any] = tomllib.load(file)
-
-    return config
+    return {name.lower(): value for name, value in vars(config).items() if name.isupper()}

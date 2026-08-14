@@ -48,13 +48,39 @@
   letter-spacing: 0.02em;
 }
 
+/* Default sidebar text (including section group labels) */
+.sidebar,
+.sidebar-nav,
+.sidebar ul,
+.sidebar ul li,
+.sidebar ul li > p,
+.sidebar ul li > span,
+.sidebar ul li > strong {
+  color: #ffffff !important;
+}
+
+/* Section headers: Getting Started / Documentation / Contributing */
+.sidebar-nav > ul > li > p,
+.sidebar > ul > li > p,
+.sidebar ul li.parent > p,
+.sidebar ul li.folder > p,
+.sidebar ul > li:has(> ul) > p {
+  color: rgba(255, 255, 255, 0.98) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em;
+  text-transform: none;
+  opacity: 1 !important;
+  margin: 0.85em 0 0.25em;
+}
+
 .sidebar ul li a {
   color: var(--sidebar-nav-link-color) !important;
   transition: color 0.15s ease;
 }
 
 .sidebar ul li a:hover,
-.sidebar ul li.active > a {
+.sidebar ul li.active > a,
+.sidebar ul li.active > a span {
   color: var(--sidebar-nav-link-color--active) !important;
 }
 

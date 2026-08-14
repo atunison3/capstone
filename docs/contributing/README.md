@@ -14,6 +14,7 @@ End users who only want to install and run the tool should start with [Installat
 | CLI entry point | `capstone` → `capstone.analysis:main` |
 | Tests | `unittest` under `tests/` |
 | Repo | https://github.com/atunison3/capstone |
+| License | MIT (see [License](license.md)) |
 
 ## Workflow overview
 

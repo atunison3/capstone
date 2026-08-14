@@ -51,9 +51,16 @@ CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, downl
 | Modeling | Logistic regression of validated turnout |
 | Visualization | Report figures for outreach and voter ID effects |
 
+## License
+
+This project is licensed under the **MIT License**. See [License](license.md) and the repository [LICENSE](https://github.com/atunison3/capstone/blob/main/LICENSE) file.
+
+Third-party datasets used by the analysis keep their own terms and are not re-licensed as MIT by this project.
+
 ## Next steps
 
 - [Installation](getting-started/installation.md) — prerequisites and install options
 - [Usage](getting-started/usage.md) — CLI and Python API examples
 - [Full documentation](documentation/README.md) — package and module reference
 - [Contributing](contributing/README.md) — developer setup
+- [License (MIT)](license.md) — terms of use

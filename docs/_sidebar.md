@@ -20,3 +20,5 @@
   - [Contributor Guide](contributing/README.md)
   - [Development Setup](contributing/development-setup.md)
   - [Testing](contributing/testing.md)
+
+- [License (MIT)](license.md)

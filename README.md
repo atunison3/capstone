@@ -1,105 +1,66 @@
 # Capstone
 
-- [ ] TODO: Verify the NCSL data
-- [ ] Add figure 4
-- [ ] Verify code on figure 4
-- [ ] Add figure 5
-- [ ] Add legend to figure 3
+Capstone is a University of Michigan MADS (Spring/Summer 2026) project that studies how voter outreach and state voter ID laws relate to validated 2024 turnout in the Cooperative Election Study (CES).
 
-![Voter Turnout](assets/figures/report_fig1_turnout_by_strictness.png)
-![Voter Turnout 2](assets/figures/report_fig2_turnout_by_contacted.png)
-![Voter Turnout 3](assets/figures/report_fig3_turnout_by_contacted.png)
-![Voter Turnout 4](assets/figures/report_fig4_logistic_marginal_effects.png)
+---
 
-## Installing Repository
+## Data Story
 
-Verify python version is 3.13. I am using 3.13.2 [Python](https://www.python.org/downloads/release/python-3132/).
+> **Coming soon.** This section will hold the project's data story — the narrative walkthrough of the research question, findings, and figures.
 
-```terminal
-python --version
-python3.13 --version
-```
+Until then, exploratory figures from the analysis pipeline are below.
 
-For Windows:
+![Turnout by voter ID strictness](assets/report_fig1_turnout_by_strictness.png)
 
-```terminal
-python --version
-py -3.13 --version
-```
+![Turnout by contact status](assets/report_fig2_turnout_by_contacted.png)
 
-Clone the [capstone repository](https://github.com/atunison3/capstone). You'll be able to clone it but you'll need permission to push changes.
+![Turnout by contact channel](assets/report_fig3_turnout_by_contacted.png)
 
-```terminal
-git clone https://github.com/atunison3/capstone.git
-```
+![Logistic marginal effects](assets/report_fig4_logistic_marginal_effects.png)
 
-Install requirements.
+---
 
-```terminal
-python -m pip install --upgrade pip
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python -m build
-```
+## Install and run
 
-Windows:
-
-```terminal
-python -m pip install --upgrade pip
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-python -m build
-```
-
-## Contributing
-
-To contibute, you will need to work on a branch other than main. When you are finished with your changes, push them to your branch and perform a PR. Rules will be enabled such that at least one reviewer must approve changes.
-
-```terminal
-git add .  # Or specify which files to add
-git commit -m "Commit Message"
-git push origin <branch-name>
-```
-
-Safety and linting checks will be performed on each push. I suggest running a formatter and linter prior to committing your work.
-
-```terminal
-black . # The uncompromising code formatter.
-ruff check  # An extremely fast Python linter and code formatter.
-bandit . # Python source code security analyzer
-mypy .  # Program that will type check your Python code.
-```
-
-### Running Projects
-
-To run a script, simply navigate to the project directory and run `python <script_name>.py`
-
-```terminal
-python src/main.py
-```
-
-### Data
-
-You can download the 2024 Cooperative Election Study data and code books from the [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/X11EP6).
-
-- Download a copy of CCES24_Common_OUTPUT_vv_topost_final.csv, and upload it to the capstone/data folder before running the data_cleaning.ipynb file to clean the data.
-
-### Configuration and data path
-
-Project settings live in `capstone/config.py`. By default, input CSVs are read from `.data/` (`DATA_PATH`).
-
-To use another directory, change `DATA_PATH` in `capstone/config.py` (prefer an editable install while developing):
-
-```python
-from pathlib import Path
-
-DATA_PATH = Path("/Users/<username>/Downloads/CES Data")
-```
-
-Or run the built-in installer, which writes CES / FIPS / NCSL files under `.data/`:
+Requires **Python 3.13+**.
 
 ```bash
+pip install git+https://github.com/atunison3/capstone.git
 capstone
 ```
+
+What `capstone` does:
+
+1. Guides you through obtaining CES data (manual download from Harvard Dataverse).
+2. Downloads Census FIPS state codes and NCSL voter ID classifications into `.data/`.
+3. Cleans and merges the datasets using settings from `capstone/config.py`.
+4. Fits a logistic regression of validated turnout and prints the model summary.
+
+Configuration ships inside the package (`capstone.config`). Override paths or column maps by editing that module (use an editable install while developing).
+
+CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, download the CES CSV into your user `Downloads` folder; the tool moves it into `.data/ces_data.csv`.
+
+---
+
+## What this project does
+
+| Area | Role |
+| --- | --- |
+| Data setup | Obtain CES, FIPS, and NCSL inputs |
+| Cleaning | Rename, map, and merge survey + state policy data |
+| Modeling | Logistic regression of validated turnout |
+| Visualization | Report figures for outreach and voter ID effects |
+
+## License
+
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for the full text.
+
+Third-party datasets used by the analysis keep their own terms and are not re-licensed as MIT by this project.
+
+## Next steps
+
+- [Installation](docs/getting-started/installation.md) — prerequisites and install options
+- [Usage](docs/getting-started/usage.md) — CLI and Python API examples
+- [Full documentation](docs/documentation/README.md) — package and module reference
+- [Contributing](docs/contributing/README.md) — developer setup
+- [License (MIT)](docs/license.md) — terms of use

@@ -24,7 +24,7 @@ from typing import Any, cast
 from capstone.data_cleaning import load_full_dataframe
 from capstone.helper_functions import load_model_config, setup_logger
 from capstone.logistic_regression import train_model
-from capstone.visualization.visuals import OUTPUT_DIR, PLT_PARAMS, ColorScheme
+from capstone.visualization.visuals import OUTPUT_DIR, PLT_PARAMS, ColorScheme, ensure_output_dir
 
 REFERENCE_ID_LAW = "No Document Required to Vote"
 
@@ -203,12 +203,14 @@ def fig_marginal_effects(effects: DataFrame) -> None:
     y_positions = np.arange(len(effects) - 1, -1, -1)
 
     for y_position, row in zip(y_positions, effects.itertuples()):
-        point_color = ColorScheme.TAPPAN_RD if row.type == "strictness" else ColorScheme.UM_BLUE
 
         # Force float types
         effect = float(cast(Any, row.effect))
         lower = float(cast(Any, row.lower))
         upper = float(cast(Any, row.upper))
+
+        # Determine point color based on effect
+        point_color = ColorScheme.TAPPAN_RD if effect < 0 else ColorScheme.UM_BLUE
 
         lower_error = effect - lower
         upper_error = upper - effect
@@ -270,7 +272,7 @@ def fig_marginal_effects(effects: DataFrame) -> None:
 def generate_fig4(config: dict[Any, Any]) -> None:
     """Fit the logistic regression and create Figure 4."""
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    ensure_output_dir()
 
     df = load_full_dataframe(config)
 

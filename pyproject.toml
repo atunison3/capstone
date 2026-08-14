@@ -9,6 +9,14 @@ authors = [
   {name = "Sahana Sundar", email="sahanasu@umich.edu"}
 ]
 readme = "README.md"
+dependencies = [
+  "matplotlib==3.11.1",
+  "numpy==2.5.2",
+  "pandas==3.0.5",
+  "Requests==2.34.2",
+  "statsmodels==0.14.5",
+  "statsmodels==0.14.6"
+]
 
 [build-system]
 requires = ["setuptools >= 77.0.3"]

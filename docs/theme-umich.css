@@ -59,6 +59,24 @@
   color: #ffffff !important;
 }
 
+/* Sidebar markdown headings (e.g. # Navigation in _sidebar.md) */
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar h4,
+.sidebar-nav h1,
+.sidebar-nav h2,
+.sidebar-nav h3,
+.sidebar-nav h4 {
+  color: var(--sidebar-nav-link-color, rgba(255, 255, 255, 0.85)) !important;
+  border: none !important;
+  margin: 0.5rem 0 0.75rem;
+  padding: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 /* Section headers: Getting Started / Documentation / Contributing */
 .sidebar-nav > ul > li > p,
 .sidebar > ul > li > p,

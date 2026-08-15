@@ -4,5 +4,4 @@
 
 [Get Started](/getting-started/installation.md)
 [Documentation](documentation/README.md)
-[License (MIT)](license.md)
 [GitHub](https://github.com/atunison3/capstone/)

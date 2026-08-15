@@ -1,6 +1,7 @@
 import statsmodels.formula.api as smf
 import warnings
 from pandas import DataFrame
+from scipy.special import expit
 from statsmodels.discrete.discrete_model import BinaryResultsWrapper
 
 from capstone.data_cleaning import load_full_dataframe
@@ -34,7 +35,21 @@ def train_model(df: DataFrame) -> BinaryResultsWrapper:
     return model
 
 
-if __name__ == "__main__":
+def calculate_probabilities(model: BinaryResultsWrapper) -> None:
+    """Calculates the probability increases
+
+    references:
+      - https://019b2da8-edfb-a262-61be-7973c056d9ae.share.connect.posit.cloud/blr-interp.html
+      - https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.expit.html"""
+
+    # Extract the coefficients
+    summary = model.summary2()
+    summary.tables[1]["Expit"] = expit(summary.tables[1]["Coef."])
+
+    print(summary)
+
+
+def main() -> None:
 
     # Load the config
     config = load_model_config()
@@ -44,4 +59,12 @@ if __name__ == "__main__":
 
     # Train the model
     model = train_model(df)
-    print(model.summary())
+
+    # Print the summary with the probability increase
+    # for each coefficient if others held constant
+    calculate_probabilities(model)
+
+
+if __name__ == "__main__":
+
+    main()

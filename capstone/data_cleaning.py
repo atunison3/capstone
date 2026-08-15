@@ -93,10 +93,23 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df = df.rename(columns=config["state_column"])
 
     # Drop na
+    # From CES_2024_GUIDE "TS_voterstatus - Respondent's voter registration status
+    # (if missing, no match was found). This reflects registration status at time of match, not necesarily for
+    # date of 2024 election"
+    # Assume unregistered voters at time of match were not registered and drop these rows.
     df = df.dropna(subset=["TS_voterstatus"])
 
     # Determine who voted
+    # "TS_g2024 - How respondent voted in 2024 general election (if missing, respondent did not have a record of voting)"
+    # 1. absentee
+    # 2. early
+    # 3. mail
+    # 4. polling place
+    # 5. provisional
+    # 6. voted by unknown method
+    # 7. did not vote
     # 7 is did not vote (1 = Yes [voted] and 0 = No [did not vote])
+    # Verified using this assert (len(df) / len(df.dropna(subset=["TS_g2024"]) == 1.0
     df["Voted"] = (df["TS_g2024"] != 7).astype(int)
     df["Age"] = 2024 - df["Birth Year"]
 

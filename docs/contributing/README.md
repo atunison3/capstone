@@ -14,7 +14,7 @@ End users who only want to install and run the tool should start with [Installat
 | CLI entry point | `capstone` → `capstone.analysis:main` |
 | Tests | `unittest` under `tests/` |
 | Repo | https://github.com/atunison3/capstone |
-| License | MIT (see [License](license.md)) |
+| License | MIT (see [License](about/license.md)) |
 
 ## Workflow overview
 
@@ -44,10 +44,11 @@ Then open the URL printed in the terminal (typically `http://localhost:3000`).
 
 ## AI assistance
 
-This repository used AI tooling during development. See the [AI statement](ai-statement.md) for how that work was scoped, tested, and human-reviewed.
+This repository used AI tooling during development. See the [AI statement](about/ai-statement.md) for how that work was scoped, tested, and human-reviewed.
 
 ## Next
 
 - [Development Setup](contributing/development-setup.md)
 - [Testing](contributing/testing.md)
-- [AI statement](ai-statement.md)
+- [Meet the team](about/meet-the-team.md)
+- [AI statement](about/ai-statement.md)

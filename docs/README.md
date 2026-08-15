@@ -53,9 +53,16 @@ CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, downl
 
 ## License
 
-This project is licensed under the **MIT License**. See [License](license.md) and the repository [LICENSE](https://github.com/atunison3/capstone/blob/main/LICENSE) file.
+This project is licensed under the **MIT License**. See [License](about/license.md) and the repository [LICENSE](https://github.com/atunison3/capstone/blob/main/LICENSE) file.
 
 Third-party datasets used by the analysis keep their own terms and are not re-licensed as MIT by this project.
+
+## Team
+
+Built by Sahana Sundar, Melody Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
+
+- [Meet the team](about/meet-the-team.md)
+- [Acknowledgements](about/acknowledgements.md)
 
 ## Next steps
 
@@ -63,5 +70,7 @@ Third-party datasets used by the analysis keep their own terms and are not re-li
 - [Usage](getting-started/usage.md) — CLI and Python API examples
 - [Full documentation](documentation/README.md) — package and module reference
 - [Contributing](contributing/README.md) — developer setup
-- [AI statement](ai-statement.md) — how AI was used on this project
-- [License (MIT)](license.md) — terms of use
+- [Meet the team](about/meet-the-team.md) — contributors
+- [Acknowledgements](about/acknowledgements.md) — mentors and program
+- [AI statement](about/ai-statement.md) — how AI was used on this project
+- [License (MIT)](about/license.md) — terms of use

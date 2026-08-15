@@ -7,7 +7,13 @@ from unittest.mock import patch
 
 from capstone import config
 from capstone import helper_functions as fun
-from capstone.helper_functions import expand_user, load_model_config, setup_logger
+from capstone.helper_functions import (
+    PROJECT_ROOT,
+    expand_user,
+    load_model_config,
+    resolve_data_path,
+    setup_logger,
+)
 
 
 class TestLoadConfig(unittest.TestCase):
@@ -34,8 +40,12 @@ class TestLoadConfig(unittest.TestCase):
         for name, value in vars(config).items():
             if not name.isupper():
                 continue
-            self.assertIn(name.lower(), result)
-            self.assertEqual(result[name.lower()], value)
+            key = name.lower()
+            self.assertIn(key, result)
+            if key == "data_path":
+                self.assertEqual(result[key], resolve_data_path(value))
+            else:
+                self.assertEqual(result[key], value)
 
     def test_excludes_non_uppercase_names(self) -> None:
         result = load_model_config()
@@ -75,7 +85,8 @@ class TestLoadConfig(unittest.TestCase):
         result = load_model_config()
 
         self.assertIsInstance(result["data_path"], Path)
-        self.assertEqual(result["data_path"], Path(".data"))
+        self.assertTrue(result["data_path"].is_absolute())
+        self.assertEqual(result["data_path"], (PROJECT_ROOT / ".data").resolve())
 
         self.assertIsInstance(result["full_columns"], list)
         self.assertIn("Voted", result["full_columns"])
@@ -105,6 +116,35 @@ class TestLoadConfig(unittest.TestCase):
         # Values are taken directly from the config module (same object identity).
         self.assertIs(first["features"], config.FEATURES)
         self.assertIs(first["demographic_columns"], config.DEMOGRAPHIC_COLUMNS)
+
+    def test_data_path_is_project_rooted_not_cwd(self) -> None:
+        """Relative DATA_PATH should not depend on the process working directory."""
+        import os
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            other_cwd = Path(temp_dir)
+            previous = Path.cwd()
+            try:
+                os.chdir(other_cwd)
+                result = load_model_config()
+            finally:
+                os.chdir(previous)
+
+        expected = (PROJECT_ROOT / ".data").resolve()
+        self.assertEqual(result["data_path"], expected)
+        self.assertNotEqual(result["data_path"], (other_cwd / ".data").resolve())
+
+
+class TestResolveDataPath(unittest.TestCase):
+    def test_relative_path_joins_project_root(self) -> None:
+        root = Path("/tmp/fake-project")  # nosec: B108
+        result = resolve_data_path(".data", project_root=root)
+        self.assertEqual(result, (root / ".data").resolve())
+
+    def test_absolute_path_unchanged_aside_from_resolve(self) -> None:
+        absolute = Path("/var/data/ces").resolve()
+        result = resolve_data_path(absolute, project_root=Path("/tmp/other"))  # nosec: B108
+        self.assertEqual(result, absolute)
 
 
 class TestExpandUser(unittest.TestCase):

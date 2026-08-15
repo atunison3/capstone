@@ -21,5 +21,8 @@
   - [Development Setup](contributing/development-setup.md)
   - [Testing](contributing/testing.md)
 
-- [AI statement](ai-statement.md)
-- [License (MIT)](license.md)
+- About
+  - [Acknowledgements](about/acknowledgements.md)
+  - [Meet the team](about/meet-the-team.md)
+  - [AI statement](about/ai-statement.md)
+  - [License (MIT)](about/license.md)

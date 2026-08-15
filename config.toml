@@ -58,7 +58,6 @@ target = "Voted"
 [demographic_columns]
 educ = "Education"
 race = "Race"
-hispanic = "Hispanic"
 gender4 = "Gender"
 birthyr = "Birth Year"
 
@@ -109,17 +108,20 @@ inputstate = "State FIPS Code"
 [in_person_mapping]
 "1.0" = "Yes"
 "2.0" = "No"
+"nan" = "No"
 
 [phone_mapping]
 "1.0" = "Yes"
 "2.0" = "No"
+"nan" = "No"
 
 [email_mapping]
 "1.0" = "Yes"
 "2.0" = "No"
+"nan" = "No"
 
 [letter_mapping]
 "1.0" = "Yes"
 "2.0" = "No"
-
+"nan" = "No"
 

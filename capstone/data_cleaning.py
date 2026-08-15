@@ -102,7 +102,7 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
 
     # Map the columns
     for column_name, map_name in config["maps"].items():
-        df[column_name] = df[column_name].astype(str).replace(config[map_name])
+        df[column_name] = df[column_name].astype(str).fillna("nan").replace(config[map_name])
         logger.debug(f"🟢 Successfully mapped {column_name}")
     df = df[config["full_columns"]]
 

@@ -46,6 +46,7 @@ BINARY_FEATURES = [
 ]
 
 
+# Add the Outreach Y/N back here for use in fig 2
 FEATURES = [
     "Education",
     "Race",
@@ -103,7 +104,7 @@ EDUC_MAPPING = {
     4: "2 year college degree",
     5: "4 year college degree",
     6: "Postgraduate degree",
-    8: "Skipped",
+    8: "Skipped",  # 7 skipped because ... <a reason>
     9: "Not asked",
 }
 
@@ -128,25 +129,13 @@ GENDER_MAPPING = {
 }
 
 
-IN_PERSON_MAPPING = {
-    1.0: "Yes",
-    2.0: "No",
-}
+IN_PERSON_MAPPING = {1.0: "Yes", 2.0: "No", "nan": "No"}
 
 
-PHONE_MAPPING = {
-    1.0: "Yes",
-    2.0: "No",
-}
+PHONE_MAPPING = {1.0: "Yes", 2.0: "No", "nan": "No"}
 
 
-EMAIL_MAPPING = {
-    1.0: "Yes",
-    2.0: "No",
-}
+EMAIL_MAPPING = {1.0: "Yes", 2.0: "No", "nan": "No"}
 
 
-LETTER_MAPPING = {
-    1.0: "Yes",
-    2.0: "No",
-}
+LETTER_MAPPING = {1.0: "Yes", 2.0: "No", "nan": "No"}

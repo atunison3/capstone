@@ -37,12 +37,17 @@ def fig_bars_zoom(df: DataFrame) -> None:
     fig, ax = plt.subplots(figsize=(8.5, 5.2))
 
     # Plot the turnout for contacted and not contacted voters
-    ax.plot([LABEL[c] for c in ORDER], df["Contacted"], marker="o", color=ColorScheme.UM_BLUE)
-    ax.plot([LABEL[c] for c in ORDER], df["Not Contacted"], marker="o", color=ColorScheme.GREY)
+    ax.plot([LABEL[c] for c in ORDER], df["Contacted"], marker="o", color=ColorScheme.UM_BLUE, label="Contacted")
+    ax.plot([LABEL[c] for c in ORDER], df["Not Contacted"], marker="o", color=ColorScheme.GREY, label="Not contacted")
 
     # Create the yellow fill between
     ax.fill_between(
-        [LABEL[c] for c in ORDER], df["Contacted"], df["Not Contacted"], alpha=0.3, color=ColorScheme.UM_MAIZE
+        [LABEL[c] for c in ORDER],
+        df["Contacted"],
+        df["Not Contacted"],
+        alpha=0.3,
+        color=ColorScheme.UM_MAIZE,
+        label="Outreach gap",
     )
 
     # Modify the axis
@@ -51,6 +56,9 @@ def fig_bars_zoom(df: DataFrame) -> None:
     ax.set_axisbelow(True)
     ax.set_ylabel(Y_LABEL)
     ax.set_title("Outreach x Voter ID Strictness Interaction")
+
+    # Identify the two lines and the shaded gap between them.
+    ax.legend(loc="lower left", frameon=True, facecolor="white", framealpha=0.9, edgecolor=ColorScheme.LIGHT_GRAY)
 
     # Save the layout
     fig.tight_layout()
@@ -102,3 +110,5 @@ def generate_fig3(config: dict[Any, Any]):
 if __name__ == "__main__":
     # Load the config
     config = load_model_config()
+
+    generate_fig3(config)

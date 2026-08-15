@@ -57,7 +57,7 @@ AI usage was focused on building reproducible python based analysis and improvin
 
 ### Example 1 — formatting a classification map
 
-**Prompt**
+#### Prompt 1
 
 ```text
 Given a dataframe with column "NCSL Classification", convert:
@@ -69,7 +69,7 @@ Given a dataframe with column "NCSL Classification", convert:
 "1": No Document Required to Vote
 ```
 
-**Response (excerpt)**
+#### Response 1 (excerpt)
 
 ```python
 classification_map = {
@@ -89,7 +89,7 @@ df["NCSL Classification"] = (
 
 ### Example 2 — drafting unit tests
 
-**Prompt**
+#### Prompt 2
 
 ```text
 Write a unittest for this:
@@ -104,7 +104,7 @@ def load_fips_data(data_path: Path) -> DataFrame:
 The unittest should at minimum verify the column names, first row of data, ...
 ```
 
-**Response (excerpt)**
+#### Response 2 (excerpt)
 
 ```python
 import tempfile

@@ -46,7 +46,6 @@ BINARY_FEATURES = [
 ]
 
 
-# Add the Outreach Y/N back here for use in fig 2
 FEATURES = [
     "Education",
     "Race",

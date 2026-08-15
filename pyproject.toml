@@ -18,6 +18,12 @@ dependencies = [
   "scipy==1.18.0",
   "statsmodels==0.14.6",
 ]
+license = "MIT"
+license-files = ["LICENSE"]
+
+[project.urls]
+Repository = "https://github.com/atunison3/capstone"
+Documentation = "https://atunison3.github.io/capstone/#/"
 
 [build-system]
 requires = ["setuptools >= 77.0.3"]
@@ -28,7 +34,7 @@ line-length = 120
 
 [tool.ruff]
 line-length = 120
-extend-exclude = ["notes", "mke_um_figs.py", "*.ipynb"]  # Excludes the notes (allows us to have unclean code there)
+extend-exclude = ["mke_um_figs.py"]  # Excludes the notes (allows us to have unclean code there)
 
 [[tool.mypy.overrides]]
 module = [
@@ -40,3 +46,6 @@ ignore_missing_imports = true
 
 [tool.setuptools]
 packages = ["capstone"]
+
+[project.scripts]
+capstone = "capstone.analysis:main"

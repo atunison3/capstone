@@ -24,6 +24,18 @@
   --sidebar-nav-link-color--active: var(--um-maize);
   --sidebar-border-color:   var(--um-blue2);
 
+  /* Docsify 5 native sidebar tokens (core.min.css) */
+  --sidebar-bg:                   var(--um-blue);
+  --sidebar-link-color:           rgba(255, 255, 255, 0.85);
+  --sidebar-link-color-active:    var(--um-maize);
+  --sidebar-group-title-color:    #ffffff;
+  --sidebar-name-color:           var(--um-maize);
+  --sidebar-border-color:         var(--um-blue2);
+
+  /* Docsify 5 cover tokens */
+  --cover-title-color:            var(--um-maize);
+  --cover-color:                  #ffffff;
+
   --content-background:     #ffffff;
   --text-color:             var(--ink);
   --heading-color:          var(--um-blue);
@@ -48,13 +60,90 @@
   letter-spacing: 0.02em;
 }
 
+/* Default sidebar text (including section group labels) */
+.sidebar,
+.sidebar-nav,
+.sidebar ul,
+.sidebar ul li,
+.sidebar ul li > p,
+.sidebar ul li > span,
+.sidebar ul li > strong {
+  color: #ffffff !important;
+}
+
+/* Sidebar markdown headings (e.g. # Navigation in _sidebar.md)
+   Docsify wraps heading text in <a href>, which otherwise uses
+   dark --sidebar-link-color / --strong-color. */
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar h4,
+.sidebar-nav h1,
+.sidebar-nav h2,
+.sidebar-nav h3,
+.sidebar-nav h4,
+.sidebar #navigation,
+.sidebar-nav #navigation,
+.sidebar h1 a,
+.sidebar h2 a,
+.sidebar h3 a,
+.sidebar h4 a,
+.sidebar-nav h1 a,
+.sidebar-nav h2 a,
+.sidebar-nav h3 a,
+.sidebar-nav h4 a,
+.sidebar #navigation a,
+.sidebar-nav #navigation a,
+.sidebar a[href="#navigation"],
+.sidebar-nav a[href="#navigation"] {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration-color: transparent !important;
+  border: none !important;
+}
+
+.sidebar h1,
+.sidebar-nav h1,
+.sidebar #navigation,
+.sidebar-nav #navigation {
+  /* Inset from the edge, but less than sidebar-nav ul item indent (~20px) */
+  margin: 0.65rem 0 0.5rem;
+  padding: 0 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sidebar h1 a:hover,
+.sidebar-nav h1 a:hover,
+.sidebar #navigation a:hover,
+.sidebar-nav #navigation a:hover {
+  color: var(--um-maize) !important;
+  -webkit-text-fill-color: var(--um-maize) !important;
+}
+
+/* Section headers: Getting Started / Documentation / Contributing */
+.sidebar-nav > ul > li > p,
+.sidebar > ul > li > p,
+.sidebar ul li.parent > p,
+.sidebar ul li.folder > p,
+.sidebar ul > li:has(> ul) > p {
+  color: rgba(255, 255, 255, 0.98) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em;
+  text-transform: none;
+  opacity: 1 !important;
+  margin: 0.85em 0 0.25em;
+}
+
 .sidebar ul li a {
   color: var(--sidebar-nav-link-color) !important;
   transition: color 0.15s ease;
 }
 
 .sidebar ul li a:hover,
-.sidebar ul li.active > a {
+.sidebar ul li.active > a,
+.sidebar ul li.active > a span {
   color: var(--sidebar-nav-link-color--active) !important;
 }
 
@@ -150,7 +239,8 @@ body {
 }
 
 /* ===== Cover page ===== */
-section.cover {
+section.cover,
+section.cover.show {
   background: linear-gradient(135deg, var(--um-blue) 0%, var(--um-blue2) 100%) !important;
   color: #ffffff;
 }
@@ -167,10 +257,19 @@ section.cover .cover-main > p a:hover {
   color: var(--um-blue) !important;
 }
 
-section.cover h1 {
-  color: #ffffff;
+/* Title is often <h1 id="capstone"><a>...</a></h1>; Docsify uses --cover-title-color */
+section.cover h1,
+section.cover.show h1,
+section.cover h1#capstone,
+section.cover #capstone,
+section.cover h1 a,
+section.cover h1#capstone a,
+section.cover #capstone a {
+  color: var(--um-maize) !important;
+  -webkit-text-fill-color: var(--um-maize) !important;
   font-weight: 800;
   letter-spacing: -0.02em;
+  text-decoration-color: transparent !important;
 }
 
 section.cover blockquote {
@@ -181,14 +280,82 @@ section.cover blockquote {
 }
 
 /* ===== Search box ===== */
-.search input {
-  border: 1px solid var(--um-blue3) !important;
-  border-radius: 4px;
+.search {
+  color: #ffffff;
 }
 
-.search input:focus {
+.search .input-wrap {
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.search input,
+.search input[type="search"] {
+  background: #ffffff !important;
+  color: var(--um-blue) !important;
+  border: 1px solid var(--um-blue3) !important;
+  border-radius: 6px;
+  caret-color: var(--um-blue);
+}
+
+.search input::placeholder,
+.search input[type="search"]::placeholder {
+  color: var(--um-blue3) !important;
+  opacity: 1;
+}
+
+/* WebKit autofill keeps text readable */
+.search input:-webkit-autofill,
+.search input:-webkit-autofill:hover,
+.search input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--um-blue) !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+.search input:focus,
+.search input[type="search"]:focus {
   border-color: var(--um-maize) !important;
   box-shadow: 0 0 0 2px rgba(255, 203, 5, 0.25);
+  outline: none;
+}
+
+/* Result list sits on the dark navy sidebar */
+.search .results-status {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.search .results-panel .matching-post {
+  border-bottom: 1px solid var(--um-blue2);
+}
+
+.search .results-panel .matching-post a {
+  color: inherit;
+}
+
+/* Module / page titles in results */
+.search .results-panel .matching-post .title,
+.search .results-panel .title {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* Snippet body text */
+.search .results-panel .matching-post .content,
+.search .results-panel .content {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Highlighted match terms */
+.search .results-panel .matching-post em,
+.search .results-panel em {
+  color: var(--um-maize) !important;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.search .clear-button,
+.search .kbd-group kbd {
+  color: var(--um-blue) !important;
 }
 
 /* ===== Scrollbar (WebKit) ===== */

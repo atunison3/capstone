@@ -100,9 +100,10 @@ def clean_ces_data(df: DataFrame, config: dict[Any, Any]) -> DataFrame:
     df["Voted"] = (df["TS_g2024"] != 7).astype(int)
     df["Age"] = 2024 - df["Birth Year"]
 
-    # Map the columns
+    # Map the columns (stringify keys so they match .astype(str) values)
     for column_name, map_name in config["maps"].items():
-        df[column_name] = df[column_name].astype(str).replace(config[map_name])
+        mapping = {str(key): value for key, value in config[map_name].items()}
+        df[column_name] = df[column_name].astype(str).fillna("No").replace(mapping)
         logger.debug(f"🟢 Successfully mapped {column_name}")
     df = df[config["full_columns"]]
 

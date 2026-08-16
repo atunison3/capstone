@@ -1,6 +1,7 @@
 import statsmodels.formula.api as smf
 import warnings
 from pandas import DataFrame
+import numpy as np
 from scipy.special import expit
 from statsmodels.discrete.discrete_model import BinaryResultsWrapper
 
@@ -47,6 +48,9 @@ def calculate_probabilities(model: BinaryResultsWrapper) -> None:
 
     # Add the Expit column to the summary table
     summary.tables[1]["Expit"] = expit(summary.tables[1]["Coef."])
+
+    # Add the Odds Ratio column to the summary table
+    summary.tables[1]["Odds Ratio"] = np.exp(summary.tables[1]["Coef."])
 
     print(summary)
 

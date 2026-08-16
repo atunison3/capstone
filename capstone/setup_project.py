@@ -6,9 +6,16 @@ from typing import Optional
 import pandas as pd
 import requests
 
-from capstone.helper_functions import setup_logger
+from capstone.config import DATA_PATH
+from capstone.helper_functions import resolve_data_path, setup_logger
 
 
+def default_output_dir() -> Path:
+    """Data directory shared by installers and loaders (cwd or source tree)."""
+    return resolve_data_path(DATA_PATH)
+
+
+# Resolved at call time via default_output_dir(); kept for backward-compatible imports.
 OUTPUT_DIR = Path(".data")
 
 logger = setup_logger()
@@ -23,8 +30,11 @@ def get_user_downloads_folder() -> Path:
     return downloads_dir
 
 
-def create_data_directory(output_dir: Path = OUTPUT_DIR) -> None:
+def create_data_directory(output_dir: Path | None = None) -> None:
     """Creates the data folder."""
+
+    if output_dir is None:
+        output_dir = default_output_dir()
 
     logger.debug("🟢 Verifying data directory exists: %s", output_dir)
 
@@ -38,7 +48,7 @@ def create_data_directory(output_dir: Path = OUTPUT_DIR) -> None:
 
 
 def download_ces_data(
-    output_dir: Path = OUTPUT_DIR,
+    output_dir: Path | None = None,
     filename: str = "CCES24_Common_OUTPUT_vv_topost_final.csv",
 ) -> None:
     """
@@ -51,11 +61,14 @@ def download_ces_data(
 
     logger.info("🟢 Starting CES data installation.")
 
+    if output_dir is None:
+        output_dir = default_output_dir()
+    output_dir = Path(output_dir)
+
     if (output_dir / "ces_data.csv").exists():
         logger.info("🟢 CES Data exists. Exiting download of ces data.")
         return None
 
-    output_dir = Path(output_dir)
     create_data_directory(output_dir)
 
     file_page_url = "https://dataverse.harvard.edu/file.xhtml?fileId=12050325&version=9.0"
@@ -183,10 +196,14 @@ def download_ces_data(
     return None
 
 
-def download_state_data(output_dir: Path = OUTPUT_DIR) -> None:
+def download_state_data(output_dir: Path | None = None) -> None:
     """Downloads FIPS data, saves it as CSV, and returns a DataFrame."""
 
     logger.info("🟢 Starting Census FIPS data download.")
+
+    if output_dir is None:
+        output_dir = default_output_dir()
+    output_dir = Path(output_dir)
 
     # Check if data already exists
     if (output_dir / "fips.csv").exists():
@@ -233,7 +250,7 @@ def download_state_data(output_dir: Path = OUTPUT_DIR) -> None:
 
 
 def install_ncsl_classification(
-    output_dir: Path = OUTPUT_DIR,
+    output_dir: Path | None = None,
     filename: str = "ncsl_voter_id_classification.csv",
 ) -> None:
     """
@@ -243,6 +260,10 @@ def install_ncsl_classification(
     """
 
     logger.info("🟢 Installing NCSL voter ID classification data.")
+
+    if output_dir is None:
+        output_dir = default_output_dir()
+    output_dir = Path(output_dir)
 
     # Checkout if ncsl data exists
     if (output_dir / "ncsl_voter_id_classification.csv").exists():
@@ -383,10 +404,15 @@ def install_ncsl_classification(
     return None
 
 
-def main(output_dir: Path = OUTPUT_DIR) -> None:
+def main(output_dir: Path | None = None) -> None:
     """Creates the data directory and installs all required project data."""
 
     logger.info("🟢 Starting capstone project data setup.")
+
+    if output_dir is None:
+        output_dir = default_output_dir()
+    output_dir = Path(output_dir)
+    logger.info("🟢 Using data directory: %s", output_dir)
 
     try:
         create_data_directory(output_dir)

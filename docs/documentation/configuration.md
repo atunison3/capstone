@@ -72,10 +72,11 @@ Relative paths are **never** anchored under `site-packages` just because the pac
 | `Email or text message` | `email_mapping` (`EMAIL_MAPPING`) |
 | `Letter or postcard` | `letter_mapping` (`LETTER_MAPPING`) |
 
-`clean_ces_data` applies each mapping with:
+`clean_ces_data` applies each mapping with stringified keys (so int/float codes match `.astype(str)` values), including outreach `nan` → `"No"` where configured:
 
 ```python
-df[column_name] = df[column_name].astype(str).replace(config[map_name])
+mapping = {str(key): value for key, value in config[map_name].items()}
+df[column_name] = df[column_name].astype(str).fillna("No").replace(mapping)
 ```
 
 ## Changing configuration

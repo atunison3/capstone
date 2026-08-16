@@ -8,23 +8,48 @@
 
 ## Recommended install (users)
 
-Install the package directly from GitHub:
-
 ```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
 pip install git+https://github.com/atunison3/capstone.git
 ```
 
-Then run:
+Then run **from the directory where you want data stored**:
 
 ```bash
 capstone
 ```
 
+That creates (or reuses) `./.data/` in the current working directory and writes:
+
+```text
+.data/ces_data.csv
+.data/fips.csv
+.data/ncsl_voter_id_classification.csv
+```
+
+Data is **not** installed into `site-packages`. Always run `capstone` from a project folder you control.
+
+### Windows quick start
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install git+https://github.com/atunison3/capstone.git
+capstone
+```
+
 ### Configuration
 
-Settings live in **`capstone/config.py`** (imported via `load_model_config()`). No external `config.toml` is required. After `pip install`, those defaults are part of the installed package.
+Settings live in **`capstone/config.py`** (imported via `load_model_config()`). No external `config.toml` is required.
 
-To customize data paths or column maps, edit `capstone/config.py` in a source checkout and install editable (`pip install -e .`), or change the constants in your environment’s installed copy.
+- Default relative data location: `.data`
+- Resolved at runtime by `resolve_data_path()` so CLI downloads and loaders share one absolute path
+- Details: [Configuration](documentation/configuration.md)
+
+To customize column maps or use an absolute data directory, edit `capstone/config.py` in a source checkout and install editable (`pip install -e .`).
 
 ## Install from a local clone
 
@@ -37,6 +62,7 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install .
+capstone
 ```
 
 ### Windows
@@ -48,6 +74,15 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install .
+capstone
+```
+
+Editable install for development:
+
+```bash
+python -m pip install -e .
+# or
+python -m pip install -r requirements-dev.txt
 ```
 
 ## Runtime dependencies
@@ -68,11 +103,14 @@ Pinned in `pyproject.toml`:
 
 ```bash
 python -c "import capstone; print('ok')"
+python -c "from capstone.helper_functions import load_model_config; print(load_model_config()['data_path'])"
 capstone
 ```
+
+The second command prints the absolute data directory the pipeline will use (usually `<cwd>/.data`).
 
 There is no `--help` flag on the CLI entry point. The command is `capstone`, which maps to `capstone.analysis:main` in `pyproject.toml`.
 
 ## Next
 
-See [Usage](getting-started/usage.md) for what the CLI does and how to call modules from Python.
+See [Usage](usage.md) for what the CLI does and how to call modules from Python.

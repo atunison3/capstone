@@ -34,19 +34,6 @@ class TestLoadConfig(unittest.TestCase):
         for key in result:
             self.assertEqual(key, key.lower())
 
-    # def test_values_match_config_module_constants(self) -> None:
-    #     result = load_model_config()
-
-    #     for name, value in vars(config).items():
-    #         if not name.isupper():
-    #             continue
-    #         key = name.lower()
-    #         self.assertIn(key, result)
-    #         if key == "data_path":
-    #             self.assertEqual(result[key], resolve_data_path(value))
-    #         else:
-    #             self.assertEqual(result[key], value)
-
     def test_excludes_non_uppercase_names(self) -> None:
         result = load_model_config()
 
@@ -84,10 +71,6 @@ class TestLoadConfig(unittest.TestCase):
     def test_core_value_types_and_contents(self) -> None:
         result = load_model_config()
 
-        # self.assertIsInstance(result["data_path"], Path)
-        # self.assertTrue(result["data_path"].is_absolute())
-        # self.assertEqual(result["data_path"], resolve_data_path(config.DATA_PATH))
-
         self.assertIsInstance(result["full_columns"], list)
         self.assertIn("Voted", result["full_columns"])
 
@@ -116,22 +99,6 @@ class TestLoadConfig(unittest.TestCase):
         # Values are taken directly from the config module (same object identity).
         self.assertIs(first["features"], config.FEATURES)
         self.assertIs(first["demographic_columns"], config.DEMOGRAPHIC_COLUMNS)
-
-    # def test_data_path_prefers_cwd_when_present(self) -> None:
-    #     """Installed-CLI behavior: existing cwd/.data wins over other locations."""
-    #     import os
-
-    #     with tempfile.TemporaryDirectory() as temp_dir:
-    #         other_cwd = Path(temp_dir)
-    #         (other_cwd / ".data").mkdir()
-    #         previous = Path.cwd()
-    #         try:
-    #             os.chdir(other_cwd)
-    #             result = load_model_config()
-    #         finally:
-    #             os.chdir(previous)
-
-    #     self.assertEqual(result["data_path"], (other_cwd / ".data").resolve())
 
 
 class TestResolveDataPath(unittest.TestCase):

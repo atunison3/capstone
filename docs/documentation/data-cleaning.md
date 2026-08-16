@@ -4,7 +4,7 @@ Module: `capstone.data_cleaning`
 
 Loads CES, FIPS, and NCSL inputs, renames and maps CES fields using `capstone.config` (via the dict from `load_model_config()`), builds a validated turnout outcome, and returns a modeling-ready frame.
 
-Default on-disk data root: `.data/` (overridden by `config["data_path"]` in `load_full_dataframe`).
+On-disk inputs are read from `config["data_path"]` (an absolute path produced by `load_model_config()` / `resolve_data_path()`). That is usually `<cwd>/.data` for an installed CLI run, or `<repo>/.data` in a source checkout when appropriate.
 
 ## `load_dataframe`
 
@@ -85,8 +85,8 @@ load_full_dataframe(config: dict[Any, Any]) -> DataFrame
 
 Full load path used by the CLI and figure scripts:
 
-1. Resolve `data_path` from config.
-2. Load and clean CES.
+1. Read absolute `data_path` from config (`Path(config["data_path"])`) and log it.
+2. Load and clean CES from `{data_path}/ces_data.csv`.
 3. Load FIPS and NCSL; merge them.
 4. Merge onto CES.
 5. Drop rows with missing values in `config["features"]`.

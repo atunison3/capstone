@@ -34,19 +34,23 @@ capstone/
 ## Pipeline overview
 
 ```text
-capstone/config.py
+capstone/config.py  (DATA_PATH = ".data")
     │
     ▼
-setup_project ──► .data/ (ces_data.csv, fips.csv, ncsl_…)
+resolve_data_path / default_output_dir
     │
-    ▼
-data_cleaning.load_full_dataframe
+    ├── setup_project ──► <resolved>/.data (ces_data.csv, fips.csv, ncsl_…)
     │
-    ├──► logistic_regression.train_model
-    │         │
-    │         └──► logistic_regression.calculate_probabilities
-    │
-    └──► visualization.report_fig*_real
+    └── load_model_config()["data_path"]
+              │
+              ▼
+        data_cleaning.load_full_dataframe
+              │
+              ├──► logistic_regression.train_model
+              │         │
+              │         └──► logistic_regression.calculate_probabilities
+              │
+              └──► visualization.report_fig*_real
 ```
 
-The public CLI (`capstone`) runs setup → cleaning → model fit → `calculate_probabilities` (summary with Expit). Figure scripts are separate entry points intended for report generation from a source checkout.
+The public CLI (`capstone`) runs setup → cleaning → model fit → `calculate_probabilities` (summary with Expit). Installers and loaders share one resolved data directory (not `site-packages`). Figure scripts are separate entry points intended for report generation from a source checkout.

@@ -3,11 +3,15 @@
 ## Quick start
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
 pip install git+https://github.com/atunison3/capstone.git
 capstone
 ```
 
 Configuration comes from `capstone.config` (no separate config file required).
+
+**Important:** run `capstone` from the folder that should own `./.data/`. Downloads and model inputs both use that resolved path (not `site-packages`).
 
 ## What the CLI runs
 
@@ -34,7 +38,7 @@ Run `capstone` from the directory where you want `.data/` created (or where it a
 
 ## CES download note
 
-Automated CES download is blocked by Harvard Dataverse WAF protections. When CES data is missing, the tool prints instructions, waits for you to place the expected CSV in your user `Downloads` folder, then copies it to `.data/ces_data.csv`.
+Automated CES download is blocked by Harvard Dataverse WAF protections. When CES data is missing, the tool prints instructions, waits for you to place the expected CSV in your user `Downloads` folder, then moves it into the resolved data directory as `ces_data.csv`.
 
 Expected download filename (default):
 
@@ -85,9 +89,10 @@ calculate_probabilities(model)  # summary2 table + Expit column
 ### Install project data without fitting a model
 
 ```python
-from capstone.setup_project import main as setup_data
+from capstone.setup_project import main as setup_data, default_output_dir
 
-setup_data()  # writes under .data/ by default
+print(default_output_dir())  # absolute path that will be used
+setup_data()                 # writes ces/fips/ncsl files there
 ```
 
 Or as a module:
@@ -102,7 +107,7 @@ python -m capstone.setup_project
 
 Figure scripts live under `capstone/visualization/` and write PNGs to `docs/assets/` (anchored to the repository root).
 
-From a source checkout with data under `DATA_PATH` (default `.data/`):
+From a source checkout (with data available via `load_model_config()["data_path"]`):
 
 ```bash
 python capstone/visualization/report_fig1_real.py
@@ -121,11 +126,17 @@ python capstone/visualization/report_fig4_real.py
 ## Working directory layout after a run
 
 ```text
-.
-├── .data/               # default DATA_PATH from capstone.config
+.                          # directory where you invoked capstone
+├── .data/                 # resolved data_path (typically <cwd>/.data)
 │   ├── ces_data.csv
 │   ├── fips.csv
 │   └── ncsl_voter_id_classification.csv
 └── .log/
     └── capstone.log
+```
+
+Confirm the path the process will use:
+
+```bash
+python -c "from capstone.helper_functions import load_model_config; print(load_model_config()['data_path'])"
 ```

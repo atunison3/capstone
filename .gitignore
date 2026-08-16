@@ -3,7 +3,6 @@
 config.local.toml
 my_sandbox.ipynb
 .data/
-example.py
 pr_description.md
 
 # Byte-compiled / optimized / DLL files

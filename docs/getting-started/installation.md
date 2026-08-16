@@ -15,9 +15,10 @@ python -m pip install --upgrade pip
 pip install git+https://github.com/atunison3/capstone.git
 ```
 
-Then run **from the directory where you want data stored**:
+Then run **from the directory where you want data stored**. If this is your **second install**, you may need to unhash the command before running again.
 
 ```bash
+unhash capstone
 capstone
 ```
 

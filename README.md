@@ -4,19 +4,58 @@ Capstone is a University of Michigan MADS (Spring/Summer 2026) project that stud
 
 ---
 
-## Data Story
+## Motivation
 
-> **Coming soon.** This section will hold the project's data story — the narrative walkthrough of the research question, findings, and figures.
+In the 2024 U.S. presidential election, 65.3% of voting-age citizens voted, 154 million people. Public understanding of voting is often shaped by headlines and anecdote rather than evidence. This project analyzes a central question: how do voter outreach and state voter ID law strictness affect turnout in a high-salience election, findings that can help civic organizations and campaigns identify what actually moves participation.
 
-Until then, exploratory figures from the analysis pipeline are below.
+## Methodology
 
-![Turnout by voter ID strictness](assets/report_fig1_turnout_by_strictness.png)
+We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID strictness classification, then fit a logistic regression to predict turnout.
 
-![Turnout by contact status](assets/report_fig2_turnout_by_contacted.png)
+- **Data**: CES 2024, around 60,000 respondents,
+- **Voter ID strictness**: 5 categories from NCSL, merged onto CES via state
+- **Outcome**: Validated turnout, not self-report
+- **Model**: Binary logistic regression
+- **Key treatments**: Voter ID strictness, 4 outreach channels (in-person, phone, email/text, mail), and their interactions
+- **Controls**: Age, race, gender, education
 
-![Turnout by contact channel](assets/report_fig3_turnout_by_contacted.png)
+## Exploratory Data Analysis (EDA)
 
-![Logistic marginal effects](assets/report_fig4_logistic_marginal_effects.png)
+![Turnout by voter ID strictness](docs/assets/report_fig1_turnout_by_strictness.png)
+
+![Turnout by contact status](docs/assets/report_fig2_turnout_by_contacted.png)
+
+**Turnout by Campaign Contact**: 95.0% among contacted respondents vs. 86.5% not contacted, an 8.5-point raw gap.
+
+![Turnout by contact channel](docs/assets/report_fig3_turnout_by_contacted.png)
+
+**Outreach Gap by Strictness**: Gap present in every category, but varies rather than staying constant.
+
+![Logistic marginal effects](docs/assets/report_fig4_logistic_marginal_effects.png)
+
+- **Contact**: +4.5 pts (95% CI: 4.0-5.0), strongest effect overall.
+- **Non-strict, photo ID: -2.1 pts (95% CI: -2.9-1.5), the only significant ID-strictness effect.
+- The other three strictness categories showed no significant effect
+
+After controlling for demographics, voter ID strictness largely ceases to predict turnout, suggesting the raw pattern reflected population composition rather than the law itself.
+
+### Limitations
+
+- Validated turnout was 91.6% vs. the Census's 65.3%, since CES respondents self-select into the survey.
+- Neither outreach nor voter ID law is randomly assigned, so results are associations, not causation
+
+### Ethical Concerns
+
+- Avoided reporting on subgroups small enough to identify individuals
+- Framed findings around expanding participation, not enabling targeting or suppression
+- Treat ID laws' disproportionate impact on voters of color as structural, not a group trait
+
+### Future Directions
+
+- Multi-year data for a difference-in-differences design
+- Per-channel outreach effects, not just an aggregated "contacted" effect
+- Add campaign spending and policy-attitude controls
+- Test whether patterns hold in lower-salience elections
 
 ---
 
@@ -38,7 +77,7 @@ What `capstone` does:
 3. Cleans and merges the datasets using settings from `capstone/config.py`.
 4. Fits a logistic regression of validated turnout and prints coefficient results with an **Expit** column via `calculate_probabilities`.
 
-Configuration ships inside the package (`capstone.config`). Relative `.data` is resolved at runtime so installers and loaders share one path — data is **not** written under `site-packages`. See [docs/documentation/configuration.md](docs/documentation/configuration.md).
+Configuration ships inside the package (`capstone.config`). Relative `.data` is resolved at runtime so installers and loaders share one path — data is **not** written under `site-packages`. See [Configuration](docs/documentation/configuration.md).
 
 CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, download the CES CSV into your user `Downloads` folder; the tool moves it into the resolved data directory as `ces_data.csv`.
 
@@ -55,9 +94,16 @@ CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, downl
 
 ## License
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for the full text.
+This project is licensed under the **MIT License**. See [License](docs/about/license.md) file.
 
 Third-party datasets used by the analysis keep their own terms and are not re-licensed as MIT by this project.
+
+## Team
+
+Built by Sahana Sundar, Melody Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
+
+- [Meet the team](docs/about/meet-the-team.md)
+- [Acknowledgements](docs/about/acknowledgements.md)
 
 ## Next steps
 
@@ -65,4 +111,7 @@ Third-party datasets used by the analysis keep their own terms and are not re-li
 - [Usage](docs/getting-started/usage.md) — CLI and Python API examples
 - [Full documentation](docs/documentation/README.md) — package and module reference
 - [Contributing](docs/contributing/README.md) — developer setup
-- [License (MIT)](docs/license.md) — terms of use
+- [Meet the team](docs/about/meet-the-team.md) — contributors
+- [Acknowledgements](docs/about/acknowledgements.md) — mentors and program
+- [AI statement](docs/about/ai-statement.md) — how AI was used on this project
+- [License (MIT)](docs/about/license.md) — terms of use

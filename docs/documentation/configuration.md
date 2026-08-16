@@ -15,7 +15,7 @@ Configuration lives in the Python module **`capstone/config.py`**, not a TOML fi
 from capstone.helper_functions import load_model_config
 
 config = load_model_config()   # from capstone.config
-print(config["data_path"])    # Path(".data")
+print(config["data_path"])    # absolute path, e.g. /Users/you/project/.data
 print(config["target"])       # "Voted"
 ```
 
@@ -25,11 +25,24 @@ You can also import constants directly:
 from capstone.config import DATA_PATH, FEATURES, TARGET
 ```
 
+## How `data_path` is resolved
+
+`DATA_PATH` defaults to the relative path `.data`. `load_model_config()` runs it through `resolve_data_path()` so installers and loaders agree:
+
+1. If `<cwd>/.data` exists → use it (normal `pip install` + `capstone` workflow).
+2. Else if a source/editable checkout is detected and `<repo>/.data` exists → use the repo path (notebooks outside the repo root).
+3. Else if a source checkout is detected → default to `<repo>/.data`.
+4. Else (installed wheel under `site-packages`) → default to `<cwd>/.data`.
+
+Relative paths are **never** anchored under `site-packages` just because the package was installed there.
+
+`setup_project` uses the same helper via `default_output_dir()`, so downloads and loads share one directory.
+
 ## Top-level settings
 
 | Key | Source constant | Role |
 | --- | --- | --- |
-| `data_path` | `DATA_PATH` | Directory for CES / FIPS / NCSL files (default `Path(".data")`) |
+| `data_path` | `DATA_PATH` | Directory for CES / FIPS / NCSL files (default relative `.data`, resolved as above) |
 | `full_columns` | `FULL_COLUMNS` | Columns retained after CES cleaning |
 | `categorical_features` | `CATEGORICAL_FEATURES` | Documented categorical feature list |
 | `multiclass_features` | `MULTICLASS_FEATURES` | Multiclass feature list |
@@ -59,17 +72,24 @@ from capstone.config import DATA_PATH, FEATURES, TARGET
 | `Email or text message` | `email_mapping` (`EMAIL_MAPPING`) |
 | `Letter or postcard` | `letter_mapping` (`LETTER_MAPPING`) |
 
-`clean_ces_data` applies each mapping with:
+`clean_ces_data` applies each mapping with stringified keys (so int/float codes match `.astype(str)` values), including outreach `nan` → `"No"` where configured:
 
 ```python
-df[column_name] = df[column_name].astype(str).replace(config[map_name])
+mapping = {str(key): value for key, value in config[map_name].items()}
+df[column_name] = df[column_name].astype(str).fillna("No").replace(mapping)
 ```
 
 ## Changing configuration
 
 Edit `capstone/config.py` and reinstall or use an editable install (`pip install -e .`) so the package picks up your changes.
 
-To point at a different data directory, change:
+To point at a different data directory, set an absolute path (recommended for custom locations):
+
+```python
+DATA_PATH = Path("/Users/<username>/data/capstone")
+```
+
+Or keep a relative name and rely on resolution from the directory where you run `capstone`:
 
 ```python
 DATA_PATH = Path(".data")

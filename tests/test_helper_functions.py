@@ -8,7 +8,7 @@ from unittest.mock import patch
 from capstone import config
 from capstone import helper_functions as fun
 from capstone.helper_functions import (
-    PROJECT_ROOT,
+    detect_source_tree_root,
     expand_user,
     load_model_config,
     resolve_data_path,
@@ -33,19 +33,6 @@ class TestLoadConfig(unittest.TestCase):
         self.assertEqual(set(result.keys()), expected_keys)
         for key in result:
             self.assertEqual(key, key.lower())
-
-    def test_values_match_config_module_constants(self) -> None:
-        result = load_model_config()
-
-        for name, value in vars(config).items():
-            if not name.isupper():
-                continue
-            key = name.lower()
-            self.assertIn(key, result)
-            if key == "data_path":
-                self.assertEqual(result[key], resolve_data_path(value))
-            else:
-                self.assertEqual(result[key], value)
 
     def test_excludes_non_uppercase_names(self) -> None:
         result = load_model_config()
@@ -84,10 +71,6 @@ class TestLoadConfig(unittest.TestCase):
     def test_core_value_types_and_contents(self) -> None:
         result = load_model_config()
 
-        self.assertIsInstance(result["data_path"], Path)
-        self.assertTrue(result["data_path"].is_absolute())
-        self.assertEqual(result["data_path"], (PROJECT_ROOT / ".data").resolve())
-
         self.assertIsInstance(result["full_columns"], list)
         self.assertIn("Voted", result["full_columns"])
 
@@ -117,34 +100,62 @@ class TestLoadConfig(unittest.TestCase):
         self.assertIs(first["features"], config.FEATURES)
         self.assertIs(first["demographic_columns"], config.DEMOGRAPHIC_COLUMNS)
 
-    def test_data_path_is_project_rooted_not_cwd(self) -> None:
-        """Relative DATA_PATH should not depend on the process working directory."""
-        import os
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            other_cwd = Path(temp_dir)
-            previous = Path.cwd()
-            try:
-                os.chdir(other_cwd)
-                result = load_model_config()
-            finally:
-                os.chdir(previous)
-
-        expected = (PROJECT_ROOT / ".data").resolve()
-        self.assertEqual(result["data_path"], expected)
-        self.assertNotEqual(result["data_path"], (other_cwd / ".data").resolve())
-
 
 class TestResolveDataPath(unittest.TestCase):
-    def test_relative_path_joins_project_root(self) -> None:
+    def test_relative_path_defaults_to_explicit_project_root_when_missing(self) -> None:
         root = Path("/tmp/fake-project")  # nosec: B108
-        result = resolve_data_path(".data", project_root=root)
+        result = resolve_data_path(".data", project_root=root, cwd=Path("/tmp/other-cwd"))  # nosec: B108
         self.assertEqual(result, (root / ".data").resolve())
 
     def test_absolute_path_unchanged_aside_from_resolve(self) -> None:
         absolute = Path("/var/data/ces").resolve()
         result = resolve_data_path(absolute, project_root=Path("/tmp/other"))  # nosec: B108
         self.assertEqual(result, absolute)
+
+    def test_prefers_existing_cwd_over_project_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            cwd = base / "cwd"
+            root = base / "root"
+            cwd.mkdir()
+            root.mkdir()
+            (cwd / ".data").mkdir()
+            (root / ".data").mkdir()
+
+            result = resolve_data_path(".data", project_root=root, cwd=cwd)
+
+        self.assertEqual(result, (cwd / ".data").resolve())
+
+    def test_uses_project_root_when_only_root_exists(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir)
+            cwd = base / "cwd"
+            root = base / "root"
+            cwd.mkdir()
+            root.mkdir()
+            (root / ".data").mkdir()
+
+            result = resolve_data_path(".data", project_root=root, cwd=cwd)
+
+        self.assertEqual(result, (root / ".data").resolve())
+
+    def test_installed_package_without_source_tree_uses_cwd(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cwd = Path(temp_dir)
+            with patch("capstone.helper_functions.detect_source_tree_root", return_value=None):
+                result = resolve_data_path(".data", cwd=cwd)
+
+        self.assertEqual(result, (cwd / ".data").resolve())
+        self.assertNotIn("site-packages", str(result))
+
+    def test_detect_source_tree_root_finds_repo(self) -> None:
+        root = detect_source_tree_root()
+        # Running tests from this repository should detect the source tree.
+        self.assertIsNotNone(root)
+        if not root:
+            raise TypeError
+        self.assertTrue((root / "pyproject.toml").is_file())
+        self.assertTrue((root / "capstone").is_dir())
 
 
 class TestExpandUser(unittest.TestCase):

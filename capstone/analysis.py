@@ -23,6 +23,7 @@ def main() -> None:
 
     # Load the config
     config = load_model_config()
+    logger.debug("🟢 Loaded the config")
 
     # Get the dataframe
     df = load_full_dataframe(config)
@@ -32,8 +33,6 @@ def main() -> None:
     ####################
     logger.info("🟢 Training the model.")
     model = train_model(df)
-
-    # Print the summary with expit
     calculate_probabilities(model)
 
 

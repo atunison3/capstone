@@ -44,6 +44,8 @@ def calculate_probabilities(model: BinaryResultsWrapper) -> None:
 
     # Extract the coefficients
     summary = model.summary2()
+
+    # Add the Expit column to the summary table
     summary.tables[1]["Expit"] = expit(summary.tables[1]["Coef."])
 
     print(summary)

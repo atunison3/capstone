@@ -22,9 +22,11 @@ Until then, exploratory figures from the analysis pipeline are below.
 
 ## Install and run
 
-Requires **Python 3.13+**.
+Requires **Python 3.13+**. Run from the directory where you want data stored:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
 pip install git+https://github.com/atunison3/capstone.git
 capstone
 ```
@@ -32,13 +34,13 @@ capstone
 What `capstone` does:
 
 1. Guides you through obtaining CES data (manual download from Harvard Dataverse).
-2. Downloads Census FIPS state codes and NCSL voter ID classifications into `.data/`.
+2. Downloads Census FIPS state codes and NCSL voter ID classifications into **`./.data/`** (current working directory).
 3. Cleans and merges the datasets using settings from `capstone/config.py`.
-4. Fits a logistic regression of validated turnout and prints the model summary.
+4. Fits a logistic regression of validated turnout and prints coefficient results with an **Expit** column via `calculate_probabilities`.
 
-Configuration ships inside the package (`capstone.config`). Override paths or column maps by editing that module (use an editable install while developing).
+Configuration ships inside the package (`capstone.config`). Relative `.data` is resolved at runtime so installers and loaders share one path — data is **not** written under `site-packages`. See [docs/documentation/configuration.md](docs/documentation/configuration.md).
 
-CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, download the CES CSV into your user `Downloads` folder; the tool moves it into `.data/ces_data.csv`.
+CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, download the CES CSV into your user `Downloads` folder; the tool moves it into the resolved data directory as `ces_data.csv`.
 
 ---
 

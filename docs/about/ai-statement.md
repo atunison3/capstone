@@ -49,11 +49,11 @@ Where drafts did not match the project, they were revised by humans.
 
 ## Skills
 
-Agent skills were used when generating documentation for this repository. See the [atunison3/agent-skills](https://github.com/atunison3/agent-skills) repository for the relevant `SKILL.md` definitions.
+Agent skills were used in conjunction with the Grok 4-5 model when initially generating documentation for this repository. See the [atunison3/agent-skills](https://github.com/atunison3/agent-skills) repository for the relevant `SKILL.md` definitions. The evaluation was performed by reviewing that the documentation existed, looked up, and accurate.
 
 ## Example AI usage
 
-AI usage was focused on building reproducible python based analysis and improving software-engineering quality of the repository. The following examples are representative of how large language models were used on this project: short, task-focused prompts for formatting and tests, followed by human review and integration.
+AI usage was focused on building reproducible python based analysis and improving software-engineering quality of the repository. Usage was performed via ChatGPT's interface using their fast responses in their 5.5 model. The following examples are representative of how large language models were used on this project: short, task-focused prompts for formatting and tests, followed by human review and integration.
 
 ### Example 1 — formatting a classification map
 

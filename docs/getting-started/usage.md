@@ -20,15 +20,17 @@ capstone = "capstone.analysis:main"
 
 `capstone.analysis.main` performs this pipeline:
 
-1. **Download / install data**
-   - `download_ces_data()` — interactive CES install into `.data/ces_data.csv`
-   - `download_state_data()` — Census FIPS state table into `.data/fips.csv`
-   - `install_ncsl_classification()` — NCSL voter ID classes into `.data/ncsl_voter_id_classification.csv`
-2. **Load config** — `load_model_config()` reads UPPERCASE constants from `capstone.config`
-3. **Clean and merge** — `load_full_dataframe(config)`
+1. **Download / install data** (into the resolved data directory, typically `./.data` under your current working directory)
+   - `download_ces_data()` — interactive CES install into `ces_data.csv`
+   - `download_state_data()` — Census FIPS state table into `fips.csv`
+   - `install_ncsl_classification()` — NCSL voter ID classes into `ncsl_voter_id_classification.csv`
+2. **Load config** — `load_model_config()` reads UPPERCASE constants from `capstone.config` and resolves `data_path`
+3. **Clean and merge** — `load_full_dataframe(config)` reads from that same `data_path`
 4. **Fit model** — `train_model(df)` then `calculate_probabilities(model)` (prints `summary2()` with an **Expit** column)
 
-Logs go to the console (INFO+) and to `.log/capstone.log`.
+Logs go to the console (INFO+) and to `.log/capstone.log` under the current working directory.
+
+Run `capstone` from the directory where you want `.data/` created (or where it already exists). After `pip install`, data is **not** stored inside `site-packages`.
 
 ## CES download note
 

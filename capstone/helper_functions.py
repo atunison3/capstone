@@ -82,6 +82,6 @@ def load_model_config() -> dict[str, Any]:
     """
 
     cfg = {name.lower(): value for name, value in vars(config).items() if name.isupper()}
-    if "data_path" in cfg:
-        cfg["data_path"] = resolve_data_path(cfg["data_path"])
+    # if "data_path" in cfg:
+    #     cfg["data_path"] = resolve_data_path(cfg["data_path"])
     return cfg

@@ -1,7 +1,5 @@
 # Navigation
 
-- [Home](/)
-
 - Getting Started
   - [Installation](getting-started/installation.md)
   - [Usage](getting-started/usage.md)

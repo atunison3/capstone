@@ -34,7 +34,7 @@ We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID s
 ![Logistic marginal effects](assets/report_fig4_logistic_marginal_effects.png)
 
 - **Contact**: +4.5 pts (95% CI: 4.0-5.0), strongest effect overall.
-- **Non-strict, photo ID: -2.1 pts (95% CI: -2.9-1.5), the only significant ID-strictness effect.
+- **Non-strict**, photo ID: -2.1 pts (95% CI: -2.9-1.5), the only significant ID-strictness effect.
 - The other three strictness categories showed no significant effect
 
 After controlling for demographics, voter ID strictness largely ceases to predict turnout, suggesting the raw pattern reflected population composition rather than the law itself.
@@ -67,6 +67,7 @@ Requires **Python 3.13+**. Run from the directory where you want data stored:
 python -m venv .venv
 source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
 pip install git+https://github.com/atunison3/capstone.git
+unhash capstone  # If you've already install it before
 capstone
 ```
 
@@ -92,18 +93,12 @@ CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, downl
 | Modeling | Logistic regression of validated turnout |
 | Visualization | Report figures for outreach and voter ID effects |
 
-## License
-
-This project is licensed under the **MIT License**. See [License](about/license.md) file.
-
-Third-party datasets used by the analysis keep their own terms and are not re-licensed as MIT by this project.
-
 ## Team
 
 Built by Sahana Sundar, Melody Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
 
-- [Meet the team](about/meet-the-team.md)
 - [Acknowledgements](about/acknowledgements.md)
+- [Meet the team](about/meet-the-team.md)
 
 ## Next steps
 
@@ -115,3 +110,13 @@ Built by Sahana Sundar, Melody Ren, and Andy Tunison, with mentorship from Laura
 - [Acknowledgements](about/acknowledgements.md) — mentors and program
 - [AI statement](about/ai-statement.md) — how AI was used on this project
 - [License (MIT)](about/license.md) — terms of use
+
+## AI Statement
+
+AI was used in the development of this project. Please see the full [AI statement](about/ai-statement.md).
+
+## License
+
+This project is licensed under the **MIT License**. See [License](about/license.md) file.
+
+Third-party datasets used by the analysis keep their own terms and are not re-licensed as MIT by this project.

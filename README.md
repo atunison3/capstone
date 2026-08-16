@@ -34,7 +34,7 @@ We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID s
 ![Logistic marginal effects](docs/assets/report_fig4_logistic_marginal_effects.png)
 
 - **Contact**: +4.5 pts (95% CI: 4.0-5.0), strongest effect overall.
-- **Non-strict, photo ID: -2.1 pts (95% CI: -2.9-1.5), the only significant ID-strictness effect.
+- **Non-strict**, photo ID: -2.1 pts (95% CI: -2.9-1.5), the only significant ID-strictness effect.
 - The other three strictness categories showed no significant effect
 
 After controlling for demographics, voter ID strictness largely ceases to predict turnout, suggesting the raw pattern reflected population composition rather than the law itself.
@@ -67,6 +67,7 @@ Requires **Python 3.13+**. Run from the directory where you want data stored:
 python -m venv .venv
 source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
 pip install git+https://github.com/atunison3/capstone.git
+unhash capstone  # If you've already install it before
 capstone
 ```
 

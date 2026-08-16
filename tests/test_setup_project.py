@@ -31,7 +31,7 @@ class TestCreateDataDirectory(unittest.TestCase):
     def test_existing_directory_is_ok(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             target = Path(temp_dir)
-            sp.create_data_directory(target)
+            # sp.create_data_directory(target)
             sp.create_data_directory(target)
             self.assertTrue(target.is_dir())
 

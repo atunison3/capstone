@@ -3,6 +3,7 @@
 config.local.toml
 my_sandbox.ipynb
 .data/
+example.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

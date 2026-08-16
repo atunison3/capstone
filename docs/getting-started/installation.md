@@ -12,14 +12,37 @@
 python -m venv .venv
 source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install git+https://github.com/atunison3/capstone.git
+pip install -U git+https://github.com/atunison3/capstone.git
 ```
 
-Then run **from the directory where you want data stored**. If this is your **second install**, you may need to unhash the command before running again.
+Run **from the directory where you want data stored**. Prefer the module form so the active interpreter cannot be confused with another install:
 
 ```bash
-unhash capstone
+python -m capstone
+```
+
+The console script also works when it points at this venv:
+
+```bash
+which capstone
+head -n 1 "$(which capstone)"   # must be this venv's python
 capstone
+```
+
+### If PATH still has a global install
+
+A previous `pip install` under another Python (for example 3.14) may leave:
+
+```text
+/Library/Frameworks/Python.framework/Versions/3.14/bin/capstone
+```
+
+Uninstall leftovers and prefer `python -m capstone`:
+
+```bash
+python3.14 -m pip uninstall -y capstone-2026   # if installed
+hash -r                                       # bash; or open a new shell
+python -m capstone
 ```
 
 That creates (or reuses) `./.data/` in the current working directory and writes:
@@ -30,7 +53,7 @@ That creates (or reuses) `./.data/` in the current working directory and writes:
 .data/ncsl_voter_id_classification.csv
 ```
 
-Data is **not** installed into `site-packages`. Always run `capstone` from a project folder you control.
+Data is **not** stored under `site-packages`. Startup logs print the Python executable, package file location, and resolved data directory — confirm none of them point at an unexpected global install.
 
 ### Windows quick start
 
@@ -38,8 +61,8 @@ Data is **not** installed into `site-packages`. Always run `capstone` from a pro
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install git+https://github.com/atunison3/capstone.git
-capstone
+pip install -U git+https://github.com/atunison3/capstone.git
+python -m capstone
 ```
 
 ### Configuration
@@ -62,8 +85,8 @@ cd capstone
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install .
-capstone
+python -m pip install -e .
+python -m capstone
 ```
 
 ### Windows
@@ -74,15 +97,13 @@ cd capstone
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-python -m pip install .
-capstone
+python -m pip install -e .
+python -m capstone
 ```
 
-Editable install for development:
+Development dependencies:
 
 ```bash
-python -m pip install -e .
-# or
 python -m pip install -r requirements-dev.txt
 ```
 
@@ -103,14 +124,18 @@ Pinned in `pyproject.toml`:
 ## Verify the install
 
 ```bash
-python -c "import capstone; print('ok')"
+python -c "import capstone, sys; print(sys.executable); print(capstone.__file__)"
 python -c "from capstone.helper_functions import load_model_config; print(load_model_config()['data_path'])"
-capstone
+python -m capstone
 ```
 
-The second command prints the absolute data directory the pipeline will use (usually `<cwd>/.data`).
+You should see:
 
-There is no `--help` flag on the CLI entry point. The command is `capstone`, which maps to `capstone.analysis:main` in `pyproject.toml`.
+- `sys.executable` inside your `.venv`
+- `capstone.__file__` under that venv (or an editable source tree)
+- `data_path` as `<cwd>/.data` — **never** `.../site-packages/.data`
+
+There is no `--help` flag. Entry points: `capstone` → `capstone.analysis:main`, and `python -m capstone`.
 
 ## Next
 

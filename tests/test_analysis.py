@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 
@@ -15,6 +16,10 @@ class TestAnalysisMain(unittest.TestCase):
             patch("capstone.setup_project.download_ces_data") as mock_ces,
             patch("capstone.setup_project.download_state_data") as mock_state,
             patch("capstone.setup_project.install_ncsl_classification") as mock_ncsl,
+            patch(
+                "capstone.setup_project.default_output_dir",
+                return_value=Path("/tmp/project/.data"),  # nosec: B108
+            ),
             patch(
                 "capstone.helper_functions.load_model_config",
                 return_value={"data_path": ".data"},

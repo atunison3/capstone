@@ -132,7 +132,9 @@ def merge_ces_fips(ces_df: DataFrame, merged_fips_nscl: DataFrame) -> DataFrame:
 def load_full_dataframe(config: dict[Any, Any]) -> DataFrame:
     """Loads the full dataframe and cleans"""
 
-    data_path = DATA_PATH
+    # Always use the resolved path from load_model_config() — never the bare
+    # module-level DATA_PATH constant (which is relative and easy to mis-resolve).
+    data_path = Path(config["data_path"])
     logger.info("🟢 Loading analysis inputs from: %s", data_path)
 
     # Loads the CES data and cleans it

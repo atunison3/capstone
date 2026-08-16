@@ -63,7 +63,8 @@ def download_ces_data(
 
     if output_dir is None:
         output_dir = default_output_dir()
-    output_dir = Path(output_dir)
+    output_dir = Path(output_dir).resolve()
+    logger.info("🟢 CES data directory: %s", output_dir)
 
     if (output_dir / "ces_data.csv").exists():
         logger.info("🟢 CES Data exists. Exiting download of ces data.")
@@ -77,9 +78,9 @@ def download_ces_data(
     source_path = downloads_dir / filename
     destination_path = output_dir / "ces_data.csv"
 
-    logger.debug("🟡 Expected CES download filename: %s", filename)
-    logger.debug("🟡 CES download directory: %s", downloads_dir)
-    logger.debug("🟡 CES destination path: %s", destination_path)
+    logger.info("🟡 Expected CES download filename: %s", filename)
+    logger.info("🟡 CES download directory: %s", downloads_dir)
+    logger.info("🟡 CES destination path: %s", destination_path)
 
     margin = "   "
     width = 80

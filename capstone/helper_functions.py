@@ -16,14 +16,23 @@ PACKAGE_PARENT = PACKAGE_DIR.parent
 PROJECT_ROOT = PACKAGE_PARENT
 
 
+def _looks_like_install_dir(path: Path | None) -> bool:
+    """True when path is under a packaging install location (not a project checkout)."""
+    if not path:
+        raise ValueError
+    parts = {part.lower() for part in path.resolve().parts}
+    return bool(parts & {"site-packages", "dist-packages"})
+
+
 def detect_source_tree_root(start: Path = PACKAGE_PARENT) -> Path | None:
     """Return the repository root when the package is running from source/editable.
 
     A normal ``pip install`` places the package under ``site-packages``. In that
-    case there is no project ``pyproject.toml`` next to the package, so this
-    returns ``None`` and data paths should use the process cwd instead.
+    case this returns ``None`` and data paths should use the process cwd instead.
     """
     candidate = start.resolve()
+    if _looks_like_install_dir(candidate):
+        return None
     if (candidate / "pyproject.toml").is_file() and (candidate / "capstone").is_dir():
         return candidate
     return None
@@ -39,7 +48,7 @@ def resolve_data_path(
 
     - Absolute paths are expanded (``~``) and resolved as-is.
     - Relative paths prefer an existing directory under the process cwd (this is
-      where ``setup_project`` writes ``Path(".data")`` for the ``capstone`` CLI).
+      where ``setup_project`` writes data for the ``capstone`` CLI).
     - If not found in cwd, an existing path under the source/editable repo root
       is used (so notebooks outside the repo root still find ``<repo>/.data``).
     - If nothing exists yet:
@@ -51,17 +60,26 @@ def resolve_data_path(
     """
     path = Path(data_path).expanduser()
     if path.is_absolute():
-        return path.resolve()
+        resolved = path.resolve()
+        if _looks_like_install_dir(resolved):
+            # Defensive: never silently use site-packages as the data root.
+            cwd_fallback = (Path(cwd) if cwd is not None else Path.cwd()).resolve() / path.name
+            return cwd_fallback.resolve()
+        return resolved
 
     cwd_path = (Path(cwd) if cwd is not None else Path.cwd()).resolve()
     cwd_candidate = (cwd_path / path).resolve()
 
     if project_root is not None:
         root: Path | None = Path(project_root).resolve()
+        if _looks_like_install_dir(root):
+            root = None
     else:
         root = detect_source_tree_root()
 
     root_candidate = (root / path).resolve() if root is not None else None
+    if root_candidate is not None and _looks_like_install_dir(root_candidate):
+        root_candidate = None
 
     if cwd_candidate.exists():
         return cwd_candidate
@@ -126,14 +144,14 @@ def load_model_config() -> dict[str, Any]:
     Returns a dict of every UPPERCASE constant in ``capstone.config``, with
     lowercased keys (for example ``DATA_PATH`` → ``"data_path"``).
 
-    ``data_path`` is normalized with :func:`resolve_data_path` so a relative
-    default like ``.data`` works for:
+    ``data_path`` is always normalized with :func:`resolve_data_path` so a
+    relative default like ``.data`` works for:
 
     - ``pip install ...`` then ``capstone`` (uses cwd ``.data``)
     - notebooks/scripts in a source checkout (can use ``<repo>/.data``)
     """
 
     cfg = {name.lower(): value for name, value in vars(config).items() if name.isupper()}
-    # if "data_path" in cfg:
-    #     cfg["data_path"] = resolve_data_path(cfg["data_path"])
+    if "data_path" in cfg:
+        cfg["data_path"] = resolve_data_path(cfg["data_path"])
     return cfg

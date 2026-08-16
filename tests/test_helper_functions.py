@@ -71,6 +71,11 @@ class TestLoadConfig(unittest.TestCase):
     def test_core_value_types_and_contents(self) -> None:
         result = load_model_config()
 
+        self.assertIsInstance(result["data_path"], Path)
+        self.assertTrue(result["data_path"].is_absolute())
+        self.assertEqual(result["data_path"], resolve_data_path(config.DATA_PATH))
+        self.assertNotIn("site-packages", str(result["data_path"]))
+
         self.assertIsInstance(result["full_columns"], list)
         self.assertIn("Voted", result["full_columns"])
 
@@ -111,6 +116,14 @@ class TestResolveDataPath(unittest.TestCase):
         absolute = Path("/var/data/ces").resolve()
         result = resolve_data_path(absolute, project_root=Path("/tmp/other"))  # nosec: B108
         self.assertEqual(result, absolute)
+
+    def test_never_uses_site_packages_as_data_root(self) -> None:
+        site = Path("/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cwd = Path(temp_dir)
+            result = resolve_data_path(".data", project_root=site, cwd=cwd)
+        self.assertEqual(result, (cwd / ".data").resolve())
+        self.assertNotIn("site-packages", str(result))
 
     def test_prefers_existing_cwd_over_project_root(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

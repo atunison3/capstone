@@ -27,8 +27,8 @@ Requires **Python 3.13+**. Run from the directory where you want data stored:
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
-pip install git+https://github.com/atunison3/capstone.git
-capstone
+pip install -U git+https://github.com/atunison3/capstone.git
+python -m capstone          # preferred; or: capstone
 ```
 
 What `capstone` does:

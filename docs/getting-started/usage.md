@@ -5,13 +5,17 @@
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
-pip install git+https://github.com/atunison3/capstone.git
-capstone
+pip install -U git+https://github.com/atunison3/capstone.git
+python -m capstone
 ```
 
 Configuration comes from `capstone.config` (no separate config file required).
 
-**Important:** run `capstone` from the folder that should own `./.data/`. Downloads and model inputs both use that resolved path (not `site-packages`).
+**Important:**
+
+- Run from the folder that should own `./.data/`.
+- Prefer `python -m capstone` so the active venv interpreter is used (avoids a leftover global `capstone` script on PATH).
+- Downloads and loads share one resolved path via `resolve_data_path()` — **not** `site-packages/.data`.
 
 ## What the CLI runs
 

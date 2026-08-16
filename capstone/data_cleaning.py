@@ -133,6 +133,7 @@ def load_full_dataframe(config: dict[Any, Any]) -> DataFrame:
     """Loads the full dataframe and cleans"""
 
     data_path = Path(config["data_path"])
+    logger.debug(f"dat_path: {data_path}")
 
     # Loads the CES data and cleans it
     df = load_dataframe(data_path)

@@ -23,6 +23,7 @@ def main() -> None:
 
     # Load the config
     config = load_model_config()
+    logger.debug("🟢 Loaded the config")
 
     # Get the dataframe
     df = load_full_dataframe(config)

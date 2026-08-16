@@ -34,7 +34,7 @@ What `capstone` does:
 1. Guides you through obtaining CES data (manual download from Harvard Dataverse).
 2. Downloads Census FIPS state codes and NCSL voter ID classifications into `.data/`.
 3. Cleans and merges the datasets using settings from `capstone/config.py`.
-4. Fits a logistic regression of validated turnout and prints the model summary.
+4. Fits a logistic regression of validated turnout and prints coefficient results with an **Expit** column via `calculate_probabilities`.
 
 Configuration ships inside the package (`capstone.config`). Override paths or column maps by editing that module (use an editable install while developing).
 

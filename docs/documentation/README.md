@@ -25,7 +25,7 @@ capstone/
 | --- | --- |
 | [Analysis CLI](documentation/analysis.md) | `capstone` command and `analysis.main` |
 | [Data Cleaning](documentation/data-cleaning.md) | CES / FIPS / NCSL load and merge |
-| [Logistic Regression](documentation/logistic-regression.md) | Model formula and training |
+| [Logistic Regression](documentation/logistic-regression.md) | Model formula, training, and `calculate_probabilities` (Expit) |
 | [Project Setup](documentation/setup-project.md) | Downloading and installing input data |
 | [Helper Functions](documentation/helper-functions.md) | Logger and `capstone.config` loader |
 | [Visualization](documentation/visualization.md) | Shared styling and report figures |
@@ -43,8 +43,10 @@ setup_project ──► .data/ (ces_data.csv, fips.csv, ncsl_…)
 data_cleaning.load_full_dataframe
     │
     ├──► logistic_regression.train_model
+    │         │
+    │         └──► logistic_regression.calculate_probabilities
     │
     └──► visualization.report_fig*_real
 ```
 
-The public CLI (`capstone`) runs setup → cleaning → model fit. Figure scripts are separate entry points intended for report generation from a source checkout.
+The public CLI (`capstone`) runs setup → cleaning → model fit → `calculate_probabilities` (summary with Expit). Figure scripts are separate entry points intended for report generation from a source checkout.

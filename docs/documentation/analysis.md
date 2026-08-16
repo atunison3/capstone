@@ -23,7 +23,7 @@ Runs the end-to-end analysis pipeline:
 4. `load_model_config()`
 5. `load_full_dataframe(config)`
 6. `train_model(df)`
-7. Prints `model.summary()`
+7. `calculate_probabilities(model)` — prints `summary2()` with an **Expit** column
 
 ### Example
 
@@ -42,3 +42,4 @@ main()
 - Loads settings from `capstone.config` via `load_model_config()`.
 - Creates or reuses `.data/` (default `DATA_PATH`) and `.log/`.
 - Does not accept CLI arguments.
+- Model reporting uses `calculate_probabilities` from `capstone.logistic_regression` (not raw `model.summary()`), so coefficient tables include Expit values. See [Logistic Regression](documentation/logistic-regression.md).

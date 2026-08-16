@@ -26,7 +26,7 @@ capstone = "capstone.analysis:main"
    - `install_ncsl_classification()` — NCSL voter ID classes into `.data/ncsl_voter_id_classification.csv`
 2. **Load config** — `load_model_config()` reads UPPERCASE constants from `capstone.config`
 3. **Clean and merge** — `load_full_dataframe(config)`
-4. **Fit model** — `train_model(df)` and print `model.summary()`
+4. **Fit model** — `train_model(df)` then `calculate_probabilities(model)` (prints `summary2()` with an **Expit** column)
 
 Logs go to the console (INFO+) and to `.log/capstone.log`.
 
@@ -72,12 +72,12 @@ print(df.head())
 ```python
 from capstone.helper_functions import load_model_config
 from capstone.data_cleaning import load_full_dataframe
-from capstone.logistic_regression import train_model
+from capstone.logistic_regression import train_model, calculate_probabilities
 
 config = load_model_config()
 df = load_full_dataframe(config)
 model = train_model(df)
-print(model.summary())
+calculate_probabilities(model)  # summary2 table + Expit column
 ```
 
 ### Install project data without fitting a model

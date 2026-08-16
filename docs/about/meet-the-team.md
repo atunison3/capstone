@@ -9,6 +9,7 @@ This capstone was built by a three-person team in the University of Michigan **M
 Sahana coordinated project planning, timelines, and team communication so research, writing, and engineering stayed aligned.
 
 - **Email:** [sahanasu@umich.edu](mailto:sahanasu@umich.edu)
+- **GitHub**: [github.com/SahanaSundar](https://github.com/PinkySkySudo)
 - **LinkedIn:** [linkedin.com/in/ssahana](https://www.linkedin.com/in/ssahana/)
 
 ### Melody Ren — Visuals and writing lead
@@ -16,6 +17,8 @@ Sahana coordinated project planning, timelines, and team communication so resear
 Melody led visualization and written narrative for the project — figures, presentation of results, and clarity of the story the analysis tells.
 
 - **Email:** [yyren@umich.edu](mailto:yyren@umich.edu)
+- **GitHub:** [github.com/PinkySkySudo](https://github.com/PinkySkySudo)
+- **LinkedIn:** [linkedin.com/in/yueyao-ren](https://www.linkedin.com/in/yueyao-ren/)
 
 ### Andy Tunison — Lead developer
 

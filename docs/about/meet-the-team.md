@@ -8,6 +8,8 @@ This capstone was built by a three-person team in the University of Michigan **M
 
 Sahana coordinated project planning, timelines, and team communication so research, writing, and engineering stayed aligned.
 
+She holds a B.S. in Industrial & Systems Engineering from the University of Washington and a Masters in Applied Data Science from the University of Michigan. Sahana is currently working as a data analyst in the insurance industry.
+
 - **Email:** [sahanasu@umich.edu](mailto:sahanasu@umich.edu)
 - **GitHub**: [github.com/SahanaSundar](https://github.com/PinkySkySudo)
 - **LinkedIn:** [linkedin.com/in/ssahana](https://www.linkedin.com/in/ssahana/)

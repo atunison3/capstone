@@ -6,14 +6,17 @@ Capstone is a University of Michigan MADS (Spring/Summer 2026) project that stud
 
 ## Motivation
 
-In the 2024 U.S. presidential election, 65.3% of voting-age citizens voted, 154 million people. Public understanding of voting is often shaped by headlines and anecdote rather than evidence. This project analyzes a central question: how do voter outreach and state voter ID law strictness affect turnout in a high-salience election, findings that can help civic organizations and campaigns identify what actually moves participation.
+In the 2024 U.S. presidential election, 65.3% of voting-age citizens voted, 154 million people. Public understanding of voting is often shaped by headlines and anecdote rather than evidence.
+
+This project analyzes a central question: how do voter outreach and state voter ID law strictness affect turnout in a high-salience election, findings that can help civic organizations and campaigns identify what actually moves participation.
 
 ## Methodology
 
 We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID strictness classification, then fit a logistic regression to predict turnout.
 
-- **Data**: CES 2024, around 60,000 respondents,
+- **Data**: CES 2024, around 60,000 respondents
 - **Voter ID strictness**: 5 categories from NCSL, merged onto CES via state
+- **Data cleaning**: We derived validated turnout and predictors from the CES data using documented column mappings, dropped respondents without a voting record (leaving 39,800 rows), and merged in NCSL voter ID strictness by state FIPS code.
 - **Outcome**: Validated turnout, not self-report
 - **Model**: Binary logistic regression
 - **Key treatments**: Voter ID strictness, 4 outreach channels (in-person, phone, email/text, mail), and their interactions
@@ -31,13 +34,31 @@ We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID s
 
 **Outreach Gap by Strictness**: Gap present in every category, but varies rather than staying constant.
 
+## Evaluation
+
+**Hypotheses**
+**Voter ID Laws (H1)**: Stricter laws -> lower odds of voting
+**Outreach (H2)**: Experiencing outreach -> higher odds of voting
+**Outreach x Voter ID Laws (H3)**: Outreach's effect on turnout differs by ID law strictness, likely stronger in stricter states.
+
+### Average Marginal Effects (AME)
+
 ![Logistic marginal effects](assets/report_fig4_logistic_marginal_effects.png)
 
+- AME is computed by averaging each person's predicted change in voting probability when a treatment is switched on vs off, holding demographics constant.
 - **Contact**: +4.5 pts (95% CI: 4.0-5.0), strongest effect overall.
 - **Non-strict**, photo ID: -2.1 pts (95% CI: -2.9-1.5), the only significant ID-strictness effect.
-- The other three strictness categories showed no significant effect
 
 After controlling for demographics, voter ID strictness largely ceases to predict turnout, suggesting the raw pattern reflected population composition rather than the law itself.
+
+### Interpretation of Results
+
+- Outreach: +4.5 point increase in voting probability, robust and significant, supporting H2.
+- Email/text and mail show the strongest individual effects; phone calls show a smaller significant effect; in-person contact alone is not significant, a surprising result worth further study
+- Voter ID laws: Only non-strict, photo ID shows a significant effect; the other three categories (including both "strict" classifications) are not distinguishable from chance
+- H1 (voter ID) is only partially supported: the effect holds for one category, not consistently across strictness levels
+- Interaction: No significant outreach × strictness effects; outreach's benefit appears consistent regardless of ID law strictness
+- Outreach, especially email/text and mail, is a more consistent predictor of turnout than voter ID strictness in this election
 
 ### Limitations
 
@@ -56,6 +77,8 @@ After controlling for demographics, voter ID strictness largely ceases to predic
 - Per-channel outreach effects, not just an aggregated "contacted" effect
 - Add campaign spending and policy-attitude controls
 - Test whether patterns hold in lower-salience elections
+
+**Statement of work**: This project builds on Sahana Sundar's original SIADS 688 analysis plan. Andy (lead developer), Melody (lead visualizer), and Sahana (project manager) all contributed to scope, coding, and writing, with mentorship from Laura Stagnaro.
 
 ---
 

@@ -1,6 +1,6 @@
-# Capstone
+# Voter Turnout Analysis
 
-Capstone is a University of Michigan MADS (Spring/Summer 2026) project that studies how voter outreach and state voter ID laws relate to validated 2024 turnout in the Cooperative Election Study (CES).
+Voter Turnout Analysis is a University of Michigan MADS (Spring/Summer 2026) project that studies how voter outreach and state voter ID laws relate to validated 2024 turnout in the Cooperative Election Study (CES).
 
 ---
 

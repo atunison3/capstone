@@ -20,4 +20,5 @@ This work was carried out by Sahana Sundar, Melody Ren, and Andy Tunison. See [M
 
 ## Data and open tools
 
-We also acknowledge the producers of the public data and open-source tools this project depends on, including the Cooperative Election Study (CES) via Harvard Dataverse, U.S. Census Bureau reference data, NCSL voter ID classifications (as used in our derived tables), and the Python scientific stack used in the analysis.
+We also acknowledge the producers of the public data and open-source tools this project depends on, including the [Cooperative Election Study (CES) via Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/X11EP6), [U.S. Census Bureau reference data](https://data.transportation.gov/Railroads/State-County-and-City-FIPS-Reference-Table/eek5-pv8d/about_data), [NCSL voter ID classifications](https://www.ncsl.org/elections-and-campaigns/voter-id#12539) (as used in our derived tables), and the Python scientific stack used in the analysis.
+

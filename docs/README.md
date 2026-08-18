@@ -1,6 +1,6 @@
-# Capstone
+# Analyzing the Relationship Between ID Laws and Outreach on Voter Turnout in the 2024 Election
 
-Capstone is a University of Michigan MADS (Spring/Summer 2026) project that studies how voter outreach and state voter ID laws relate to validated 2024 turnout in the Cooperative Election Study (CES).
+Voter Turnout Analysis is a University of Michigan MADS (Spring/Summer 2026) project that studies how voter outreach and state voter ID laws relate to validated 2024 turnout in the Cooperative Election Study (CES).
 
 ---
 
@@ -36,10 +36,11 @@ We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID s
 
 ## Evaluation
 
-**Hypotheses**
-**Voter ID Laws (H1)**: Stricter laws -> lower odds of voting
-**Outreach (H2)**: Experiencing outreach -> higher odds of voting
-**Outreach x Voter ID Laws (H3)**: Outreach's effect on turnout differs by ID law strictness, likely stronger in stricter states.
+### Hypotheses
+
+- Voter ID Laws (H1): Stricter laws -> lower odds of voting
+- Outreach (H2): Experiencing outreach -> higher odds of voting
+- Outreach x Voter ID Laws (H3): Outreach's effect on turnout differs by ID law strictness, likely stronger in stricter states.
 
 ### Average Marginal Effects (AME)
 

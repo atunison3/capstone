@@ -16,6 +16,8 @@ Sahana coordinated project planning, timelines, and team communication so resear
 
 Melody led visualization and written narrative for the project — figures, presentation of results, and clarity of the story the analysis tells.
 
+She is based in the Bay Area, CA, works as a financial analyst focusing on US stock market, and enjoys playing piano as a hobby.
+
 - **Email:** [yyren@umich.edu](mailto:yyren@umich.edu)
 - **GitHub:** [github.com/PinkySkySudo](https://github.com/PinkySkySudo)
 - **LinkedIn:** [linkedin.com/in/yueyao-ren](https://www.linkedin.com/in/yueyao-ren/)

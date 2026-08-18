@@ -1,6 +1,6 @@
 # Analyzing the Relationship Between ID Laws and Outreach on Voter Turnout in the 2024 Election
 
-> A University of Michigan Masters in Applied Data Science (MADS) capstone project.
+> A University of Michigan Masters in Applied Data Science (MADS) captone project.
 
 [Get Started](/getting-started/installation.md)
 [Documentation](documentation/README.md)

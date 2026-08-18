@@ -2,6 +2,8 @@
 
 ## v0.1.0
 
+- 91a1515 | 2026-08-17 | atunison3 | Deconflicting more merge conflicts
+- 938b66c | 2026-08-17 | atunison3 | Updates to doc name and bios
 - f241e66 | 2026-08-17 | atunison3 | Merge pull request #28 from atunison3/add_data_links
 - 805ad94 | 2026-08-17 | SahanaSundar | Merge pull request #27 from atunison3/andy/data-story
 - f21f2f5 | 2026-08-16 | SahanaSundar | Merge pull request #25 from atunison3/logistic_results

@@ -1,6 +1,6 @@
-# Capstone
+# Analyzing the Relationship Between ID Laws and Outreach on Voter Turnout in the 2024 Election
 
-> Analyzing voter turnout, outreach, and voter ID laws with the 2024 Cooperative Election Study.
+> A University of Michigan Masters in Applied Data Science (MADS) capstone project.
 
 [Get Started](/getting-started/installation.md)
 [Documentation](documentation/README.md)

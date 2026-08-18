@@ -12,9 +12,9 @@ Sahana coordinated project planning, timelines, and team communication so resear
 - **GitHub**: [github.com/SahanaSundar](https://github.com/PinkySkySudo)
 - **LinkedIn:** [linkedin.com/in/ssahana](https://www.linkedin.com/in/ssahana/)
 
-### Melody Ren — Visuals and writing lead
+### Yueyao Ren — Visuals and writing lead
 
-Melody led visualization and written narrative for the project — figures, presentation of results, and clarity of the story the analysis tells.
+Yueyao led visualization and written narrative for the project — figures, presentation of results, and clarity of the story the analysis tells.
 
 She is based in the Bay Area, CA, works as a financial analyst focusing on US stock market, and enjoys playing piano as a hobby.
 

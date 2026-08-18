@@ -36,11 +36,11 @@ We combined the 2024 Cooperative Election Study (CES) with the NCSL's voter ID s
 
 ## Evaluation
 
-### Hypothesis
+### Hypotheses
 
-- **Voter ID Laws (H1)**: Stricter laws -> lower odds of voting
-- **Outreach (H2)**: Experiencing outreach -> higher odds of voting
-- **Outreach x Voter ID Laws (H3)**: Outreach's effect on turnout differs by ID law strictness, likely stronger in stricter states.
+- Voter ID Laws (H1): Stricter laws -> lower odds of voting
+- Outreach (H2): Experiencing outreach -> higher odds of voting
+- Outreach x Voter ID Laws (H3): Outreach's effect on turnout differs by ID law strictness, likely stronger in stricter states.
 
 ### Average Marginal Effects (AME)
 
@@ -79,7 +79,7 @@ After controlling for demographics, voter ID strictness largely ceases to predic
 - Add campaign spending and policy-attitude controls
 - Test whether patterns hold in lower-salience elections
 
-**Statement of work**: This project builds on Sahana Sundar's original SIADS 688 analysis plan. Andy (lead developer), Melody (lead visualizer), and Sahana (project manager) all contributed to scope, coding, and writing, with mentorship from Laura Stagnaro.
+**Statement of work**: This project builds on Sahana Sundar's original SIADS 688 analysis plan. Andy (lead developer), Yueyao (lead visualizer), and Sahana (project manager) all contributed to scope, coding, and writing, with mentorship from Laura Stagnaro.
 
 ---
 
@@ -125,7 +125,7 @@ Third-party datasets used by the analysis keep their own terms and are not re-li
 
 ## Team
 
-Built by Sahana Sundar, Melody Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
+Built by Sahana Sundar, Yueyao Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
 
 - [Meet the team](docs/about/meet-the-team.md)
 - [Acknowledgements](docs/about/acknowledgements.md)

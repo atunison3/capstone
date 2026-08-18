@@ -16,7 +16,7 @@ Learn more about the program:
 
 ## Team
 
-This work was carried out by Sahana Sundar, Melody Ren, and Andy Tunison. See [Meet the team](about/meet-the-team.md) for roles and contact links.
+This work was carried out by Sahana Sundar, Yueyao Ren, and Andy Tunison. See [Meet the team](about/meet-the-team.md) for roles and contact links.
 
 ## Data and open tools
 

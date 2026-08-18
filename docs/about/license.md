@@ -2,7 +2,7 @@
 
 This project is released under the **MIT License**.
 
-Copyright (c) 2026 Andy Tunison, Melody Ren, and Sahana Sundar
+Copyright (c) 2026 Andy Tunison, Yueyao Ren, and Sahana Sundar
 
 You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the software, provided that the copyright notice and permission notice

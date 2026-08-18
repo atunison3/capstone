@@ -5,7 +5,7 @@ version = "0.1.0"
 requires-python = ">= 3.13"
 authors = [
   {name = "Andy Tunison", email = "andrew.e.tunison@gmail.com"},
-  {name = "Melody Ren", email="yyren@umich.edu"},
+  {name = "Yueyao Ren", email="yyren@umich.edu"},
   {name = "Sahana Sundar", email="sahanasu@umich.edu"}
 ]
 readme = "README.md"

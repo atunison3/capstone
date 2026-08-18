@@ -79,7 +79,7 @@ After controlling for demographics, voter ID strictness largely ceases to predic
 - Add campaign spending and policy-attitude controls
 - Test whether patterns hold in lower-salience elections
 
-**Statement of work**: This project builds on Sahana Sundar's original SIADS 688 analysis plan. Andy (lead developer), Melody (lead visualizer), and Sahana (project manager) all contributed to scope, coding, and writing, with mentorship from Laura Stagnaro.
+**Statement of work**: This project builds on Sahana Sundar's original SIADS 688 analysis plan. Andy (lead developer), Yueyao (lead visualizer), and Sahana (project manager) all contributed to scope, coding, and writing, with mentorship from Laura Stagnaro.
 
 ---
 
@@ -119,7 +119,7 @@ CES data cannot be fully automated (Harvard Dataverse WAF). When prompted, downl
 
 ## Team
 
-Built by Sahana Sundar, Melody Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
+Built by Sahana Sundar, Yueyao Ren, and Andy Tunison, with mentorship from Laura Stagnaro and support from the UMich MADS teaching staff.
 
 - [Acknowledgements](about/acknowledgements.md)
 - [Meet the team](about/meet-the-team.md)
